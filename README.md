@@ -16,20 +16,20 @@ prerequisities / steps
 8. all devices system variables and rooms should be created automatically on the indigo server
 
 supported devices
- 	device type			description
-	HMIP-WRC			  2 button remote
-	HMIP-RC8			  2 button remote
-	HMIP-STHO			  internal / external Temp / humidity sensor
-	HMIP-FALMOT-C12	12 channel underfloor heating 
-	HMIP-FAL230-C10	10 230V
-	HMIP-FAL230-C6	6  230V
-	HMIP-FAL24-C10	10 24V
-	HMIP-FAL24-C6		6  24V
-	HMIP-WTH		  	wall thermostat 
-	HMIP-SWDM		  	magnet on / off sensor
-	HMIP-ETRV		  	radiator attached thermostat
-	HMIP-PS			  	powerplug switch
-	HMIP-PSM		  	powerplug switch w energy measurement
+- 	device type			description
+-	HMIP-WRC			  2 button remote
+-	HMIP-RC8			  2 button remote
+-	HMIP-STHO			  internal / external Temp / humidity sensor
+-	HMIP-FALMOT-C12			12 channel underfloor heating 
+-	HMIP-FAL230-C10			10 230V
+-	HMIP-FAL230-C6			6  230V
+-	HMIP-FAL24-C10			10 24V
+-	HMIP-FAL24-C6			6  24V
+-	HMIP-WTH		  	wall thermostat 
+-	HMIP-SWDM		  	magnet on / off sensor
+-	HMIP-ETRV		  	radiator attached thermostat
+-	HMIP-PS			  	powerplug switch
+-	HMIP-PSM		  	powerplug switch w energy measurement
 
 
 
