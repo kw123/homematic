@@ -16,7 +16,7 @@ prerequisities / steps
 8. all devices system variables and rooms should be created automatically on the indigo server
 
 supported devices
-- 	device type			description
+device type			description
 -	HMIP-WRC			  2 button remote
 -	HMIP-RC8			  2 button remote
 -	HMIP-STHO			  internal / external Temp / humidity sensor
