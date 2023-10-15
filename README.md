@@ -1,11 +1,11 @@
 # homematic
-indigo plugin to link with homematic on raspberry pi (raspberrymatic)
+##indigo plugin to link with homematic on raspberry pi (raspberrymatic)
 
-this plugin does the following:
+###this plugin does the following:
 1. copy states  from homematic host to indigo devices/ states
 2. indigo through actions can set states and values on the homematic host
 
-prerequisities / steps
+###Prerequisite / steps
 1. create micro sd with raspberry matic (homematic on raspberry) image
 2. start rpi
 3. install add on "ccuJack" - that is used to communicat with the rpi through http
@@ -15,9 +15,9 @@ prerequisities / steps
 7. in config set ip number and port number (normally 2121)
 8. all devices system variables and rooms should be created automatically on the indigo server
 
-supported devices
+###supported devices
 
-device type			description
+####device type			description
 -	HMIP-WRC:			  2 button remote
 -	HMIP-RC8:			  2 button remote
 -	HMIP-STHO:			  internal / external Temp / humidity sensor
