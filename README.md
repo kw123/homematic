@@ -32,4 +32,5 @@
 -	HMIP-PS:			  	powerplug switch
 -	HMIP-PSM:		  	powerplug switch w energy measurement
 
+more to follow
 
