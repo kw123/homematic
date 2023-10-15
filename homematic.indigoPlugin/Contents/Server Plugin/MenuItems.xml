@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<MenuItems>
+
+
+	<MenuItem id="printConfig">
+		<Name>PRINT parameters to logfile ..</Name>
+		<ConfigUI>
+
+				<Field id="printConfig" type="button"> 
+					<Label>PRINT Config parameters and host info to log </Label> 
+					<Title>PRINT</Title><CallbackMethod>printConfigMenu</CallbackMethod>
+				</Field>
+
+		</ConfigUI>
+	</MenuItem>
+
+
+
+</MenuItems>

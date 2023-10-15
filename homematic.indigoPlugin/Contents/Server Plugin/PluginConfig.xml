@@ -1,0 +1,151 @@
+<?xml version="1.0"?>
+<PluginConfig>
+
+	<Field id="infoLabel1" 				type="label"> 
+		<Label>Homematic  plugin  Developed by Karl Wachs</Label>  
+	</Field>
+
+	<Field id="simpleSeparator22" 		type="separator"/>
+
+	<Field id="MSG"        	type="textfield"   > 
+		<Label> msg from plugin:</Label>  
+	</Field>
+
+
+	<Field id="infoLabelUserID" 			type="label" fontColor="green" > 
+		<Label>== user IpNumber, port#... for homematic system</Label>  
+	</Field>
+<!--
+	<Field id="userIDON" 				type="checkbox"  fontColor="green">  > 
+		<Label>Show UserID password .. section......................................................:</Label> 
+	</Field>
+
+	<Field id="userid"  	type="textfield"  visibleBindingId="userIDON" visibleBindingValue="true"   > 
+		<Label>.. userid (not used):</Label> 
+	</Field>
+
+	<Field id="password"  	type="textfield"  visibleBindingId="userIDON" visibleBindingValue="true"   > 
+		<Label>.. password (not used):</Label> 
+	</Field>
+-->
+
+
+	<Field id="ipNumber"  	type="textfield"     > 
+		<Label>.. ipNumber:</Label> 
+	</Field>
+
+	<Field id="portNumber"  	type="textfield"   > 
+		<Label>.. portNumber:</Label> 
+	</Field>
+
+	<Field id="sep-generalON" 		type="separator"/>
+
+
+	<Field id="infoLabelGeneral" 			type="label" fontColor="green" > 
+		<Label>== General Parameters for Plugin </Label>  
+	</Field>
+
+	<Field id="generalON" 					type="checkbox"  fontColor="green"> 
+		<Label>Show General section........................................................:</Label>  
+	</Field>
+
+
+	<Field id="tempUnit"    	type="menu"  visibleBindingId="generalON" visibleBindingValue="true"   > 
+		<Label>Temperature Unit:</Label>   
+		<List>
+			<Option value="F"  >F</Option>
+			<Option value="C"  >C</Option>
+		</List>
+	</Field>
+
+	<Field id="ignoreNewDevices"    	type="checkbox"  visibleBindingId="generalON" visibleBindingValue="true"   > 
+		<Label>Ignore NEW Devices:</Label>   
+	</Field>
+
+
+	<Field id="folderNameDevices"       	type="textfield"   visibleBindingId="generalON" visibleBindingValue="true"  > 
+		<Label>Folder name for new DEVICES:</Label>  
+	</Field>
+
+	<Field id="folderNameVariables"        	type="textfield"    visibleBindingId="generalON" visibleBindingValue="true" > 
+		<Label> Folder name for VARIABLES:</Label>  
+	</Field>
+
+	<Field id="getValuesEvery"    	type="menu"  visibleBindingId="generalON" visibleBindingValue="true"   > 
+		<Label>Get all VALUES from homematic every [secs] (&lt;0.2 secs elapsed time):</Label>   
+		<List>
+			<Option value="0.5">0.5</Option>
+			<Option value="1"  >1</Option>
+			<Option value="1.5"  >1.5</Option>
+			<Option value="2"  >2.5</Option>
+			<Option value="2.5"  >2</Option>
+			<Option value="3"  >3 default</Option>
+			<Option value="5"  >5</Option>
+			<Option value="10" >10</Option>
+			<Option value="15" >15</Option>
+			<Option value="20" >20</Option>
+		</List>
+	</Field>
+
+
+	<Field id="getCompleteUpdateEvery"    	type="menu"  visibleBindingId="generalON" visibleBindingValue="true"   > 
+		<Label>Get COMPLETE info from homematic every [secs] (&gt;2 sec elapsed time ):</Label>   
+		<List>
+			<Option value="3"  >3</Option>
+			<Option value="5"  >5</Option>
+			<Option value="10" >10</Option>
+			<Option value="15" >15</Option>
+			<Option value="20" >20 </Option>
+			<Option value="30" >30</Option>
+			<Option value="60" >60 default</Option>
+			<Option value="90" >90</Option>
+			<Option value="180" >180</Option>
+		</List>
+	</Field>
+
+	<Field id="sep-Names" 			type="separator"/>
+
+
+
+
+	<Field id="debugOn" 					type="checkbox"  fontColor="green"> 
+		<Label>Show DEBUG section........................................................:</Label>  
+	</Field>
+
+	<Field id="infoLabel226"       type="label"    visibleBindingId="debugOn" visibleBindingValue="true"  fontColor="green" >  <Label>== Debug:... </Label>  </Field>
+	<Field id="writeInfoToFile"    type="checkbox" visibleBindingId="debugOn" visibleBindingValue="true" > <Label> write info read from hub to file in pref directory:</Label>  </Field>
+	<Field id="showLoginTest"      type="checkbox" visibleBindingId="debugOn" visibleBindingValue="true" > <Label> show logging test at startup:</Label>  </Field>
+	<Field id="debugLogic"         type="checkbox" visibleBindingId="debugOn" visibleBindingValue="true" > <Label>... (1) Logic:</Label>										</Field>
+	<Field id="debugGetData"       type="checkbox" visibleBindingId="debugOn" visibleBindingValue="true" > <Label>... (3) get data, in plugin.log:</Label>						</Field>
+	<Field id="debugDigest"        type="checkbox" visibleBindingId="debugOn" visibleBindingValue="true" > <Label>... (4) digest data received, in plugin.log:</Label>			</Field>
+	<Field id="debugActions"       type="checkbox" visibleBindingId="debugOn" visibleBindingValue="true" > <Label>... (5) actions:</Label>										</Field>
+	<Field id="debugConnect"       type="checkbox" visibleBindingId="debugOn" visibleBindingValue="true" > <Label>... (6) onnect to RPI:</Label>								</Field>
+	<Field id="debugUpdateStates"  type="checkbox" visibleBindingId="debugOn" visibleBindingValue="true" > <Label>... (7) update states  in plugin.log :</Label>				</Field>
+	<Field id="debugSpecial"       type="checkbox" visibleBindingId="debugOn" visibleBindingValue="true" > <Label>... (19) Special debug for development:</Label>				</Field>
+	<Field id="debugAll"           type="checkbox" visibleBindingId="debugOn" visibleBindingValue="true" > <Label>... (20) all of the above = everything:</Label>				</Field>
+	<Field id="sep-debugOn" type="separator"  />
+
+
+
+
+	<Field id="infolabelExperts" type="label" fontColor="green"> <Label>=== EXPERTs only ...</Label>  </Field>
+	<Field id="expertOn" 					type="checkbox"  fontColor="green"> 
+		<Label>Show EXPERT section........................................................:</Label>  
+	</Field>
+
+	<Field id="requestTimeout"    	type="menu"  visibleBindingId="expertOn" visibleBindingValue="true"   > 
+		<Label>http request timeout[secs]:</Label>   
+		<List>
+			<Option value="2"  >2</Option>
+			<Option value="5"  >5</Option>
+			<Option value="10" >10</Option>
+			<Option value="15" >15</Option>
+			<Option value="20" >20</Option>
+		</List>
+	</Field>
+
+
+	<Field id="sep-expertOn" type="separator"  />
+
+
+</PluginConfig>

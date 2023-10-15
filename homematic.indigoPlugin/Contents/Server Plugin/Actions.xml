@@ -1,0 +1,14 @@
+<Actions>
+        
+    <Action id="xxx">
+        <Name>yyy</Name>
+        <CallbackMethod>buttonConfirmxxxCALLBACKaction</CallbackMethod> 
+        <ConfigUI>
+            <Field     id="xxx" type="menu" defaultValue="0">
+                <Label>select P device:</Label>
+                <List class="self" filter="" method="filterxxxx"  dynamicReload="no"/>
+            </Field>
+        </ConfigUI>
+    </Action>
+
+</Actions>

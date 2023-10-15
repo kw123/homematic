@@ -1,0 +1,400 @@
+<Devices>
+
+	<Device type="thermostat" id="HMIP-ETRV">
+		<Name>Homematic eTRV-RadiatorValve</Name>
+		<ConfigUI>
+				<Field id="SupportsOnState" type="checkbox" defaultValue="false" hidden ="true"></Field>
+				<Field id="SupportsSensorValue" type="checkbox" defaultValue="true" hidden ="true"></Field>
+
+			<Field id="simpleSeparator1" type="separator"/>
+
+
+			<Field	  id="displayS"		  type="menu"  defaultValue="temperatureInput"	 tooltip="pick one">
+				<Label>which info to be used for status updates</Label>
+				<List>
+					<Option value="temperatureInput"	>temp indigo dev</Option>
+				</List>
+			</Field>
+
+			<Field id="sep-03" type="separator"/>
+
+		</ConfigUI>
+		<States>
+		</States>
+
+	</Device>
+
+	<Device type="dimmer" id="HMIP-ETRV-child">
+		<Name>Homematic eTRV-RadiatorValve dimmer</Name>
+		<ConfigUI>
+				<Field id="SupportsOnState" type="checkbox" defaultValue="false" hidden ="true"></Field>
+				<Field id="SupportsSensorValue" type="checkbox" defaultValue="true" hidden ="true"></Field>
+
+			<Field id="simpleSeparator1" type="separator"/>
+
+
+			<Field	  id="displayS"		  type="menu"  defaultValue="LEVEL"	 tooltip="pick one">
+				<Label>which info to be used for status updates</Label>
+				<List>
+					<Option value="LEVEL"	>temp indigo dev</Option>
+				</List>
+			</Field>
+
+			<Field id="sep-03" type="separator"/>
+
+		</ConfigUI>
+		<States>
+		</States>
+
+	</Device>
+
+
+	<Device type="thermostat" id="HMIP-WTH">
+		<Name>Homematic WTH-Wall Thermostat</Name>
+		<ConfigUI>
+				<Field id="SupportsOnState" type="checkbox" defaultValue="false" hidden ="true"></Field>
+				<Field id="SupportsSensorValue" type="checkbox" defaultValue="true" hidden ="true"></Field>
+
+			<Field id="simpleSeparator1" type="separator"/>
+
+
+			<Field	  id="displayS"		  type="menu"  defaultValue="temperatureInput"	 tooltip="pick one">
+				<Label>which info to be used for status updates</Label>
+				<List>
+					<Option value="temperatureInput"	>temp indigo dev</Option>
+				</List>
+			</Field>
+
+			<Field id="sep-03" type="separator"/>
+
+		</ConfigUI>
+		<States>
+		</States>
+
+	</Device>
+
+
+	<Device type="sensor" id="HMIP-STHO">
+		<Name>Homematic STHO-Temp-Humidity Sensor</Name>
+		<ConfigUI>
+				<Field id="SupportsOnState" type="checkbox" defaultValue="false" hidden ="true"></Field>
+				<Field id="SupportsSensorValue" type="checkbox" defaultValue="true" hidden ="true"></Field>
+
+			<Field id="simpleSeparator1" type="separator"/>
+
+
+			<Field	  id="displayS"		  type="menu"  defaultValue="ACTUAL_TEMPERATURE"	 tooltip="pick one">
+				<Label>which info to be used for status updates</Label>
+				<List>
+					<Option value="ACTUAL_TEMPERATURE"	>ACTUAL_TEMPERATURE	</Option>
+					<Option value="HUMIDITY"	>HUMIDITY	</Option>
+				</List>
+			</Field>
+
+			<Field id="sep-03" type="separator"/>
+
+		</ConfigUI>
+		<States>
+		</States>
+
+	</Device>
+
+	<Device type="sensor" id="HMIP-SWDM">
+		<Name>Homematic SWDM-Magnet Contact</Name>
+		<ConfigUI>
+				<Field id="SupportsOnState" type="checkbox" defaultValue="true" hidden ="true"></Field>
+				<Field id="SupportsSensorValue" type="checkbox" defaultValue="false" hidden ="true"></Field>
+
+			<Field id="simpleSeparator1" type="separator"/>
+
+
+			<Field	  id="displayS"		  type="menu"  defaultValue="STATE"	 tooltip="pick one">
+				<Label>which info to be used for status updates</Label>
+				<List>
+					<Option value="STATE"	>State	</Option>
+				</List>
+			</Field>
+
+			<Field id="sep-03" type="separator"/>
+
+		</ConfigUI>
+		<States>
+		</States>
+
+	</Device>
+
+
+	<Device type="sensor" id="HMIP-WRC">
+		<Name>Homematic WRC-Dual button</Name>
+		<ConfigUI>
+				<Field id="SupportsOnState" type="checkbox" defaultValue="true" hidden ="true"></Field>
+				<Field id="SupportsSensorValue" type="checkbox" defaultValue="False" hidden ="true"></Field>
+
+			<Field id="simpleSeparator1" type="separator"/>
+
+			<Field	  id="displayS"		  type="menu"  defaultValue="PRESS_SHORT-1"	 tooltip="pick one">
+				<Label>which info to be used for status updates</Label>
+				<List>
+					<Option value="PRESS_SHORT-1"	>PRESS_SHORT-1	</Option>
+					<Option value="PRESS_SHORT-2"	>PRESS_SHORT-2	</Option>
+					<Option value="PRESS_LONG-1"	>PRESS_LONG-1	</Option>
+					<Option value="PRESS_LONG-2"	>PRESS_LONG-2	</Option>
+				</List>
+			</Field>
+
+			<Field id="sep-03" type="separator"/>
+
+		</ConfigUI>
+		<States>
+		</States>
+
+	</Device>
+
+	<Device type="sensor" id="HMIP-RC8">
+		<Name>Homematic RC8-8 button switch</Name>
+		<ConfigUI>
+				<Field id="SupportsOnState" type="checkbox" defaultValue="true" hidden ="true"></Field>
+				<Field id="SupportsSensorValue" type="checkbox" defaultValue="False" hidden ="true"></Field>
+
+			<Field id="simpleSeparator1" type="separator"/>
+
+			<Field	  id="displayS"		  type="menu"  defaultValue="PRESS_SHORT-1"	 tooltip="pick one">
+				<Label>which info to be used for status updates</Label>
+				<List>
+					<Option value="PRESS_SHORT-1"	>PRESS_SHORT-1	</Option>
+					<Option value="PRESS_SHORT-2"	>PRESS_SHORT-2	</Option>
+					<Option value="PRESS_LONG-1"	>PRESS_LONG-1	</Option>
+					<Option value="PRESS_LONG-2"	>PRESS_LONG-2	</Option>
+				</List>
+			</Field>
+
+			<Field id="sep-03" type="separator"/>
+
+		</ConfigUI>
+		<States>
+		</States>
+
+	</Device>
+
+
+
+
+
+	<Device type="sensor" id="HMIP-FAL-C12">
+		<Name>Homematic HMIP-FALMOT-C12-Actor</Name>
+		<ConfigUI>
+				<Field id="SupportsOnState" type="checkbox" defaultValue="false" hidden ="true"></Field>
+				<Field id="SupportsSensorValue" type="checkbox" defaultValue="true" hidden ="true"></Field>
+
+			<Field id="simpleSeparator1" type="separator"/>
+
+			<Field	  id="displayS"		  type="menu"  defaultValue="buttonPressed"	 tooltip="pick one">
+				<Label>which Valve to show in Status</Label>
+				<List>
+					<Option value="buttonPressed"	> buttonPressed	</Option>
+				</List>
+			</Field>
+
+			<Field id="sep-03" type="separator"/>
+
+		</ConfigUI>
+		<States>
+		</States>
+
+	</Device>
+
+
+	<Device type="sensor" id="HMIP-FAL-C10">
+		<Name>Homematic HMIP-FALMOT-C10-Actor</Name>
+		<ConfigUI>
+				<Field id="SupportsOnState" type="checkbox" defaultValue="false" hidden ="true"></Field>
+				<Field id="SupportsSensorValue" type="checkbox" defaultValue="true" hidden ="true"></Field>
+
+			<Field id="simpleSeparator1" type="separator"/>
+
+			<Field	  id="displayS"		  type="menu"  defaultValue="buttonPressed"	 tooltip="pick one">
+				<Label>which Valve to show in Status</Label>
+				<List>
+					<Option value="buttonPressed"	> buttonPressed	</Option>
+				</List>
+			</Field>
+
+			<Field id="sep-03" type="separator"/>
+
+		</ConfigUI>
+		<States>
+		</States>
+
+	</Device>
+
+
+	<Device type="sensor" id="HMIP-FAL-C6">
+		<Name>Homematic HMIP-FALMOT-C6-Actor</Name>
+		<ConfigUI>
+				<Field id="SupportsOnState" type="checkbox" defaultValue="false" hidden ="true"></Field>
+				<Field id="SupportsSensorValue" type="checkbox" defaultValue="true" hidden ="true"></Field>
+
+			<Field id="simpleSeparator1" type="separator"/>
+
+			<Field	  id="displayS"		  type="menu"  defaultValue="LEVEL-1"	 tooltip="pick one">
+				<Label>which Valve to show in Status</Label>
+				<List>
+					<Option value="LEVEL-1"	>1	</Option>
+					<Option value="LEVEL-2"	>2	</Option>
+					<Option value="LEVEL-3"	>3	</Option>
+					<Option value="LEVEL-4"	>4	</Option>
+					<Option value="LEVEL-5"	>5	</Option>
+					<Option value="LEVEL-6"	>6	</Option>
+				</List>
+			</Field>
+
+			<Field id="sep-03" type="separator"/>
+
+		</ConfigUI>
+		<States>
+		</States>
+
+	</Device>
+
+
+	<Device type="relay" id="HMIP-PSM">
+		<Name>Homematic HMIP-PSM PowerOutllet W Energy</Name>
+		<ConfigUI>
+				<Field id="SupportsOnState" type="checkbox" defaultValue="true" hidden ="true"></Field>
+				<Field id="SupportsSensorValue" type="checkbox" defaultValue="false" hidden ="true"></Field>
+
+			<Field id="simpleSeparator1" type="separator"/>
+
+			<Field	  id="displayS"		  type="menu"  defaultValue="STATE"	 tooltip="pick one">
+				<Label>which Valve to show in Status</Label>
+				<List>
+					<Option value="STATUS"	>STATUS	</Option>
+				</List>
+			</Field>
+
+			<Field id="sep-03" type="separator"/>
+
+		</ConfigUI>
+		<States>
+		</States>
+
+	</Device>
+
+
+	<Device type="relay" id="HMIP-PS">
+		<Name>Homematic HMIP-PSM PowerOutllet</Name>
+		<ConfigUI>
+				<Field id="SupportsOnState" type="checkbox" defaultValue="true" hidden ="true"></Field>
+				<Field id="SupportsSensorValue" type="checkbox" defaultValue="false" hidden ="true"></Field>
+
+			<Field id="simpleSeparator1" type="separator"/>
+
+			<Field	  id="displayS"		  type="menu"  defaultValue="STATE"	 tooltip="pick one">
+				<Label>which Valve to show in Status</Label>
+				<List>
+					<Option value="STATUS"	>STATUS	</Option>
+				</List>
+			</Field>
+
+			<Field id="sep-03" type="separator"/>
+
+		</ConfigUI>
+		<States>
+		</States>
+
+	</Device>
+
+
+	<Device type="sensor" id="HMIP-ROOM">
+		<Name>Homematic Room</Name>
+		<ConfigUI>
+				<Field id="SupportsOnState" type="checkbox" defaultValue="false" hidden ="true"></Field>
+				<Field id="SupportsSensorValue" type="checkbox" defaultValue="true" hidden ="true"></Field>
+
+			<Field id="simpleSeparator1" type="separator"/>
+			<Field	  id="displayS"		  type="menu"  defaultValue="NumberOfDevices"	 tooltip="pick one">
+				<Label>which info to be used for status updates</Label>
+				<List>
+					<Option value="NumberOfDevices"	>NumberOfDevices</Option>
+					</List>
+			</Field>
+
+
+		</ConfigUI>
+		<States>
+		</States>
+
+	</Device>
+
+
+	<Device type="sensor" id="HMIP-SYSVAR">
+		<Name>Homematic SYSvar</Name>
+		<ConfigUI>
+				<Field id="SupportsOnState" type="checkbox" defaultValue="false" hidden ="true"></Field>
+				<Field id="SupportsSensorValue" type="checkbox" defaultValue="true" hidden ="true"></Field>
+
+		</ConfigUI>
+		<States>
+		</States>
+
+	</Device>
+
+
+	<Device type="sensor" id="HomematicHost">
+		<Name>Homematic Host</Name>
+		<ConfigUI>
+				<Field id="SupportsOnState" type="checkbox" defaultValue="true" hidden ="true"></Field>
+				<Field id="SupportsSensorValue" type="checkbox" defaultValue="false" hidden ="true"></Field>
+				<Field id="SupportsStatusRequest" type="checkbox" defaultValue="false" hidden ="true"></Field>
+				<Field id="AllowOnStateChange" type="checkbox" defaultValue="false" hidden ="true"></Field>
+				<Field id="AllowSensorValueChange" type="checkbox" defaultValue="false" hidden="True"></Field>
+
+			<Field id="simpleSeparator1" type="separator"/>
+
+
+			<Field	  id="ipNumber"		  type="textfield"  >
+				<Label>overwrite ip Number if wanted</Label>
+			</Field>
+
+			<Field	  id="portNumber"		  type="textfield"  >
+				<Label>overwrite port Number if wanted</Label>
+			</Field>
+
+		</ConfigUI>
+
+
+		<States>
+				<State id="created">
+					<ValueType>String</ValueType>
+					<TriggerLabel>created</TriggerLabel>
+					<ControlPageLabel>created</ControlPageLabel>
+				</State>
+				<State id="lastSucessfullRead">
+					<ValueType>String</ValueType>
+					<TriggerLabel>lastSucessfullRead</TriggerLabel>
+					<ControlPageLabel>lastSucessfullRead</ControlPageLabel>
+				</State>
+				<State id="numberOfDevices">
+					<ValueType>integer</ValueType>
+					<TriggerLabel>numberOfDevices</TriggerLabel>
+					<ControlPageLabel>numberOfDevices</ControlPageLabel>
+				</State>
+				<State id="numberOfRooms">
+					<ValueType>integer</ValueType>
+					<TriggerLabel>numberOfRooms</TriggerLabel>
+					<ControlPageLabel>numberOfRooms</ControlPageLabel>
+				</State>
+				<State id="numberOfVariables">
+					<ValueType>integer</ValueType>
+					<TriggerLabel>numberOfVariables</TriggerLabel>
+					<ControlPageLabel>numberOfVariables</ControlPageLabel>
+				</State>
+
+
+		</States>
+
+	</Device>
+
+</Devices>
+
+
