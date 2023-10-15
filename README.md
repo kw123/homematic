@@ -18,7 +18,7 @@ prerequisities / steps
 supported devices
 
 device type			description
--	HMIP-WRC:			  2 button remote
+-	HMIP-WRC ==			  2 button remote
 -	HMIP-RC8:			  2 button remote
 -	HMIP-STHO:			  internal / external Temp / humidity sensor
 -	HMIP-FALMOT-C12:			12 channel underfloor heating 
