@@ -18,7 +18,6 @@
 ###supported devices
 
 ####device type			description
-```
 -	HMIP-WRC:			  2 button remote
 -	HMIP-RC8:			  2 button remote
 -	HMIP-STHO:			  internal / external Temp / humidity sensor
@@ -32,6 +31,5 @@
 -	HMIP-ETRV:		  	radiator attached thermostat
 -	HMIP-PS:			  	powerplug switch
 -	HMIP-PSM:		  	powerplug switch w energy measurement
-```
 
 
