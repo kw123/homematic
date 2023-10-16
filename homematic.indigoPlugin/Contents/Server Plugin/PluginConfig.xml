@@ -71,37 +71,6 @@
 		<Label> Folder name for VARIABLES:</Label>  
 	</Field>
 
-	<Field id="getValuesEvery"    	type="menu"  visibleBindingId="generalON" visibleBindingValue="true"   > 
-		<Label>Get all VALUES from homematic every [secs] (&lt;0.2 secs elapsed time):</Label>   
-		<List>
-			<Option value="0.5">0.5</Option>
-			<Option value="1"  >1</Option>
-			<Option value="1.5"  >1.5</Option>
-			<Option value="2"  >2.5</Option>
-			<Option value="2.5"  >2</Option>
-			<Option value="3"  >3 default</Option>
-			<Option value="5"  >5</Option>
-			<Option value="10" >10</Option>
-			<Option value="15" >15</Option>
-			<Option value="20" >20</Option>
-		</List>
-	</Field>
-
-
-	<Field id="getCompleteUpdateEvery"    	type="menu"  visibleBindingId="generalON" visibleBindingValue="true"   > 
-		<Label>Get COMPLETE info from homematic every [secs] (&gt;2 sec elapsed time ):</Label>   
-		<List>
-			<Option value="3"  >3</Option>
-			<Option value="5"  >5</Option>
-			<Option value="10" >10</Option>
-			<Option value="15" >15</Option>
-			<Option value="20" >20 </Option>
-			<Option value="30" >30</Option>
-			<Option value="60" >60 default</Option>
-			<Option value="90" >90</Option>
-			<Option value="180" >180</Option>
-		</List>
-	</Field>
 
 	<Field id="sep-Names" 			type="separator"/>
 
@@ -121,6 +90,7 @@
 	<Field id="debugActions"       type="checkbox" visibleBindingId="debugOn" visibleBindingValue="true" > <Label>... (5) actions:</Label>										</Field>
 	<Field id="debugConnect"       type="checkbox" visibleBindingId="debugOn" visibleBindingValue="true" > <Label>... (6) onnect to RPI:</Label>								</Field>
 	<Field id="debugUpdateStates"  type="checkbox" visibleBindingId="debugOn" visibleBindingValue="true" > <Label>... (7) update states  in plugin.log :</Label>				</Field>
+	<Field id="debugTime" 		   type="checkbox" visibleBindingId="debugOn" visibleBindingValue="true" > <Label>... (18) timing information in plugin.log :</Label>			</Field>
 	<Field id="debugSpecial"       type="checkbox" visibleBindingId="debugOn" visibleBindingValue="true" > <Label>... (19) Special debug for development:</Label>				</Field>
 	<Field id="debugAll"           type="checkbox" visibleBindingId="debugOn" visibleBindingValue="true" > <Label>... (20) all of the above = everything:</Label>				</Field>
 	<Field id="sep-debugOn" type="separator"  />
@@ -144,8 +114,31 @@
 		</List>
 	</Field>
 
+	<Field id="getValuesEvery"    	type="menu"  visibleBindingId="expertOn" visibleBindingValue="true"   > 
+		<Label>Get all VALUES from homematic every [secs]:</Label>   
+		<List>
+			<Option value="0.5"  >0.5</Option>
+			<Option value="1"  >1</Option>
+			<Option value="1.5"  >1.5</Option>
+			<Option value="2"  >2.5</Option>
+			<Option value="2.5"  >2</Option>
+			<Option value="3"  >3 default</Option>
+			<Option value="5"  >5</Option>
+			<Option value="10" >10</Option>
+		</List>
+	</Field>
 
-	<Field id="sep-expertOn" type="separator"  />
+	<Field id="getCompleteUpdateEvery"    	type="menu"  visibleBindingId="expertOn" visibleBindingValue="true"   > 
+		<Label>Get COMPLETE info from homematic every [secs] (&gt;2 sec elapsed time ):</Label>   
+		<List>
+			<Option value="15" >15</Option>
+			<Option value="20" >20 </Option>
+			<Option value="30" >30</Option>
+			<Option value="60" >60 default</Option>
+			<Option value="90" >90</Option>
+			<Option value="180" >180</Option>
+		</List>
+	</Field>
 
 
 </PluginConfig>

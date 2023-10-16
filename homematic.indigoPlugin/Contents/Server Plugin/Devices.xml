@@ -49,6 +49,31 @@
 	</Device>
 
 
+	<Device type="dimmer" id="HMIP-PDT">
+		<Name>Homematic eTRV- outlet dimmer</Name>
+		<ConfigUI>
+				<Field id="SupportsOnState" type="checkbox" defaultValue="false" hidden ="true"></Field>
+				<Field id="SupportsSensorValue" type="checkbox" defaultValue="true" hidden ="true"></Field>
+
+			<Field id="simpleSeparator1" type="separator"/>
+
+
+			<Field	  id="displayS"		  type="menu"  defaultValue="LEVEL"	 tooltip="pick one">
+				<Label>which info to be used for status updates</Label>
+				<List>
+					<Option value="LEVEL"	>temp indigo dev</Option>
+				</List>
+			</Field>
+
+			<Field id="sep-03" type="separator"/>
+
+		</ConfigUI>
+		<States>
+		</States>
+
+	</Device>
+
+
 	<Device type="thermostat" id="HMIP-WTH">
 		<Name>Homematic WTH-Wall Thermostat</Name>
 		<ConfigUI>
@@ -316,6 +341,27 @@
 				<Label>which info to be used for status updates</Label>
 				<List>
 					<Option value="NumberOfDevices"	>NumberOfDevices</Option>
+					</List>
+			</Field>
+
+
+		</ConfigUI>
+		<States>
+		</States>
+
+	</Device>
+
+	<Device type="sensor" id="HMIP-SMI">
+		<Name>Homematic Room</Name>
+		<ConfigUI>
+				<Field id="SupportsOnState" type="checkbox" defaultValue="false" hidden ="true"></Field>
+				<Field id="SupportsSensorValue" type="checkbox" defaultValue="false" hidden ="true"></Field>
+
+			<Field id="simpleSeparator1" type="separator"/>
+			<Field	  id="displayS"		  type="menu"  defaultValue="MOTION"	 tooltip="pick one">
+				<Label>which info to be used for status updates</Label>
+				<List>
+					<Option value="MOTION"	>MOTION</Option>
 					</List>
 			</Field>
 

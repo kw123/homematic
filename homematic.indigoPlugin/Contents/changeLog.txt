@@ -1,4 +1,9 @@
+changes in V2022.0.1 2023-10-16
+==================  
+reduced cpu usge by 90%
+added hMIP-SMI motion sensor 
 
-changes in V2022.0.1 2023-10-05
+
+changes in V2022.0.1 2023-10-15
 ==================  
 first version

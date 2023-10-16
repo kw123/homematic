@@ -35,7 +35,7 @@ requests.packages.urllib3.disable_warnings(requests.packages.urllib3.exceptions.
 
 
 # left to be done:
-# relay action for switches etc
+#  for motion detection set action to reset afte 10secs 
 # 
 #  what to do with no update states ..
 #
@@ -83,7 +83,7 @@ kDefaultPluginPrefs = {
 	"showLoginTest":							True
 }
 
-_debugAreas = ["Logic","Connect","GetData","Digest","Actions","UpdateStates","Special","All"]
+_debugAreas = ["Logic","Connect","GetData","Digest","Actions","UpdateStates","Time","Special","All"]
 for xx in _debugAreas:
 	kDefaultPluginPrefs["debug"+xx] = False
 
@@ -123,8 +123,11 @@ _supportedDeviceTypesFromHomematicToIndigo = {
 	"HMIP-WTH": 		"HMIP-WTH",			
 	"HMIP-SWDM": 		"HMIP-SWDM",			
 	"HMIP-ETRV":		"HMIP-ETRV",			
-	"HMIP-PS":		 	"HMIP-PS",			
+	"HMIP-PS-2":		"HMIP-PS",			
+	"HMIP-PS-1":		"HMIP-PS",			
 	"HMIP-PSM": 		"HMIP-PSM",
+	"HMIP-PDT": 		"HMIP-PDT",
+	"HMIP-SMI":			"HMIP-SMI",			
 	"HMIP-RC8":			"HMIP-RC8",			
 	"HMIP-RCV-50": 		"HMIP-RCV-50"	,		
 	"HMIP-SYSVAR": 		"HMIP-SYSVAR"			
@@ -140,8 +143,10 @@ _supportedDeviceTypesFromIndigotoHomematic = {
 	"HMIP-SWDM":		["HMIP-SWDM-1", "HMIP-SWDM-2", "HMIP-SWDM"],
 	"HMIP-ETRV":	 	["HMIP-ETRV-2","HMIP-ETRV-1"],			
 	"HMIP-PSM":	 		["HMIP-PSM-2","HMIP-PSM-1"],			
-	"HMIP-PS":	 		["HMIP-PS-2","HMIP-PS-1"],			
+	"HMIP-PS":	 		["HMIP-PS-2","HMIP-PS-1"],	
+	"HMIP-PDT":			["HMIP-PDT"],		
 	"HMIP-RC8":	 		["HMIP-RC8"],			
+	"HMIP-SMI":	 		["HMIP-SMI"],			
 	"HMIP-RCV-50":		["HMIP-RCV-50"] ,					
 	"HMIP-SYSVAR":		["HMIP-SYSVAR"] 					
 }
@@ -151,6 +156,7 @@ _isBatteryDevice = [
 	"HMIP-STHO",			
 	"HMIP-WTH",
 	"HMIP-SWDM",
+	"HMIP-SMI",
 	"HMIP-RC8",
 	"HMIP-ETRV"
 ]
@@ -161,7 +167,9 @@ _isVoltageDevice = [
 	"HMIP-WTH",
 	"HMIP-SWDM",
 	"HMIP-ETRV",			
-	"HMIP-RC8",			
+	"HMIP-RC8",		
+	"HMIP-SMI",	
+	"HMIP-PDT",
 	"HMIP-FAL-C12",		
 	"HMIP-FAL-C10",		
 	"HMIP-FAL-C6",		
@@ -179,6 +187,14 @@ _isNotRealDevice =[
 
 
 _statesToCopyFromHomematic = {
+		"HMIP-SMI":{
+				"CURRENT_ILLUMINATION":"integer",
+				"CURRENT_ILLUMINATION_STATUS":"integer",
+				"ILLUMINATION":"real",
+				"ILLUMINATION_STATUS":"integer",
+				"MOTION": "booltruefalse",
+				"MOTION_DETECTION_ACTIVE": "booltruefalse"
+			},
 		"HMIP-PS":{
 				"ACTUAL_TEMPERATURE":"real",
 				"ACTUAL_TEMPERATURE_STATUS":"integer",
@@ -190,14 +206,14 @@ _statesToCopyFromHomematic = {
 #				"PRESS_LONG_RELEASE": "booltruefalse",
 #				"PRESS_LONG_START": "booltruefalse",
 #				"PRESS_SHORT": "booltruefalsev",
-				"PROCESS": "integer",
-				"SECTION": " integer",
-				"SECTION_STATUS": "string",
-				"STATE": "booltruefalse",
-				"COMBINED_PARAMETER": "string",
-				"WEEK_PROGRAM_CHANNEL_LOCKS": "integer",
-				"WEEK_PROGRAM_TARGET_CHANNEL_LOCK": "integer",
-				"WEEK_PROGRAM_TARGET_CHANNEL_LOCKS": "integer"
+#				"PROCESS": "integer",
+#				"SECTION": " integer",
+#				"SECTION_STATUS": "string",
+#				"COMBINED_PARAMETER": "string",
+#				"WEEK_PROGRAM_CHANNEL_LOCKS": "integer",
+#				"WEEK_PROGRAM_TARGET_CHANNEL_LOCK": "integer",
+#				"WEEK_PROGRAM_TARGET_CHANNEL_LOCKS": "integer",
+				"STATE": "booltruefalse"
 			},
 		"HMIP-PSM":{
 				"ACTUAL_TEMPERATURE":"real",
@@ -210,9 +226,13 @@ _statesToCopyFromHomematic = {
 #				"PRESS_LONG_RELEASE": "booltruefalse",
 #				"PRESS_LONG_START": "booltruefalse",
 #				"PRESS_SHORT": "booltruefalsev",
-				"PROCESS": "integer",
-				"SECTION": " integer",
-				"SECTION_STATUS": "string",
+#				"PROCESS": "integer",
+#				"SECTION": " integer",
+#				"SECTION_STATUS": "string",
+#				"COMBINED_PARAMETER": "string",
+#				"WEEK_PROGRAM_CHANNEL_LOCKS": "integer",
+#				"WEEK_PROGRAM_TARGET_CHANNEL_LOCK": "integer",
+#				"WEEK_PROGRAM_TARGET_CHANNEL_LOCKS": "integer",
 				"STATE": "booltruefalse",
 				"CURRENT": "integer",
 				"CURRENT_STATUS": "integer",
@@ -224,11 +244,29 @@ _statesToCopyFromHomematic = {
 				"POWER_STATUS": " integer",
 				"VOLTAGE": "real",
 				"VOLTAGE_STATUS": "integer",
-				"COMBINED_PARAMETER": "string",
-				"WEEK_PROGRAM_CHANNEL_LOCKS": "integer",
-				"WEEK_PROGRAM_TARGET_CHANNEL_LOCK": "integer",
-				"WEEK_PROGRAM_TARGET_CHANNEL_LOCKS": "integer"
 			},
+		"HMIP-PDT":{
+				"ACTUAL_TEMPERATURE":"real",
+				"ACTUAL_TEMPERATURE_STATUS":"integer",
+				"ERROR_CODE": " integer",
+				"ERROR_OVERHEAT": "booltruefalse",
+				"ERROR_OVERLOAD": "booltruefalse",
+				"ERROR_POWER_FAILURE": "booltruefalse",
+#				"PRESS_LONG": " booltruefalsev",
+#				"PRESS_LONG_RELEASE": "booltruefalse",
+#				"PRESS_LONG_START": "booltruefalse",
+#				"PRESS_SHORT": "booltruefalsev",
+#				"PROCESS": "integer",
+#				"SECTION": " integer",
+#				"SECTION_STATUS": "string",
+#				"COMBINED_PARAMETER": "string",
+#				"WEEK_PROGRAM_CHANNEL_LOCKS": "integer",
+#				"WEEK_PROGRAM_TARGET_CHANNEL_LOCK": "integer",
+#				"WEEK_PROGRAM_TARGET_CHANNEL_LOCKS": "integer",
+				"LEVEL": "integer",
+				"LEVEL_Status": "integer"
+			},
+
 		"HMIP-WTH":{
 				"ACTUAL_TEMPERATURE":"real",
 				"ACTUAL_TEMPERATURE_STATUS":"integer",
@@ -329,6 +367,19 @@ _statesToCopyFromHomematic = {
 _temperatureReal = ["temperatureInput1", "setpointHeat","ACTUAL_TEMPERATURE", "PARTY_SET_POINT_TEMPERATURE", "CONTROL_DIFFERENTIAL_TEMPERATURE", "SET_POINT_TEMPERATURE"]
 
 _humdidityReal  = ["HUMIDITY"]
+
+
+_usedWichStateForRead = {
+		"HMIP-PDT":{
+				"LEVEL":"2",
+		},
+		"HMIP-PS":{
+				"LEVEL":"2",
+		},
+		"HMIP-PSM":{
+				"LEVEL":"2"
+		}
+}
 
 
 
@@ -489,8 +540,18 @@ _defaultProps = {
 			"SupportsSensorValue":False,
 			"SupportsOnState": True
 		},
+		"HMIP-SMI":{
+			"displayS":"MOTION",
+			"SupportsSensorValue":False,
+			"SupportsOnState": True
+		},
 		"HMIP-STHO":{
 			"displayS":"ACTUAL_TEMPERATURE",
+			"SupportsSensorValue":True,
+			"SupportsOnState": False
+		},
+		"HMIP-PDT":{
+			"displayS":"brightnessLevel",
 			"SupportsSensorValue":True,
 			"SupportsOnState": False
 		},
@@ -563,8 +624,8 @@ _actionParams = {
 				"BOOST_MODE":"BOOST_MODE"
 			},
 			"channels":{
-				"SET_POINT_TEMPERATUREe":"1",
-				"BOOST_MODE":"1"
+				"SET_POINT_TEMPERATUREe":["1"],
+				"BOOST_MODE":["1"]
 			}
 		},
 		"HMIP-WRC":{
@@ -576,7 +637,7 @@ _actionParams = {
 				"OnOff":"OnOff",
 			},
 			"channels":{
-				"OnOff":"1"
+				"OnOff":["1"]
 			}
 		},
 		"HMIP-FAL-C12":{
@@ -584,7 +645,7 @@ _actionParams = {
 				"OnOff":"OnOff",
 			},
 			"channels":{
-				"OnOff":"1"
+				"OnOff":["1"]
 			}
 		},
 		"HMIP-FAL-C10":{
@@ -592,7 +653,7 @@ _actionParams = {
 				"OnOff":"OnOff",
 			},
 			"channels":{
-				"OnOff":"1"
+				"OnOff":["1"]
 			}
 		},
 		"HMIP-FAL-C6":{
@@ -600,7 +661,7 @@ _actionParams = {
 				"OnOff":"OnOff",
 			},
 			"channels":{
-				"OnOff":"1"
+				"OnOff":["1"]
 			}
 		},
 		"HMIP-RCV-50":{
@@ -612,9 +673,9 @@ _actionParams = {
 				"Dimm":"LEVEL"
 			},
 			"channels":{
-				"SET_POINT_TEMPERATURE":"1",
-				"BOOST_MODE":"1",
-				"Dimm":"1"
+				"SET_POINT_TEMPERATURE":["1"],
+				"BOOST_MODE":["1"],
+				"Dimm":["1"]
 			}
 		},
 		"HMIP-ETRV-child":{
@@ -622,7 +683,18 @@ _actionParams = {
 				"Dimm":"LEVEL"
 			},
 			"channels":{
-				"Dimm":"1"
+				"Dimm":["1"]
+			},
+			"mult":{
+				"Dimm":0.01
+			}
+		},
+		"HMIP-PDT":{
+			"states":{
+				"Dimm":"LEVEL"
+			},
+			"channels":{
+				"Dimm":["3","4","5"]
 			},
 			"mult":{
 				"Dimm":0.01
@@ -633,7 +705,7 @@ _actionParams = {
 				"OnOff":"STATE",
 			},
 			"channels":{
-				"OnOff":"3"
+				"OnOff":["3","4","5"]
 			}
 		},
 		"HMIP-PS":{
@@ -641,13 +713,18 @@ _actionParams = {
 				"OnOff":"STATE",
 			},
 			"channels":{
-				"OnOff":"3"
+				"OnOff":["3","4","5"]
 			}
 		},
 		"HMIP-ROOM":{
 		}
 }
 
+_allCopyStates = [
+	"ACTUAL_TEMPERATURE",
+	"SET_POINT_TEMPERATURE",
+	"LEVEL"
+]
 
 _copyStates = {
 		"HMIP-WTH":{
@@ -673,6 +750,9 @@ _copyStates = {
 			"SET_POINT_TEMPERATURE":"setpointHeat"
 		},
 		"HMIP-ETRV-child":{
+			"LEVEL":"brightnessLevel"
+		},
+		"HMIP-PDT":{
 			"LEVEL":"brightnessLevel"
 		},
 		"HMIP-ROOM":{
@@ -854,7 +934,11 @@ class Plugin(indigo.PluginBase):
 	####----------------- @ startup set global parameters, create directories etc ---------
 	def initSelfVariables(self):
 		try:
+			self.addressToDevType								= {} # save execution time, only check those tha have chnaged w/o reading the states
+			self.lastDevStates									= {} # save execution time, only check those tha have chnaged w/o reading the states
 			self.hostDevId										= 0
+			self.homematicIdtoIndigoId							= {}
+			self.homematicIdtoTitle								= {}
 			self.numberOfRooms									= -1
 			self.numberOfDevices								= -1
 			self.numberOfVariables								= -1
@@ -865,8 +949,6 @@ class Plugin(indigo.PluginBase):
 			self.devNeedsUpdate									= {}
 			self.pendingCommand									= {}
 			self.varExcludeSQLList								= []
-			self.homematicIdtoIndigoId							= {}
-			self.homematicIdtoTitle								= {}
 			self.lastRecuestRenewal								= 0
 			self.failedLoginCount								= 0
 			self.failedLoginCountMax							= 5
@@ -973,11 +1055,18 @@ class Plugin(indigo.PluginBase):
 
 
 ####-------------------------------------------------------------------------####
-	def writeJson(self, data, fName="", sort = True, doFormat=False ):
+	def writeJson(self, data, fName="", sort = True, doFormat=True, singleLines= False ):
 		try:
 
-			if format:
-				out = json.dumps(data, sort_keys=sort, indent=2)
+			if self.decideMyLog("Logic"): self.indiLOG.log(10,"writeJson: fname:{}, sort:{}, doFormat:{}, singleLines:{}, data:{} ".format(fName, sort, doFormat, singleLines, str(data)[0:100]) )
+	
+			if doFormat:
+				if singleLines:
+					out = ""
+					for xx in data:
+						out += "\n{}:{}".format(xx, data[xx])
+				else:
+					out = json.dumps(data, sort_keys=sort, indent=2)
 			else:
 				out = json.dumps(data, sort_keys=sort)
 
@@ -1218,15 +1307,14 @@ class Plugin(indigo.PluginBase):
 
 			if "states" not in acp: return
 			state =		acp["states"].get("SET_POINT_TEMPERATURE","SET_POINT_TEMPERATURE")
-			channel = 	acp["channels"].get("SET_POINT_TEMPERATURE","1")
+			for ch  in	acp["channels"].get("SET_POINT_TEMPERATURE","1"):
 
-			html = "http://{}:{}/device/{}/{}/{}/~pv".format(self.ipNumber , self.portNumber, address,channel, state )
+				html = "http://{}:{}/device/{}/{}/{}/~pv".format(self.ipNumber , self.portNumber, address,ch, state )
 
+				if self.decideMyLog("Actions"): self.indiLOG.log(20,"actionControlDimmerRelay html:{}, dd:{}".format(html, dj))
+				r = thisRequestSession.put(html, data=dj, timeout=self.requestTimeout, headers={'Connection':'close',"Content-Type": "application/json"})
 
-			if self.decideMyLog("Actions"): self.indiLOG.log(20,"actionControlDimmerRelay html:{}, dd:{}".format(html, dj))
-			r = thisRequestSession.put(html, data=dj, timeout=self.requestTimeout, headers={'Connection':'close',"Content-Type": "application/json"})
-
-			if self.decideMyLog("Actions"): self.indiLOG.log(20,"actionControlDimmerRelay ret:{}".format(r))
+				if self.decideMyLog("Actions"): self.indiLOG.log(20,"actionControlDimmerRelay ret:{}".format(r))
 
 		except Exception as e:
 			if "{}".format(e).find("None") == -1: self.indiLOG.log(40,"", exc_info=True)
@@ -1247,30 +1335,38 @@ class Plugin(indigo.PluginBase):
 
 			thisRequestSession	 = requests.Session()
 			address = dev.states["address"].split("-")[0]
+			channel = []
 
 			if dev.deviceTypeId not in _actionParams: return
 			acp = _actionParams[dev.deviceTypeId]
+
+			if self.decideMyLog("Actions"): self.indiLOG.log(20,"actionControlDimmerRelay acp:{}".format(acp))
+
 			if "states" not in acp: return
 
 			if action.deviceAction == indigo.kDeviceAction.TurnOn:
 				if "mult" in acp:
 					dj = json.dumps({"v":100* acp["mult"]["Dimm"]})
 					state =		acp["states"].get("Dimm","")
-					channel = 	acp["channels"].get("Dimm","1")
+					for ch in acp["channels"].get("Dimm","1"):
+						channel.append(ch)	
 				else:
 					dj = json.dumps({"v":True })
 					state =		acp["states"].get("OnOff","")
-					channel = 	acp["channels"].get("OnOff","3")
+					for ch in acp["channels"].get("OnOff","1"):
+						channel.append(ch)	
 
 			elif action.deviceAction == indigo.kDeviceAction.TurnOff:
 				if "mult" in acp:
 					dj = json.dumps({"v":0.})
 					state =		acp["states"].get("Dimm","")
-					channel = 	acp["channels"].get("Dimm","3")
+					for ch in acp["channels"].get("Dimm","1"):
+						channel.append(ch)	
 				else:
 					dj = json.dumps({"v":False })
 					state =		acp["states"].get("OnOff","")
-					channel = 	acp["channels"].get("OnOff","1")
+					for ch in acp["channels"].get("Dimm","1"):
+						channel.append(ch)	
 
 			elif action.deviceAction == indigo.kDeviceAction.SetBrightness:
 				if "mult" in acp:
@@ -1279,16 +1375,15 @@ class Plugin(indigo.PluginBase):
 					dj = json.dumps({"v":action.actionValue})
 
 				state =		acp["states"].get("Dimm","")
-				channel = 	acp["channels"].get("Dimm","1")
+				for ch in acp["channels"].get("Dimm","1"):
+						channel.append(ch)	
 
-			html = "http://{}:{}/device/{}/{}/{}/~pv".format(self.ipNumber , self.portNumber, address,channel, state )
+			for ch in channel:	
+				html = "http://{}:{}/device/{}/{}/{}/~pv".format(self.ipNumber , self.portNumber, address,ch, state )
 
-
-			if self.decideMyLog("Actions"): self.indiLOG.log(20,"actionControlDimmerRelay html:{}, dj:{}<<".format(html, dj))
-			r = thisRequestSession.put(html, data=dj, timeout=self.requestTimeout, headers={'Connection':'close',"Content-Type": "application/json"})
-
-			if self.decideMyLog("Actions"): self.indiLOG.log(20,"actionControlDimmerRelay ret:{}".format(r))
-
+				if self.decideMyLog("Actions"): self.indiLOG.log(20,"actionControlDimmerRelay html:{}, dj:{}<<".format(html, dj))
+				r = thisRequestSession.put(html, data=dj, timeout=self.requestTimeout, headers={'Connection':'close',"Content-Type": "application/json"})
+				if self.decideMyLog("Actions"): self.indiLOG.log(20,"actionControlDimmerRelay ret:{}".format(r))
 
 
 		except Exception as e:
@@ -1310,7 +1405,7 @@ class Plugin(indigo.PluginBase):
 		if "address" in dev.states:
 			address = dev.states["address"]
 			self.homematicIdtoIndigoId[address]	= dev.id
-
+			self.addressToDevType[address] = dev.deviceTypeId
 
 		if	self.pluginState == "init":
 			dev.stateListOrDisplayStateIdChanged()
@@ -1587,7 +1682,7 @@ class Plugin(indigo.PluginBase):
 
 
 	####-----------------	 ---------
-	def doGetDevStateType(self,  deviceTypeId, statesToCreate):
+	def doGetDevStateType(self,  deviceTypeId, statesToCreate,devId):
 	
 		for state in statesToCreate:
 			stateType = statesToCreate[state]
@@ -1614,25 +1709,26 @@ class Plugin(indigo.PluginBase):
 
 	####-----------------	 ---------
 	def getDeviceStateList(self, dev):
-		try:
 
+		try:
+	
 			self.newStateList  = super(Plugin, self).getDeviceStateList(dev)
 
 			deviceTypeId = dev.deviceTypeId
 			if deviceTypeId != "HomematicHost":
 
 				if  deviceTypeId not in _isNotRealDevice:
-						self.doGetDevStateType(deviceTypeId, _statesToCreateisRealDevice)
+						self.doGetDevStateType(deviceTypeId, _statesToCreateisRealDevice, dev.id)
 
 				if  deviceTypeId in _isBatteryDevice:
-						self.doGetDevStateType(deviceTypeId, _statesToCreateisBatteryDevice)
+						self.doGetDevStateType(deviceTypeId, _statesToCreateisBatteryDevice, dev.id)
 
 				if  deviceTypeId in _isVoltageDevice:
-						self.doGetDevStateType(deviceTypeId, _statesToCreateisVoltageDevice)
+						self.doGetDevStateType(deviceTypeId, _statesToCreateisVoltageDevice, dev.id)
 
 				if True:
-					self.doGetDevStateType(deviceTypeId, _statesToCreateCommon)
-					self.doGetDevStateType(deviceTypeId, _statesToCopyFromHomematic[deviceTypeId])
+					self.doGetDevStateType(deviceTypeId, _statesToCreateCommon, dev.id)
+					self.doGetDevStateType(deviceTypeId, _statesToCopyFromHomematic[deviceTypeId], dev.id)
 
 			#self.indiLOG.log(20,"dev:{}, self.newStateList:{}".format(dev.name, self.newStateList))
 		except	Exception as e:
@@ -1925,10 +2021,19 @@ class Plugin(indigo.PluginBase):
 
 			#self.indiLOG.log(10,"all Values:{}".format(json.dumps(allValues, sort_keys=True, indent=2)))
 		indigoIdforChild = 0
+		## this for saving execution time. there are several states for each device, we dont need to reload the device multile times
 		devChild = ""
 		devTypeChild = ""
+		devCurrent = ""
+		devIdCurrent = -1
+		devButtonCurrent = ""
+		devButtonIdCurrent = -1
+		tStart = time.time()
+		dtimes = []
+		
 		for link in allValues:
 			try:
+				lStart = time.time()
 				ll = link.split()
 				address, channelNumber, state, homematicType = "","","value", ""
 				if time.time() - self.lastSucessfullHostContact  > 10:
@@ -1952,33 +2057,66 @@ class Plugin(indigo.PluginBase):
 
 				if address in self.homematicIdtoIndigoId:
 
+
 					v = allValues[link].get("v","")
 					ts = allValues[link].get("ts",0)/1000.
 					s = allValues[link].get("s","")
 					try:	dt = datetime.datetime.fromtimestamp(ts).strftime(_defaultDateStampFormat)
 					except: dt = ""
-					try:
-						dev = indigo.devices[self.homematicIdtoIndigoId[address]]
-					except: continue
-					#if homematicType == "sysvar": self.indiLOG.log(20,"getDeviceData, address:{} pass 2 ".format(address  ) )
 
-					props = dev.pluginProps
-					devTypeId = dev.deviceTypeId
+					
+					if True:  # test if same value as last time, if yes skip
+						devIdNew = self.homematicIdtoIndigoId[address]
+						if devIdNew < 1: continue
+
+						if devIdNew not in self.lastDevStates:
+							 self.lastDevStates[devIdNew] = {}
+						if state not in self.lastDevStates[devIdNew]:
+							self.lastDevStates[devIdNew][state] = v
+						else:
+							if self.lastDevStates[devIdNew][state] == v: 
+								continue
+							else:
+								self.lastDevStates[devIdNew][state] = v 
+
+					if True:  # check if right channel for state, eg LEVEL is in several channel sometimes  ie HIMP-PDT has LEVEL in 4 channels ch 2 is the right one 
+						newdevTypeId = self.addressToDevType.get(address,"xxx")
+						if 	newdevTypeId in _usedWichStateForRead:
+							if state in  _usedWichStateForRead[newdevTypeId]:
+								if _usedWichStateForRead[newdevTypeId][state] != channelNumber:
+									continue
+
+
+					if devIdCurrent == devIdNew:
+						dev = devCurrent
+					else:
+						try:
+							dev = indigo.devices[self.homematicIdtoIndigoId[address]]
+							if dev.id not in self.lastDevStates: 	self.lastDevStates[devId] = {}
+							devCurrent = dev
+							devIdCurrent = dev.id
+							props = dev.pluginProps
+							devTypeId = dev.deviceTypeId
+						except: continue
+
+
 
 					if devTypeId in _multiChannelStatesDict:
 						if state in _multiChannelStatesDict[devTypeId]["states"]:
 							if channelNumber in _multiChannelStatesDict[devTypeId]["channels"].split(","):
 								state = state+"-"+channelNumber
 
+
 					state2 = ""
 					if devTypeId in _copyStates:
 						state2 = _copyStates[devTypeId].get(state, state)
+
 
 					if state in dev.states:
 						vui = ""
 						if  homematicType ==  "device":
 
-							if self.decideMyLog("UpdateStates") :	 self.indiLOG.log(10," getDeviceData in 2 new  prop:{}, state2:{}, state:{} v:{} onst:{}, sens:{}".format( props.get("displayS","") , state2, state,  v , props["SupportsOnState"], props["SupportsSensorValue"]))
+							if self.decideMyLog("UpdateStates") :	 self.indiLOG.log(10," upDateDeviceData in 2 new  prop:{}, state2:{}, state:{} v:{} onst:{}, sens:{}".format( props.get("displayS","") , state2, state,  v , props["SupportsOnState"], props["SupportsSensorValue"]))
 
 							checkStateTotext = _stateValuesToText.get(state.split("-")[0], "")
 							if checkStateTotext != "":
@@ -2038,7 +2176,13 @@ class Plugin(indigo.PluginBase):
 									try:
 										devButtonId = self.homematicIdtoIndigoId.get(buttondevAddress,0)
 										if devButtonId > 0:
-											devButton = indigo.devices[devButtonId]
+											if devButtonId == devButtonIdCurrent:
+												devButton = devButtonCurrent
+											else:
+												devButton = indigo.devices[devButtonId]
+												devButtonCurrent = devButton
+												devButtonIdCurrent = devButtonId
+
 											#self.indiLOG.log(20,"getDeviceData, dev:{}, key:{}, value:{}, setting dev:{}, set button to on:{}".format(devButton.name, state, v, devButton.name, thebutton ) )
 											dt = datetime.datetime.now().strftime(_defaultDateStampFormat)
 											if (
@@ -2124,12 +2268,22 @@ class Plugin(indigo.PluginBase):
 
 							indigoIdforChild = indigoIdforChildnew
 						
+				if self.decideMyLog("Time"): dtimes.append(time.time() - lStart)
 
 				
 			except	Exception as e:
 				if "{}".format(e).find("None") == -1: self.indiLOG.log(40,"", exc_info=True)
 
+
+		if self.decideMyLog("Time"):  tMain = time.time() - tStart
+
 		self.executeUpdateStatesList()
+		if self.decideMyLog("Time"):  
+			tAve = 0
+			for x in dtimes:
+				tAve += x
+			tAve = tAve / max(1,len(dtimes))
+			self.indiLOG.log(20,"upDateDeviceData, elapsed times - tot:{:.2f}, tMain:{:.2f}   per state ave:{:.4f},  N-States:{:}  ".format(time.time() - tStart, tMain, tAve, len(dtimes)  ) )
 		return 
 
 
@@ -2248,6 +2402,9 @@ class Plugin(indigo.PluginBase):
 							self.addToStatesUpdateDict(dev.id, "address", address)
 
 						self.homematicIdtoIndigoId[address]	= dev.id
+						self.addressToDevType[address]= dev.deviceTypeId
+
+						self.addressToDevType[address]= dev.deviceTypeId
 						props = dev.pluginProps
 						uiValue = uiValue="{} devices".format(nDevices)
 						self.addToStatesUpdateDict(dev.id, "title", title)
@@ -2342,6 +2499,8 @@ class Plugin(indigo.PluginBase):
 							self.addToStatesUpdateDict(dev.id, "address", address)
 						if self.decideMyLog("Digest"): self.indiLOG.log(10,"createDevicesFromCompleteUpdate, :{};  address:{}, deviceTypeId:{}".format( dev.name, address, dev.deviceTypeId) )
 						self.homematicIdtoIndigoId[address]	= dev.id
+						self.addressToDevType[address]= dev.deviceTypeId
+
 
 						if address in self.roomMembers:
 							if self.roomMembers[address][0] !="":
@@ -2433,6 +2592,7 @@ class Plugin(indigo.PluginBase):
 								props			= newprops
 								)
 						self.homematicIdtoIndigoId[address]	= dev.id
+						self.addressToDevType[address]= dev.deviceTypeId
 						if len(dev.states["created"]) < 5:
 							self.addToStatesUpdateDict(dev.id, "created", datetime.datetime.now().strftime(_defaultDateStampFormat))
 						if len(dev.states["address"]) < 5:
@@ -2479,7 +2639,7 @@ class Plugin(indigo.PluginBase):
 				getValuesLast  = time.time()			
 				allValues = getHomematicClass.getDeviceValues(self.allDataFromHomematic)
 				if self.pluginPrefs.get("writeInfoToFile", False):
-					self.writeJson( allValues, fName=self.indigoPreferencesPluginDir + "allValues.json", sort = True, doFormat=False )
+					self.writeJson( allValues, fName=self.indigoPreferencesPluginDir + "allValues.json", sort = True, doFormat=True, singleLines=True )
 
 				self.upDateDeviceData(allValues)
 				
@@ -2661,6 +2821,7 @@ class LevelFormatter(logging.Formatter):
 		super(LevelFormatter, self).__init__(fmt=fmt, datefmt=datefmt)
 		return
 
+	####-----------------	 ---------
 	def format(self, record):
 		if record.levelno in self._level_formatters:
 			return self._level_formatters[record.levelno].format(record)
@@ -2676,16 +2837,15 @@ class LevelFormatter(logging.Formatter):
 ########################################
 
 class getHomematicData():
-	def __init__(self, ip, port, kTimeout=10, debug=False ):
-		self.debug = debug
+	def __init__(self, ip, port, kTimeout=10):
 		self.ip = ip
 		self.port = port
 		self.kTimeout = kTimeout
-		self.debug2 = True
 		self.requestSession	 = requests.Session()
 
 		return 
 
+	####-----------------	 ---------
 	def getInfo(self, area):
 		try:
 			if   area == "allDevice": 		return self.getAllDevice() 
@@ -2698,8 +2858,20 @@ class getHomematicData():
 			if "{}".format(e).find("None") == -1: indigo.activePlugin.indiLOG.log(40,"", exc_info=True)
 		return {area:"empty"}
 
+	####-----------------	 ---------
+	def doConnect(self, page, getorput="get", data=""):
+		try:
+			if indigo.activePlugin.decideMyLog("Connect"):  indigo.activePlugin.indiLOG.log(10,"doConnect: page:{},  {}".format(page,getorput))
+			if getorput =="get":
+				r = self.requestSession.get(page, timeout=self.kTimeout)
+			else:
+				r = self.requestSession.put(page, data=data, timeout=self.kTimeout, headers={'Connection':'close',"Content-Type": "application/json"})
+			return r
+		except:
+			indigo.activePlugin.indiLOG.log(30,"connect to hometic did not work for {}  page={}".format(getorput, page))
+		return ""
 
-
+	####-----------------	 ---------
 	def getDeviceValues(self, allData):
 		try:
 			tStart = time.time()
@@ -2712,7 +2884,10 @@ class getHomematicData():
 			#indigo.activePlugin.indiLOG.log(10,"getDeviceValues  the list:{} ...{}".format(str(theList)[0:40],str(theList)[-40:] ))
 			linkHtml = "http://{}:{}/{}".format(self.ip , self.port, "~exgdata")
 			dataJson = json.dumps({"readPaths":theList })
-			r = self.requestSession.put(linkHtml, data=dataJson, timeout=self.kTimeout, headers={'Connection':'close',"Content-Type": "application/json"})
+
+			r = self.doConnect(linkHtml, getorput="put", data=dataJson)
+			if r == "": return allValues
+
 			valesReturnedJson = r.content.decode('ISO-8859-1')
 			#indigo.activePlugin.indiLOG.log(10,"getDeviceValues  tvalesReturnedJson:{} ...{}".format(valesReturnedJson[0:100],valesReturnedJson[-100:] ))
 			valesReturnedDict = json.loads(valesReturnedJson)
@@ -2731,6 +2906,7 @@ class getHomematicData():
 			if "{}".format(e).find("None") == -1: indigo.activePlugin.indiLOG.log(40,"", exc_info=True)
 		return {"allValues":"empty"}
 
+	####-----------------	 ---------
 	def getAllDevice(self):
 		try:
 			if indigo.activePlugin.testPing(self.ip) != 0:
@@ -2743,7 +2919,10 @@ class getHomematicData():
 			baseHtml = "http://{}:{}/".format(self.ip , self.port)
 			devices0Html = baseHtml+pageQ+"/*"
 			if indigo.activePlugin.decideMyLog("GetData"): indigo.activePlugin.indiLOG.log(10,"getAllDevice Accessing URL: {}".format(devices0Html))
-			r = self.requestSession.get(devices0Html, timeout=self.kTimeout)
+
+			r = self.doConnect(devices0Html)
+			if r == "": return theDict
+
 			content = r.content.decode('ISO-8859-1')
 			devices = json.loads(content)
 			for dev in devices:
@@ -2752,7 +2931,10 @@ class getHomematicData():
 
 			devices1Html = baseHtml + pageQ+"/*/*"
 			if indigo.activePlugin.decideMyLog("GetData"): indigo.activePlugin.indiLOG.log(10,"getAllDevice Accessing URL: {}".format(devices1Html))
-			r = self.requestSession.get(devices1Html, timeout=self.kTimeout)
+	
+			r = self.doConnect(devices1Html)
+			if r == "": return theDict
+
 			content = r.content.decode('ISO-8859-1')
 			if indigo.activePlugin.decideMyLog("GetData"): indigo.activePlugin.indiLOG.log(10,"getAllDevice {}".format(content[0:100]))
 
@@ -2792,7 +2974,9 @@ class getHomematicData():
 					theDict["allValueLinks"] .append(link)
 					if indigo.activePlugin.decideMyLog("GetData"): indigo.activePlugin.indiLOG.log(10,"getAllDevice prop Accessing URL: {}".format(link))
 
-					r = self.requestSession.get(baseHtml+link, timeout=self.kTimeout)
+					r = self.doConnect(baseHtml+link)
+					if r == "": return theDict
+
 					propDict= json.loads(r.content)
 					if indigo.activePlugin.decideMyLog("GetData"): indigo.activePlugin.indiLOG.log(10,"getAllDevice   prop dict: {}".format(propDict))
 
@@ -2805,7 +2989,10 @@ class getHomematicData():
 			linkHtml = "http://{}:{}/{}".format(self.ip , self.port, "~exgdata")
 			dataJson = json.dumps({"readPaths":theDict["allValueLinks"] })
 			if indigo.activePlugin.decideMyLog("GetData"): indigo.activePlugin.indiLOG.log(10,"getAllDevice Accessing URL: {}, dataJ{}".format(linkHtml, dataJson))
-			r = self.requestSession.put(linkHtml, data=dataJson, timeout=self.kTimeout, headers={'Connection':'close',"Content-Type": "application/json"})
+
+			r = self.doConnect(linkHtml, getorput="put", data=dataJson)
+			if r == "": return theDict
+
 			valesReturnedJson = r.content.decode('ISO-8859-1')
 			valesReturnedDict = json.loads(valesReturnedJson)
 			
@@ -2823,6 +3010,7 @@ class getHomematicData():
 		return theDict
 
 
+	####-----------------	 ---------
 	def getAllRoom(self):
 		try:
 			if indigo.activePlugin.testPing(self.ip) != 0:
@@ -2833,7 +3021,10 @@ class getHomematicData():
 			baseHtml = "http://{}:{}/{}".format(self.ip , self.port,  page)
 
 			if indigo.activePlugin.decideMyLog("GetData"): indigo.activePlugin.indiLOG.log(10,"getAllRoom Accessing URL: {}".format(baseHtml))
-			r = self.requestSession.get(baseHtml, timeout=self.kTimeout)
+
+			r = self.doConnect(baseHtml)
+			if r == "": return {}
+
 			content = r.content.decode('ISO-8859-1')
 			if indigo.activePlugin.decideMyLog("GetData"): indigo.activePlugin.indiLOG.log(10,"getAllRoom all {}:{}".format(page, content))
 			objects = json.loads(content)
@@ -2852,7 +3043,10 @@ class getHomematicData():
 					roomDevicesHref = "{}/{}".format(baseHtml, address)
 					theDict["address"][address] = {"title":room["title"],"devices":[],"link":roomDevicesHref}
 					if indigo.activePlugin.decideMyLog("GetData"): indigo.activePlugin.indiLOG.log(10,"getAllRoom room Accessing URL: {},".format(roomDevicesHref))
-					r = self.requestSession.get(roomDevicesHref, timeout=self.kTimeout)
+
+					r = self.doConnect(roomDevicesHref)
+					if r == "": return {}
+
 					roomDevicesDict = json.loads(r.content)
 					if indigo.activePlugin.decideMyLog("GetData"): indigo.activePlugin.indiLOG.log(10,"getAllRoom dict: {}".format(roomDevicesDict))
 					if "~links" not in roomDevicesDict: continue
@@ -2868,6 +3062,7 @@ class getHomematicData():
 			if "{}".format(e).find("None") == -1: indigo.activePlugin.indiLOG.log(40,"", exc_info=True)
 		return theDict
 
+	####-----------------	 ---------
 	def getAllFunction(self):
 		try:
 			if indigo.activePlugin.testPing(self.ip) != 0:
@@ -2878,7 +3073,10 @@ class getHomematicData():
 			baseHtml = "http://{}:{}/{}".format(self.ip , self.port,  page)
 
 			if indigo.activePlugin.decideMyLog("GetData"): indigo.activePlugin.indiLOG.log(10,"getAllFunction Accessing URL: {}".format(baseHtml))
-			r = self.requestSession.get(baseHtml, timeout=self.kTimeout)
+
+			r = self.doConnect(baseHtml)
+			if r == "": return {}
+
 			content = r.content.decode('ISO-8859-1')
 			if indigo.activePlugin.decideMyLog("GetData"): indigo.activePlugin.indiLOG.log(10,"getAllFunction all {}:{}".format(page, content))
 			objects = json.loads(content)
@@ -2894,11 +3092,13 @@ class getHomematicData():
 					address = item["href"]
 					if address == "..": continue
 
-
 					roomDevicesHref = "{}/{}".format(baseHtml, address)
 					theDict["address"][address] = {"title":item["title"],"devices":[],"link":roomDevicesHref}
 					if indigo.activePlugin.decideMyLog("GetData"): indigo.activePlugin.indiLOG.log(10," getAllFunction  Accessing URL: {},".format(roomDevicesHref))
-					r = self.requestSession.get(roomDevicesHref, timeout=self.kTimeout)
+
+					r = self.doConnect(roomDevicesHref)
+					if r == "": return {}
+
 					roomDevicesDict = json.loads(r.content)
 					if indigo.activePlugin.decideMyLog("GetData"): indigo.activePlugin.indiLOG.log(10," getAllFunction dict: {}".format(roomDevicesDict))
 					if "~links" not in roomDevicesDict: continue
@@ -2916,6 +3116,7 @@ class getHomematicData():
 
 
 
+	####-----------------	 ---------
 	def getAllSysvar(self):
 		try:
 			if indigo.activePlugin.testPing(self.ip) != 0:
@@ -2926,7 +3127,9 @@ class getHomematicData():
 			baseHtml = "http://{}:{}/{}".format(self.ip , self.port,  page)
 
 			if indigo.activePlugin.decideMyLog("GetData"): indigo.activePlugin.indiLOG.log(10,"getAllSysvar Accessing URL: {}".format(baseHtml))
-			r = self.requestSession.get(baseHtml, timeout=self.kTimeout)
+			r = self.doConnect(baseHtml)
+			if r == "": return {}
+
 			content = r.content.decode('ISO-8859-1')
 			if indigo.activePlugin.decideMyLog("GetData"): indigo.activePlugin.indiLOG.log(10,"getAllSysvar all {}:{}".format(page, content))
 			objects = json.loads(content)
@@ -2949,7 +3152,10 @@ class getHomematicData():
 					theDict["allValueLinks"].append("/sysvar/"+itemsHref.split("/sysvar/")[1])
 					
 					if indigo.activePlugin.decideMyLog("GetData"): indigo.activePlugin.indiLOG.log(10,"getAllSysvar  {} Accessing URL: {},".format(page, itemsHref))
-					r = self.requestSession.get(itemsHref, timeout=self.kTimeout)
+
+					r = self.doConnect(itemsHref)
+					if r == "": return {}
+
 					itemsDict = json.loads(r.content)
 					if indigo.activePlugin.decideMyLog("GetData"): indigo.activePlugin.indiLOG.log(10,"getAllSysvar  {} dict: {}".format(page, itemsDict))
 					for xx in itemsDict:
@@ -2960,7 +3166,10 @@ class getHomematicData():
 
 					valueHref = "{}/{}/~pv".format(baseHtml, address)
 					if indigo.activePlugin.decideMyLog("GetData"): indigo.activePlugin.indiLOG.log(10,"getAllSysvar  {} Accessing URL: {},".format(page, valueHref))
-					r = self.requestSession.get(valueHref, timeout=self.kTimeout)
+
+					r = self.doConnect(valueHref)
+					if r == "": return {}
+
 					valueDict = json.loads(r.content)
 					if indigo.activePlugin.decideMyLog("GetData"): indigo.activePlugin.indiLOG.log(10,"getAllSysvar  {} dict: {}".format(page, valueDict))
 					theDict["address"][address]["value"] = valueDict
@@ -2971,6 +3180,7 @@ class getHomematicData():
 
 
 
+	####-----------------	 ---------
 	def getAllProgram(self):
 		try:
 			if indigo.activePlugin.testPing(self.ip) != 0:
@@ -2982,7 +3192,10 @@ class getHomematicData():
 			baseHtml = "http://{}:{}/{}".format(self.ip , self.port,  page)
 
 			if indigo.activePlugin.decideMyLog("GetData"): indigo.activePlugin.indiLOG.log(10,"getAllProgram Accessing URL: {}".format(baseHtml))
-			r = self.requestSession.get(baseHtml, timeout=self.kTimeout)
+
+			r = self.doConnect(baseHtml)
+			if r == "": return {}
+
 			content = r.content.decode('ISO-8859-1')
 			if indigo.activePlugin.decideMyLog("GetData"): indigo.activePlugin.indiLOG.log(10,"getAllProgram all {}:{}".format(page, content))
 			objects = json.loads(content)
@@ -3003,7 +3216,10 @@ class getHomematicData():
 
 					itemsHref = "{}/{}".format(baseHtml, address)
 					if indigo.activePlugin.decideMyLog("GetData"): indigo.activePlugin.indiLOG.log(10,"getAllProgram {} Accessing URL: {},".format(page, itemsHref))
-					r = self.requestSession.get(itemsHref, timeout=self.kTimeout)
+
+					r = self.doConnect(itemsHref)
+					if r == "": return {}
+
 					itemsDict = json.loads(r.content)
 					if indigo.activePlugin.decideMyLog("GetData"): indigo.activePlugin.indiLOG.log(10,"getAllProgram {} dict: {}".format(page, itemsDict))
 					for xx in itemsDict:
@@ -3014,7 +3230,10 @@ class getHomematicData():
 					if "~links" not in itemsDict: continue
 					valueHref = "{}/{}/~pv".format(baseHtml, address)
 					if indigo.activePlugin.decideMyLog("GetData"): indigo.activePlugin.indiLOG.log(10,"getAllProgram {} Accessing URL: {},".format(page, valueHref))
-					r = self.requestSession.get(valueHref, timeout=self.kTimeout)
+
+					r = self.doConnect(valueHref)
+					if r == "": return {}
+
 					valueDict = json.loads(r.content)
 					if indigo.activePlugin.decideMyLog("GetData"): indigo.activePlugin.indiLOG.log(10,"getAllProgram {} dict: {}".format(page, valueDict))
 					theDict["address"][address]["value"] = valueDict
@@ -3027,6 +3246,7 @@ class getHomematicData():
 
 
 
+	####-----------------	 ---------
 	def getAllVendor(self):
 		try:
 			if indigo.activePlugin.testPing(self.ip) != 0:
@@ -3038,7 +3258,10 @@ class getHomematicData():
 				
 
 			if indigo.activePlugin.decideMyLog("GetData"): indigo.activePlugin.indiLOG.log(10,"getAllVendor Accessing URL: {}".format(baseHtml))
-			r = self.requestSession.get(baseHtml, timeout=self.kTimeout)
+
+			r = self.doConnect(baseHtml)
+			if r == "": return {}
+
 			content = r.content.decode('ISO-8859-1')
 			if indigo.activePlugin.decideMyLog("GetData"): indigo.activePlugin.indiLOG.log(10,"getAllVendor all {}:{}".format(page, content))
 			objects = json.loads(content)
@@ -3057,7 +3280,10 @@ class getHomematicData():
 					itemsHref = "{}/{}".format(baseHtml, address)
 					if indigo.activePlugin.decideMyLog("GetData"): indigo.activePlugin.indiLOG.log(10,"getAllVendor  {} 1 Accessing URL: {},".format(page, itemsHref))
 					try:
-						r = self.requestSession.get(itemsHref, timeout=self.kTimeout)
+
+						r = self.doConnect(itemsHref)
+						if r == "": return {}
+
 					except Exception as e:
 						if "{}".format(e).find("None") == -1: indigo.activePlugin.indiLOG.log(40,"", exc_info=True)
 						continue
@@ -3075,7 +3301,10 @@ class getHomematicData():
 						if href1 == "~pv": 
 							valueHref = "{}/{}".format(itemsHref, href1)
 							if indigo.activePlugin.decideMyLog("GetData"): indigo.activePlugin.indiLOG.log(10," getAllVendor {} 2 Accessing URL: {},".format(page, valueHref))
-							r = self.requestSession.get(valueHref, timeout=self.kTimeout)
+
+							r = self.doConnect(valueHref)
+							if r == "": return {}
+
 							valueDict = json.loads(r.content)
 							if indigo.activePlugin.decideMyLog("GetData"): indigo.activePlugin.indiLOG.log(10," getAllVendor {} dict: {}".format(page, str(valueDict)[:100]))
 							theDict["address"][address]["value"] = valueDict
@@ -3085,7 +3314,10 @@ class getHomematicData():
 							theDict["address"][address][href1] = {}
 							itemsHref2 = "{}/{}".format(itemsHref, href1)
 							if indigo.activePlugin.decideMyLog("GetData"): indigo.activePlugin.indiLOG.log(10,"getAllVendor  {} 3 Accessing URL: {},".format(page, itemsHref2))
-							r = self.requestSession.get(itemsHref2, timeout=self.kTimeout)
+
+							r = self.doConnect(itemsHref2)
+							if r == "": return {}
+
 							itemsDict2 = json.loads(r.content)
 							if indigo.activePlugin.decideMyLog("GetData"): indigo.activePlugin.indiLOG.log(10," getAllVendor {} dict: {}".format(page, itemsDict2))
 							if "~links" not in itemsDict2: continue
@@ -3096,7 +3328,10 @@ class getHomematicData():
 								if href3 == "~pv": 
 									itemsHref3 = "{}/{}".format(itemsHref2, href3)
 									if indigo.activePlugin.decideMyLog("GetData"): indigo.activePlugin.indiLOG.log(10,"getAllVendor  {} 4 Accessing URL: {},".format(page, itemsHref3))
-									r = self.requestSession.get(itemsHref3, timeout=self.kTimeout)
+
+									r = self.doConnect(itemsHref3)
+									if r == "": return {}
+
 									itemsDict3 = json.loads(r.content)
 									if indigo.activePlugin.decideMyLog("GetData"): indigo.activePlugin.indiLOG.log(10," getAllVendor {} dict: {}".format(page, itemsDict3))
 									theDict["address"][address][href1]["value"] = itemsDict3
