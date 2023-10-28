@@ -6,13 +6,68 @@
 		<Name>PRINT parameters to logfile ..</Name>
 		<ConfigUI>
 
-				<Field id="printConfig" type="button"> 
-					<Label>PRINT Config parameters and host info to log </Label> 
-					<Title>PRINT</Title><CallbackMethod>printConfigMenu</CallbackMethod>
-				</Field>
+			<Field id="printConfig" type="button"> 
+				<Label>PRINT Config parameters and host info to log </Label> 
+				<Title>PRINT</Title><CallbackMethod>printConfigMenu</CallbackMethod>
+			</Field>
 
 		</ConfigUI>
 	</MenuItem>
+
+
+	<MenuItem id="boost">
+		<Name>Boost thermostat</Name>
+		<ConfigUI>
+
+			<Field     id="deviceId" type="menu" defaultValue="0">
+				<Label>select thermostate device:</Label>
+				<List class="self" filter="thermostats" method="filterDevices"  dynamicReload="no"/>
+			</Field>
+
+			<Field  id="onOff" type="menu" defaultValue="on">
+				<List>
+					<Option value="off">Off </Option>
+					<Option value="on">On </Option>
+				</List>
+				<Label>boost on / off:</Label>
+			</Field>
+
+
+			<Field  id="exec" type="button" >
+				<Title>Execute</Title>
+				<CallbackMethod>boostThermostat</CallbackMethod> 
+			</Field>
+		</ConfigUI>
+
+    </MenuItem>
+
+
+
+	<MenuItem id="unlock">
+		<Name>Boost thermostat</Name>
+		<ConfigUI>
+
+			<Field     id="deviceId" type="menu" defaultValue="0">
+				<Label>select door lock device:</Label>
+				<List class="self" filter="doorLocks" method="filterDevices"  dynamicReload="no"/>
+			</Field>
+
+			<Field  id="value" type="menu" defaultValue="lock">
+				<List>
+					<Option value="unlock">unlock </Option>
+					<Option value="lock">lock </Option>
+				</List>
+				<Label>boost on / off:</Label>
+			</Field>
+
+
+			<Field  id="exec" type="button" >
+				<Title>Execute</Title>
+				<CallbackMethod>doorLockUnLock</CallbackMethod> 
+			</Field>
+		</ConfigUI>
+
+    </MenuItem>
 
 
 

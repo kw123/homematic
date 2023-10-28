@@ -1,9 +1,33 @@
-changes in V2022.0.1 2023-10-16
+changes in V2022.1.2 2023-10-28
 ==================  
-reduced cpu usge by 90%
-added hMIP-SMI motion sensor 
+first non beta release:
 
-
-changes in V2022.0.1 2023-10-15
-==================  
-first version
+supported devices (29 + sub versions)
+- HMIP-SPDR:           left <-> right passage sensor 
+- HMIP-KRC4:           4 key button
+- HMIP-WRC6:           6 button remote
+- HMIP-WKP:            Keypad sensor 
+- HMIP-WRC:            2 button wall switch
+- HMIP-RC8:            8 button remote
+- HMIP-FCI6:           6 switch on/off 
+- HMIP-SDW :           water alarm sensor
+- HMIP-SWSD:           smoke alarm sensor
+- HMIP-SWDO:           optical on / off sensor
+- HMIP-SCI:            on / off kabel sensor
+- HMIP-SWDM:           magnet on / off sensor
+- HMIP-SMI:            Motion Sensor
+- HMIP-SRD:            Rain sensor
+- HMIP-SWO-PR:         prof weather station
+- HMIP-DLD:            Door key open / closer
+- HMIP-WRC:            turn left righ push switch    
+- HMIP-STHO:           internal / external Temp / humidity sensor
+- HMIP-FALMOT-C12:     12 channel underfloor heating
+- HMIP-FAL230-C10:     10 channel  230V underfloor heating
+- HMIP-FAL230-C6:      6 channel  230V underfloor heating
+- HMIP-FAL24-C10:      10 channel  24V underfloor heating
+- HMIP-FAL24-C6:       6 channel  24V underfloor heating
+- HMIP-WTH:            wall thermostat (various types)
+- HMIP-ETRV:           radiator attached thermostat (various types)
+- HMIP-PS:             powerplug switch
+- HMIP-PSM:            powerplug switch w energy measurement
+- HMIP-PDT:            powerplug  dimmer 
