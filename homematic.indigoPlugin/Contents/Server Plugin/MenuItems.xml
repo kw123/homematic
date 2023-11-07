@@ -44,7 +44,7 @@
 
 
 	<MenuItem id="unlock">
-		<Name>Boost thermostat</Name>
+		<Name>Unlock Door</Name>
 		<ConfigUI>
 
 			<Field     id="deviceId" type="menu" defaultValue="0">
@@ -57,7 +57,7 @@
 					<Option value="unlock">unlock </Option>
 					<Option value="lock">lock </Option>
 				</List>
-				<Label>boost on / off:</Label>
+				<Label>lock / unlock:</Label>
 			</Field>
 
 

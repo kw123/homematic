@@ -71,8 +71,12 @@
 	<Device type="sensor" id="HMIP-SWDM">
 		<Name>Homematic SWDM-Magnet/Optical ..  Contact</Name>
 		<ConfigUI>
-			<Field	  id="show"		  type="label"  >
-			<Label>Nothing to configure</Label>
+			<Field	  id="invertState"		  type="menu"  defaultValue="no"	 tooltip="pick one">
+				<Label>Invert state on to off and vs versa</Label>
+				<List>
+					<Option value="yes"	>invert state</Option>
+					<Option value="no"	>keep as is	</Option>
+				</List>
 			</Field>
 		</ConfigUI>
 		<States>
@@ -136,6 +140,7 @@
 		<Name>Homematic SWSD Smoke Sensor</Name>
 		<UiDisplayStateId>displayStatus</UiDisplayStateId>
 		<ConfigUI>
+
 			<Field	  id="show"		  type="label"  >
 			<Label>Nothing to configure</Label>
 			</Field>
@@ -253,7 +258,7 @@
 
 
 	<Device type="relay" id="HMIP-PS">
-		<Name>Homematic HMIP-PSM PowerOutlet Switch</Name>
+		<Name>Homematic HMIP-PSM etc Outlet Switch</Name>
 		<ConfigUI>
 				<Field id="SupportsOnState" type="checkbox" defaultValue="true" hidden ="true"></Field>
 				<Field id="SupportsSensorValue" type="checkbox" defaultValue="false" hidden ="true"></Field>
@@ -264,7 +269,6 @@
 		</ConfigUI>
 		<States>
 		</States>
-
 	</Device>
 
 	<Device type="sensor" id="HMIP-SMI">
@@ -302,8 +306,8 @@
 
 	</Device>
 
-	<Device type="sensor" id="HMIP-SYSVAR">
-		<Name>Homematic SYSvar</Name>
+	<Device type="sensor" id="HMIP-SYSVAR-FLOAT">
+		<Name>Homematic SYSvar-FLOAT</Name>
 		<ConfigUI>
 			<Field	  id="show"		  type="label"  >
 			<Label>Nothing to configure</Label>
@@ -311,7 +315,39 @@
 		</ConfigUI>
 		<States>
 		</States>
+	</Device>
 
+	<Device type="sensor" id="HMIP-SYSVAR-STRING">
+		<Name>Homematic SYSvar-STRING</Name>
+		<ConfigUI>
+			<Field	  id="show"		  type="label"  >
+			<Label>Nothing to configure</Label>
+			</Field>
+		</ConfigUI>
+		<States>
+		</States>
+	</Device>
+
+	<Device type="sensor" id="HMIP-SYSVAR-BOOL">
+		<Name>Homematic SYSvar-BOOL</Name>
+		<ConfigUI>
+			<Field	  id="show"		  type="label"  >
+			<Label>Nothing to configure</Label>
+			</Field>
+		</ConfigUI>
+		<States>
+		</States>
+	</Device>
+
+	<Device type="sensor" id="HMIP-SYSVAR-ALARM">
+		<Name>Homematic SYSvar-ALARM</Name>
+		<ConfigUI>
+			<Field	  id="show"		  type="label"  >
+			<Label>Nothing to configure</Label>
+			</Field>
+		</ConfigUI>
+		<States>
+		</States>
 	</Device>
 
 

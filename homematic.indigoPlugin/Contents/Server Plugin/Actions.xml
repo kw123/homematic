@@ -1,13 +1,13 @@
 <Actions>
         
-    <Action id="boost">
-        <Name>Boost thermostat</Name>
-        <CallbackMethod>boostThermostatAction</CallbackMethod> 
-        <ConfigUI>
-            <Field     id="deviceId" type="menu" defaultValue="0">
-                <Label>select thermostat device:</Label>
-                <List class="self" filter="thermostats" method="filterDevices"  dynamicReload="no"/>
-            </Field>
+	<Action id="boost">
+		<Name>Boost thermostat</Name>
+		<CallbackMethod>boostThermostatAction</CallbackMethod> 
+		<ConfigUI>
+			<Field     id="deviceId" type="menu" defaultValue="0">
+				<Label>select thermostat device:</Label>
+				<List class="self" filter="thermostats" method="filterDevices"  dynamicReload="no"/>
+			</Field>
 			<Field  id="onOff" type="menu" defaultValue="on">
 				<List>
 					<Option value="off">off </Option>
@@ -15,7 +15,30 @@
 				</List>
 				<Label>boost on / off:</Label>
 			</Field>
-        </ConfigUI>
-    </Action>
+		</ConfigUI>
+	</Action>
+
+
+	<MenuItem id="unlock">
+		<Name>Unlock Door</Name>
+		<CallbackMethod>doorLockUnLock</CallbackMethod> 
+		<ConfigUI>
+
+			<Field     id="deviceId" type="menu" defaultValue="0">
+				<Label>select door lock device:</Label>
+				<List class="self" filter="doorLocks" method="filterDevices"  dynamicReload="no"/>
+			</Field>
+
+			<Field  id="value" type="menu" defaultValue="lock">
+				<List>
+					<Option value="unlock">unlock </Option>
+					<Option value="lock">lock </Option>
+				</List>
+				<Label>lock / unlock:</Label>
+			</Field>
+		</ConfigUI>
+
+ 	</MenuItem>
+
 
 </Actions>

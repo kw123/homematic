@@ -1,3 +1,25 @@
+
+changes in V2022.2.3 2023-10-28
+==================  
+
+added:
+- HMIP-PCBS:           outlet relay on a pc board
+
+- rain start / stop
+- rain today, yesterday total 
+- energy usage total
+- sun shine duration 
+
+in the pipeline:
+- HMIP-MIO16-PCB       16 channel i/o analog and digital / relay 
+
+fixed:
+- wrong mapping of some states
+- reduced updates of states to minimum (only when changed)
+- some minor issues
+
+
+
 changes in V2022.1.2 2023-10-28
 ==================  
 first non beta release:
@@ -31,3 +53,4 @@ supported devices (29 + sub versions)
 - HMIP-PS:             powerplug switch
 - HMIP-PSM:            powerplug switch w energy measurement
 - HMIP-PDT:            powerplug  dimmer 
+
