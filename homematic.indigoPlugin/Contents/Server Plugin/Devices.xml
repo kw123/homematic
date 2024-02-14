@@ -38,7 +38,6 @@
 
 	</Device>
 
-
 	<Device type="sensor" id="HMIP-STHO">
 		<Name>Homematic STHO-Temp-Humidity Sensor</Name>
 		<ConfigUI>
@@ -55,6 +54,40 @@
 		</States>
 
 	</Device>
+
+
+	<Device type="sensor" id="HMIP-SCTH">
+		<Name>Homematic SCTH CO2-Temp-Humidity Sensor</Name>
+		<ConfigUI>
+			<Field	  id="displayS"		  type="menu"  defaultValue="CO2"	 tooltip="pick one">
+				<Label>which info to be used for status updates</Label>
+				<List>
+					<Option value="CO2"	>CO2	</Option>
+					<Option value="ACTUAL_TEMPERATURE"	>ACTUAL_TEMPERATURE</Option>
+					<Option value="HUMIDITY"	>HUMIDITY	</Option>
+				</List>
+			</Field>
+
+		</ConfigUI>
+		<States>
+		</States>
+
+	</Device>
+
+
+	<Device type="relay" id="HMIP-SCTH-child">
+		<Name>Homematic SCTH-relay</Name>
+		<ConfigUI>
+			<Field	  id="show"		  type="label"  >
+			<Label>Nothing to configure</Label>
+			</Field>
+		</ConfigUI>
+		<States>
+		</States>
+
+	</Device>
+
+
 
 	<Device type="sensor" id="HMIP-SPDR">
 		<Name>Homematic SPDR-passage detector</Name>
@@ -231,6 +264,21 @@
 	</Device>
 
 
+
+	<Device type="relay" id="HMIP-USBSM">
+		<Name>Homematic HMIP-USBSM  switch and sensor</Name>
+		<ConfigUI>
+			<Field	  id="show"		  type="label"  >
+			<Label>Nothing to configure</Label>
+			</Field>
+		</ConfigUI>
+		<States>
+		</States>
+
+	</Device>
+
+
+
 	<Device type="dimmer" id="HMIP-PDT">
 		<Name>Homematic PDT-outlet dimmer</Name>
 		<ConfigUI>
@@ -245,7 +293,7 @@
 
 
 	<Device type="relay" id="HMIP-PSM">
-		<Name>Homematic HMIP-PSM PowerOutllet Switch W Energy</Name>
+		<Name>Homematic HMIP-PSM PowerOutlet Switch W Energy</Name>
 		<ConfigUI>
 			<Field	  id="show"		  type="label"  >
 			<Label>Nothing to configure</Label>
@@ -306,6 +354,18 @@
 
 	</Device>
 
+	<Device type="sensor" id="HMIP-HEATING">
+		<Name>Homematic Heating collection</Name>
+		<ConfigUI>
+			<Field	  id="show"		  type="label"  >
+			<Label>Nothing to configure</Label>
+			</Field>
+		</ConfigUI>
+		<States>
+		</States>
+	</Device>
+
+
 	<Device type="sensor" id="HMIP-SYSVAR-FLOAT">
 		<Name>Homematic SYSvar-FLOAT</Name>
 		<ConfigUI>
@@ -317,8 +377,9 @@
 		</States>
 	</Device>
 
-	<Device type="sensor" id="HMIP-SYSVAR-STRING">
+	<Device type="custom" id="HMIP-SYSVAR-STRING">
 		<Name>Homematic SYSvar-STRING</Name>
+		<UiDisplayStateId>value</UiDisplayStateId>
 		<ConfigUI>
 			<Field	  id="show"		  type="label"  >
 			<Label>Nothing to configure</Label>
@@ -393,6 +454,27 @@
 		</States>
 
 	</Device>
+
+	<Device type="sensor" id="Homematic-AP">
+		<Name>Homematic AP</Name>
+		<ConfigUI>
+			<Field id="SupportsStatusRequest" type="checkbox" defaultValue="False" hidden="true"></Field>
+			<Field id="SupportsSensorValue" type="checkbox" defaultValue="true" hidden="true"></Field>
+			<Field id="SupportsOnState" type="checkbox" defaultValue="False" hidden="true"></Field>
+		</ConfigUI>
+
+
+		<States>
+				<State id="created">
+					<ValueType>String</ValueType>
+					<TriggerLabel>created</TriggerLabel>
+					<ControlPageLabel>created</ControlPageLabel>
+				</State>
+
+		</States>
+
+	</Device>
+
 
 </Devices>
 

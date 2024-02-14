@@ -1,56 +1,48 @@
 
-changes in V2022.2.3 2023-10-28
+changes in V2022.3.3 2024-02-14
 ==================  
 
-added:
-- HMIP-PCBS:           outlet relay on a pc board
-
-- rain start / stop
-- rain today, yesterday total 
-- energy usage total
-- sun shine duration 
-
-in the pipeline:
-- HMIP-MIO16-PCB       16 channel i/o analog and digital / relay 
-
-fixed:
-- wrong mapping of some states
-- reduced updates of states to minimum (only when changed)
-- some minor issues
-
-
-
-changes in V2022.1.2 2023-10-28
-==================  
-first non beta release:
-
-supported devices (29 + sub versions)
+supported devices (34 + sub versions)
 - HMIP-SPDR:           left <-> right passage sensor 
-- HMIP-KRC4:           4 key button
-- HMIP-WRC6:           6 button remote
-- HMIP-WKP:            Keypad sensor 
-- HMIP-WRC:            2 button wall switch
-- HMIP-RC8:            8 button remote
+- HMIP-KRCx:           x button key
+- HMIP-WRCx:           x button remote
+- HMIP-WKP:            10 digit Keypad 
+- HMIP-WRC:            1-2 button wall switch
+- HMIP-RCx:            x button remote
 - HMIP-FCI6:           6 switch on/off 
 - HMIP-SDW :           water alarm sensor
 - HMIP-SWSD:           smoke alarm sensor
 - HMIP-SWDO:           optical on / off sensor
-- HMIP-SCI:            on / off kabel sensor
 - HMIP-SWDM:           magnet on / off sensor
+- HMIP-SCI:            on / off cable sensor
 - HMIP-SMI:            Motion Sensor
 - HMIP-SRD:            Rain sensor
 - HMIP-SWO-PR:         prof weather station
+- HMIP-STI:            Capacitor button sensor
+- HMIP-STV:            Tilt and movement sensor
 - HMIP-DLD:            Door key open / closer
-- HMIP-WRC:            turn left righ push switch    
 - HMIP-STHO:           internal / external Temp / humidity sensor
+- HMIP-SCTH:           wall CO2 Temp Humidity sensor
 - HMIP-FALMOT-C12:     12 channel underfloor heating
 - HMIP-FAL230-C10:     10 channel  230V underfloor heating
 - HMIP-FAL230-C6:      6 channel  230V underfloor heating
 - HMIP-FAL24-C10:      10 channel  24V underfloor heating
 - HMIP-FAL24-C6:       6 channel  24V underfloor heating
+- HMIP-WRC:            turn left righ push switch    
 - HMIP-WTH:            wall thermostat (various types)
+      -BWTH            wall thermostat
 - HMIP-ETRV:           radiator attached thermostat (various types)
 - HMIP-PS:             powerplug switch
 - HMIP-PSM:            powerplug switch w energy measurement
 - HMIP-PDT:            powerplug  dimmer 
+- HMIP-USBSM:          USB V, A, P, measurement and relay board
+- HMIP-PCBS:           low volt relay 
+
+in the pipeline:
+-HMIP-MP3P             mp3 player and light alarm
+-HMIP-MIO16            multichannel io board
+-HmIP-MOD-OC8          8 channel output swtch open collector
+
+
+
 

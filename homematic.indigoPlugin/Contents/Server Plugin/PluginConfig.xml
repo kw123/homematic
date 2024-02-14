@@ -31,11 +31,11 @@
 
 
 	<Field id="ipNumber"  	type="textfield"     > 
-		<Label>.. ipNumber:</Label> 
+		<Label>.. ipNumber of homematic server:</Label> 
 	</Field>
 
 	<Field id="portNumber"  	type="textfield"   > 
-		<Label>.. portNumber:</Label> 
+		<Label>.. portNumber of homematic server:</Label> 
 	</Field>
 
 	<Field id="sep-generalON" 		type="separator"/>
@@ -45,11 +45,11 @@
 		<Label>== General Parameters for Plugin </Label>  
 	</Field>
 
-	<Field id="generalON" 					type="checkbox"  fontColor="green"> 
+	<Field id="ShowGeneral" 					type="checkbox"  fontColor="green"> 
 		<Label>Show General section........................................................:</Label>  
 	</Field>
 
-
+<!--
 	<Field id="tempUnit"    	type="menu"  visibleBindingId="generalON" visibleBindingValue="true"   > 
 		<Label>Temperature Unit:</Label>   
 		<List>
@@ -57,18 +57,19 @@
 			<Option value="C"  >C</Option>
 		</List>
 	</Field>
+-->
 
-	<Field id="ignoreNewDevices"    	type="checkbox"  visibleBindingId="generalON" visibleBindingValue="true"   > 
+	<Field id="ignoreNewDevices"    	type="checkbox"  visibleBindingId="ShowGeneral" visibleBindingValue="true"   > 
 		<Label>Ignore NEW Devices:</Label>   
 	</Field>
 
 
-	<Field id="folderNameDevices"       	type="textfield"   visibleBindingId="generalON" visibleBindingValue="true"  > 
+	<Field id="folderNameDevices"       	type="textfield"   visibleBindingId="ShowGeneral" visibleBindingValue="true"  > 
 		<Label>Folder name for new DEVICES:</Label>  
 	</Field>
 
-	<Field id="folderNameVariables"        	type="textfield"    visibleBindingId="generalON" visibleBindingValue="true" > 
-		<Label> Folder name for VARIABLES:</Label>  
+	<Field id="folderNameVariables"        	type="textfield"    visibleBindingId="ShowGeneral" visibleBindingValue="true" > 
+		<Label>Folder name for VARIABLES:</Label>  
 	</Field>
 
 
@@ -76,35 +77,58 @@
 
 
 
+	<Field id="ShowDevices" 					type="checkbox"  fontColor="green"> 
+		<Label>Show Devices section........................................................:</Label>  
+	</Field>
 
-	<Field id="debugOn" 					type="checkbox"  fontColor="green"> 
+	<Field id="accept_HEATING"    	type="checkbox"  visibleBindingId="ShowDevices" visibleBindingValue="true"   > 
+		<Label>Create HEATING collection devices:</Label>   
+	</Field>
+
+	<Field id="accept_SYSVAR"    	type="checkbox"  visibleBindingId="ShowDevices" visibleBindingValue="true"   > 
+		<Label>Create ANY sys var devices:</Label>   
+	</Field>
+
+	<Field id="accept_WatchDog"    	type="checkbox"  visibleBindingId="ShowDevices" visibleBindingValue="true"   > 
+		<Label>Create Watchdog sys var devices:</Label>   
+	</Field>
+
+
+	<Field id="accept_DutyCycle"    	type="checkbox"  visibleBindingId="ShowDevices" visibleBindingValue="true"   > 
+		<Label>Create DutyCycle sys var devices:</Label>   
+	</Field>
+
+
+	<Field id="sep-Debug" 			type="separator"/>
+
+	<Field id="ShowDebug" 					type="checkbox"  fontColor="green"> 
 		<Label>Show DEBUG section........................................................:</Label>  
 	</Field>
 
-	<Field id="infoLabel226"       type="label"    visibleBindingId="debugOn" visibleBindingValue="true"  fontColor="green" >  <Label>== Debug:... </Label>  </Field>
-	<Field id="writeInfoToFile"    type="checkbox" visibleBindingId="debugOn" visibleBindingValue="true" > <Label> write info read from hub to file in pref directory:</Label>  </Field>
-	<Field id="showLoginTest"      type="checkbox" visibleBindingId="debugOn" visibleBindingValue="true" > <Label> show logging test at startup:</Label>  </Field>
-	<Field id="debugLogic"         type="checkbox" visibleBindingId="debugOn" visibleBindingValue="true" > <Label>... (1) Logic:</Label>										</Field>
-	<Field id="debugGetData"       type="checkbox" visibleBindingId="debugOn" visibleBindingValue="true" > <Label>... (3) get data, in plugin.log:</Label>						</Field>
-	<Field id="debugDigest"        type="checkbox" visibleBindingId="debugOn" visibleBindingValue="true" > <Label>... (4) digest data received, in plugin.log:</Label>			</Field>
-	<Field id="debugActions"       type="checkbox" visibleBindingId="debugOn" visibleBindingValue="true" > <Label>... (5) actions:</Label>										</Field>
-	<Field id="debugConnect"       type="checkbox" visibleBindingId="debugOn" visibleBindingValue="true" > <Label>... (6) onnect to RPI:</Label>								</Field>
-	<Field id="debugUpdateStates"  type="checkbox" visibleBindingId="debugOn" visibleBindingValue="true" > <Label>... (7) update states  in plugin.log :</Label>				</Field>
-	<Field id="debugTime" 		   type="checkbox" visibleBindingId="debugOn" visibleBindingValue="true" > <Label>... (18) timing information in plugin.log :</Label>			</Field>
-	<Field id="debugSpecial"       type="checkbox" visibleBindingId="debugOn" visibleBindingValue="true" > <Label>... (19) Special debug for development:</Label>				</Field>
-	<Field id="debugAll"           type="checkbox" visibleBindingId="debugOn" visibleBindingValue="true" > <Label>... (20) all of the above = everything:</Label>				</Field>
-	<Field id="sep-debugOn" type="separator"  />
+	<Field id="infoLabel226"       type="label"    visibleBindingId="ShowDebug" visibleBindingValue="true"  fontColor="green" >  <Label>== Debug:... </Label>  </Field>
+	<Field id="writeInfoToFile"    type="checkbox" visibleBindingId="ShowDebug" visibleBindingValue="true" > <Label> write info read from hub to file in pref directory:</Label>  </Field>
+	<Field id="showLoginTest"      type="checkbox" visibleBindingId="ShowDebug" visibleBindingValue="true" > <Label> show logging test at startup:</Label>  </Field>
+	<Field id="debugLogic"         type="checkbox" visibleBindingId="ShowDebug" visibleBindingValue="true" > <Label>... (1) Logic:</Label>										</Field>
+	<Field id="debugGetData"       type="checkbox" visibleBindingId="ShowDebug" visibleBindingValue="true" > <Label>... (3) get data, in plugin.log:</Label>						</Field>
+	<Field id="debugDigest"        type="checkbox" visibleBindingId="ShowDebug" visibleBindingValue="true" > <Label>... (4) digest data received, in plugin.log:</Label>			</Field>
+	<Field id="debugActions"       type="checkbox" visibleBindingId="ShowDebug" visibleBindingValue="true" > <Label>... (5) actions:</Label>										</Field>
+	<Field id="debugConnect"       type="checkbox" visibleBindingId="ShowDebug" visibleBindingValue="true" > <Label>... (6) onnect to RPI:</Label>								</Field>
+	<Field id="debugUpdateStates"  type="checkbox" visibleBindingId="ShowDebug" visibleBindingValue="true" > <Label>... (7) update states  in plugin.log :</Label>				</Field>
+	<Field id="debugTime" 		   type="checkbox" visibleBindingId="ShowDebug" visibleBindingValue="true" > <Label>... (18) timing information in plugin.log :</Label>			</Field>
+	<Field id="debugSpecial"       type="checkbox" visibleBindingId="ShowDebug" visibleBindingValue="true" > <Label>... (19) Special debug for development:</Label>				</Field>
+	<Field id="debugAll"           type="checkbox" visibleBindingId="ShowDebug" visibleBindingValue="true" > <Label>... (20) all of the above = everything:</Label>				</Field>
+	<Field id="sep-ShowDebug" type="separator"  />
 
 
 
 
 	<Field id="infolabelExperts" type="label" fontColor="green"> <Label>=== EXPERTs only ...</Label>  </Field>
-	<Field id="expertOn" 					type="checkbox"  fontColor="green"> 
+	<Field id="ShowExpert" 					type="checkbox"  fontColor="green"> 
 		<Label>Show EXPERT section........................................................:</Label>  
 	</Field>
 
 
-	<Field id="requestTimeout"    	type="menu"  visibleBindingId="expertOn" visibleBindingValue="true"   > 
+	<Field id="requestTimeout"    	type="menu"  visibleBindingId="ShowExpert" visibleBindingValue="true"   > 
 		<Label>http request timeout[secs]:</Label>   
 		<List>
 			<Option value="2"  >2</Option>
@@ -116,7 +140,7 @@
 	</Field>
 
 
-	<Field id="delayOffForButtons"    	type="menu"  visibleBindingId="expertOn" visibleBindingValue="true"   > 
+	<Field id="delayOffForButtons"    	type="menu"  visibleBindingId="ShowExpert" visibleBindingValue="true"   > 
 		<Label>switch true to false for button states after [secs]:</Label>   
 		<List>
 			<Option value="2"  >2</Option>
@@ -132,7 +156,7 @@
 	</Field>
 
 
-	<Field id="getValuesEvery"    	type="menu"  visibleBindingId="expertOn" visibleBindingValue="true"   > 
+	<Field id="getValuesEvery"    	type="menu"  visibleBindingId="ShowExpert" visibleBindingValue="true"   > 
 		<Label>Get all VALUES from homematic every [secs]:</Label>   
 		<List>
 			<Option value="1"  >1</Option>
@@ -143,7 +167,7 @@
 		</List>
 	</Field>
 
-	<Field id="getCompleteUpdateEvery"    	type="menu"  visibleBindingId="expertOn" visibleBindingValue="true"   > 
+	<Field id="getCompleteUpdateEvery"    	type="menu"  visibleBindingId="ShowExpert" visibleBindingValue="true"   > 
 		<Label>Get COMPLETE info from homematic every [secs] (&gt;2 sec elapsed time ):</Label>   
 		<List>
 			<Option value="15" >15</Option>
