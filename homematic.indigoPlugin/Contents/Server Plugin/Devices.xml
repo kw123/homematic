@@ -1,478 +1,318 @@
 <Devices>
 
-	<Device type="thermostat" id="HMIP-ETRV">
+	<Device type="thermostat" id="HMIP-ETRV" allowUserCreation="false">
 		<Name>Homematic eTRV-RadiatorValve</Name>
-		<ConfigUI>
-			<Field	  id="show"		  type="label"  >
-			<Label>Nothing to configure</Label>
-			</Field>
-		</ConfigUI>
-		<States>
-		</States>
+		<ConfigUI> </ConfigUI>
 	</Device>
 
-	<Device type="dimmer" id="HMIP-ETRV-child">
-		<Name>Homematic eTRV-RadiatorValve dimmer</Name>
-		<ConfigUI>
-
-			<Field	  id="show"		  type="label"  >
-			<Label>Nothing to configure</Label>
-			</Field>
-
-		</ConfigUI>
-		<States>
-		</States>
-
+	<Device type="thermostat" id="HMIP-HEATING" allowUserCreation="false">
+		<Name>Homematic Heating Group</Name>
+		<ConfigUI> </ConfigUI>
 	</Device>
 
 
-	<Device type="thermostat" id="HMIP-WTH">
+	<Device type="thermostat" id="HMIP-WTH" allowUserCreation="false">
 		<Name>Homematic WTH-Wall Thermostat</Name>
-		<ConfigUI>
-			<Field	  id="show"		  type="label"  >
-			<Label>Nothing to configure</Label>
-			</Field>
-		</ConfigUI>
-		<States>
-		</States>
-
+		<ConfigUI> </ConfigUI>
 	</Device>
 
-	<Device type="sensor" id="HMIP-STHO">
+
+	<Device type="sensor" id="HMIP-STHO" allowUserCreation="false">
 		<Name>Homematic STHO-Temp-Humidity Sensor</Name>
-		<ConfigUI>
-			<Field	  id="displayS"		  type="menu"  defaultValue="ACTUAL_TEMPERATURE"	 tooltip="pick one">
-				<Label>which info to be used for status updates</Label>
-				<List>
-					<Option value="ACTUAL_TEMPERATURE"	>ACTUAL_TEMPERATURE	</Option>
-					<Option value="HUMIDITY"	>HUMIDITY	</Option>
-				</List>
-			</Field>
-
-		</ConfigUI>
-		<States>
-		</States>
-
+		<ConfigUI> </ConfigUI>
 	</Device>
 
 
-	<Device type="sensor" id="HMIP-SCTH">
+	<Device type="sensor" id="HMIP-SCTH" allowUserCreation="false">
 		<Name>Homematic SCTH CO2-Temp-Humidity Sensor</Name>
-		<ConfigUI>
-			<Field	  id="displayS"		  type="menu"  defaultValue="CO2"	 tooltip="pick one">
-				<Label>which info to be used for status updates</Label>
-				<List>
-					<Option value="CO2"	>CO2	</Option>
-					<Option value="ACTUAL_TEMPERATURE"	>ACTUAL_TEMPERATURE</Option>
-					<Option value="HUMIDITY"	>HUMIDITY	</Option>
-				</List>
-			</Field>
-
-		</ConfigUI>
-		<States>
-		</States>
-
+		<ConfigUI> </ConfigUI>
 	</Device>
 
 
-	<Device type="relay" id="HMIP-SCTH-child">
-		<Name>Homematic SCTH-relay</Name>
-		<ConfigUI>
-			<Field	  id="show"		  type="label"  >
-			<Label>Nothing to configure</Label>
-			</Field>
-		</ConfigUI>
-		<States>
-		</States>
-
-	</Device>
-
-
-
-	<Device type="sensor" id="HMIP-SPDR">
+	<Device type="sensor" id="HMIP-SPDR" allowUserCreation="false">
 		<Name>Homematic SPDR-passage detector</Name>
-		<ConfigUI>
-			<Field	  id="show"		  type="label"  >
-			<Label>Nothing to configure</Label>
-			</Field>
-		</ConfigUI>
-		<States>
-		</States>
-
-	</Device>
-
-	<Device type="sensor" id="HMIP-SWDM">
-		<Name>Homematic SWDM-Magnet/Optical ..  Contact</Name>
-		<ConfigUI>
-			<Field	  id="invertState"		  type="menu"  defaultValue="no"	 tooltip="pick one">
-				<Label>Invert state on to off and vs versa</Label>
-				<List>
-					<Option value="yes"	>invert state</Option>
-					<Option value="no"	>keep as is	</Option>
-				</List>
-			</Field>
-		</ConfigUI>
-		<States>
-		</States>
-
+		<ConfigUI> </ConfigUI>
 	</Device>
 
 
-	<Device type="sensor" id="HMIP-SWD">
-		<Name>Homematic SWD Water sensor</Name>
-		<ConfigUI>
-			<Field	  id="show"		  type="label"  >
-			<Label>Nothing to configure</Label>
-			</Field>
-
-		</ConfigUI>
-		<States>
-		</States>
-
+	<Device type="sensor" id="HMIP-SWDM" allowUserCreation="false">
+		<Name>Homematic SWDM- Magnet/Optical/Contact sensor</Name>
+		<ConfigUI> </ConfigUI>
 	</Device>
 
 
-
-	<Device type="sensor" id="HMIP-SRD">
-		<Name>Homematic SRD Rain sensor</Name>
-		<ConfigUI>
-			<Field	  id="show"		  type="label"  >
-			<Label>Nothing to configure</Label>
-			</Field>
-
-		</ConfigUI>
-		<States>
-		</States>
-
+	<Device type="sensor" id="HMIP-SWD" allowUserCreation="false">
+		<Name>Homematic SWD Water Alarm</Name>
+		<ConfigUI> </ConfigUI>
 	</Device>
 
 
-	<Device type="sensor" id="HMIP-SWO-PR">
-		<Name>Homematic SWO-PR weather station</Name>
-		<ConfigUI>
-			<Field	  id="displayS"		  type="menu"  defaultValue="ACTUAL_TEMPERATURE"	 tooltip="pick one">
-				<Label>What to show in Status</Label>
-				<List>
-					<Option value="ACTUAL_TEMPERATURE"	>ACTUAL_TEMPERATURE	</Option>
-					<Option value="HUMIDITY"	>HUMIDITY	</Option>
-					<Option value="ILLUMINATION"	>ILLUMINATION	</Option>
-					<Option value="RAIN_COUNTER"	>RAIN_COUNTER	</Option>
-					<Option value="WIND_SPEED"	>WIND_SPEED	</Option>
-					<Option value="WIND_DIR"	>WIND_DIR	</Option>
-				</List>
-			</Field>
+	<Device type="sensor" id="HMIP-MOD-OC8" allowUserCreation="false">
+		<Name>Homematic MOD-OC8 8 parent device</Name>
+		<ConfigUI> </ConfigUI>
+	</Device>
 
-		</ConfigUI>
-		<States>
-		</States>
-
+	<Device type="sensor" id="HMIP-MIO16-PCB" allowUserCreation="false">
+		<Name>Homematic MIO16-PCB parent device</Name>
+		<ConfigUI> </ConfigUI>
 	</Device>
 
 
-	<Device type="custom" id="HMIP-SWSD">
-		<Name>Homematic SWSD Smoke Sensor</Name>
-		<UiDisplayStateId>displayStatus</UiDisplayStateId>
-		<ConfigUI>
-
-			<Field	  id="show"		  type="label"  >
-			<Label>Nothing to configure</Label>
-			</Field>
-
-		</ConfigUI>
-		<States>
-		</States>
-
+	<Device type="sensor" id="HMIP-SRD" allowUserCreation="false">
+		<Name>Homematic SRD-Rain Indicator</Name>
+		<ConfigUI> </ConfigUI>
 	</Device>
 
 
-	<Device type="sensor" id="HMIP-BUTTON">
+	<Device type="sensor" id="HMIP-SWO-PR" allowUserCreation="false">
+		<Name>Homematic SWO-PR -PL -B weather station</Name>
+		<ConfigUI> </ConfigUI>
+	</Device>
+
+	<Device type="sensor" id="HMIP-SFD" allowUserCreation="false">
+		<Name>Homematic SWO-SFD particulate sensor</Name>
+		<ConfigUI> </ConfigUI>
+	</Device>
+
+
+	<Device type="custom" id="HMIP-SWSD" allowUserCreation="false">
+		<Name>Homematic SWSD Smoke Alarm</Name>
+		<ConfigUI> </ConfigUI>
+	</Device>
+
+
+	<Device type="sensor" id="HMIP-WRCD" allowUserCreation="false">
+		<Name>Homematic WRCR display and button</Name>
+		<ConfigUI> </ConfigUI>
+	</Device>
+
+
+	<Device type="sensor" id="HMIP-BUTTON" allowUserCreation="false">
 		<Name>Homematic Button devices</Name>
-		<ConfigUI>
-			<Field	  id="show"		  type="label"  >
-			<Label>Nothing to configure here
-   You can use any kind of button device (the type has to be registed as a button in the definitions file in the plugin directroy)
-   BUT you need to have some kind channel linked to the buttons of the device. w/o any channel def the states will stay stale.
-   You can eg setup a variable and let a device/button#/shortpress # trigger it. No actual action has to be defined</Label>
-			</Field>
-		</ConfigUI>
-		<States>
-		</States>
+		<ConfigUI> </ConfigUI>
 	</Device>
 
 
-	<Device type="sensor" id="HMIP-WKP">
+	<Device type="sensor" id="HMIP-WKP" allowUserCreation="false">
 		<Name>Homematic KeyPad devices</Name>
-		<ConfigUI>
-			<Field	  id="show"		  type="label"  >
-			<Label>Nothing to configure here</Label>
-			</Field>
-		</ConfigUI>
-		<States>
-		</States>
+		<ConfigUI> </ConfigUI>
 	</Device>
 
 
-	<Device type="sensor" id="HMIP-FALMOT">
-		<Name>Homematic HMIP-FALMOT-C6/8/12-Actor</Name>
-		<ConfigUI>
-			<Field	  id="displayS"		  type="menu"  defaultValue="LEVEL-1"	 tooltip="pick one">
-				<Label>which Valve to show in Status</Label>
-				<List>
-					<Option value="LEVEL-1"	>1	</Option>
-					<Option value="LEVEL-2"	>2	</Option>
-					<Option value="LEVEL-3"	>3	</Option>
-					<Option value="LEVEL-4"	>4	</Option>
-					<Option value="LEVEL-5"	>5	</Option>
-					<Option value="LEVEL-6"	>6	</Option>
-					<Option value="LEVEL-7"	>7	</Option>
-					<Option value="LEVEL-8"	>8	</Option>
-					<Option value="LEVEL-9"	>9	</Option>
-					<Option value="LEVEL-10">10	</Option>
-					<Option value="LEVEL-11">11	</Option>
-					<Option value="LEVEL-12">12	</Option>
-				</List>
-			</Field>
-
-			<Field	  id="numberOfPhysicalChannels"		  type="menu"  defaultValue="12">
-				<Label>how many channel are present</Label>
-				<List>
-					<Option value="4" >4	</Option>
-					<Option value="6" >6	</Option>
-					<Option value="8" >8	</Option>
-					<Option value="10">10	</Option>
-					<Option value="12">12	</Option>
-				</List>
-			</Field>
-
-		<Field id="channelActive-1" type="checkbox" defaultValue="true" > <Label>Is Channel 1 Active? </Label></Field>
-		<Field id="channelActive-2" type="checkbox" defaultValue="true" > <Label>Is Channel 2 Active? </Label></Field>
-		<Field id="channelActive-3" type="checkbox" defaultValue="true" > <Label>Is Channel 3 Active? </Label></Field>
-		<Field id="channelActive-4" type="checkbox" defaultValue="true" > <Label>Is Channel 4 Active? </Label></Field>
-		<Field id="channelActive-5" type="checkbox" defaultValue="true" > <Label>Is Channel 5 Active? </Label></Field>
-		<Field id="channelActive-6" type="checkbox" defaultValue="true" > <Label>Is Channel 6 Active? </Label></Field>
-		<Field id="channelActive-7" type="checkbox" defaultValue="true" > <Label>Is Channel 7 Active? </Label></Field>
-		<Field id="channelActive-8" type="checkbox" defaultValue="true" > <Label>Is Channel 8 Active? </Label></Field>
-		<Field id="channelActive-9" type="checkbox" defaultValue="true" > <Label>Is Channel 9 Active? </Label></Field>
-		<Field id="channelActive-10" type="checkbox" defaultValue="true" > <Label>Is Channel 10 Active? </Label></Field>
-		<Field id="channelActive-11" type="checkbox" defaultValue="true" > <Label>Is Channel 11 Active? </Label></Field>
-		<Field id="channelActive-12" type="checkbox" defaultValue="true" > <Label>Is Channel 12 Active? </Label></Field>
-
-		</ConfigUI>
-		<States>
-		</States>
-
+	<Device type="sensor" id="HMIP-FALMOT" allowUserCreation="false">
+		<Name>Homematic HMIP-FALMOT-C4/6/8/10/12-Actor</Name>
+		<ConfigUI> </ConfigUI>
 	</Device>
 
 
-
-	<Device type="relay" id="HMIP-USBSM">
-		<Name>Homematic HMIP-USBSM  switch and sensor</Name>
-		<ConfigUI>
-			<Field	  id="show"		  type="label"  >
-			<Label>Nothing to configure</Label>
-			</Field>
-		</ConfigUI>
-		<States>
-		</States>
-
+	<Device type="dimmer" id="HMIP-MP3P" allowUserCreation="false">
+		<Name>Homematic MP3P-Sound</Name>
+		<ConfigUI> </ConfigUI>
 	</Device>
 
-
-
-	<Device type="dimmer" id="HMIP-PDT">
+	<Device type="dimmer" id="HMIP-PDT" allowUserCreation="false">
 		<Name>Homematic PDT-outlet dimmer</Name>
-		<ConfigUI>
-			<Field	  id="show"		  type="label"  >
-			<Label>Nothing to configure</Label>
-			</Field>
-		</ConfigUI>
-		<States>
-		</States>
+		<ConfigUI> </ConfigUI>
+	</Device>
 
+	<Device type="dimmer" id="HMIP-PDT3" allowUserCreation="false">
+		<Name>Homematic PDT- 3 dimmer</Name>
+		<ConfigUI> </ConfigUI>
+	</Device>
+
+	<Device type="dimmer" id="HMIP-PDT4" allowUserCreation="false">
+		<Name>Homematic PDT- DRBL 4 dimmer</Name>
+		<ConfigUI> </ConfigUI>
+	</Device>
+
+	<Device type="relay" id="HMIP-PSM" allowUserCreation="false">
+		<Name>Homematic PSM  power switch w energy types:  BSM UBS...  </Name>
+		<ConfigUI> </ConfigUI>
 	</Device>
 
 
-	<Device type="relay" id="HMIP-PSM">
-		<Name>Homematic HMIP-PSM PowerOutlet Switch W Energy</Name>
-		<ConfigUI>
-			<Field	  id="show"		  type="label"  >
-			<Label>Nothing to configure</Label>
-			</Field>
-		</ConfigUI>
-		<States>
-		</States>
-
+	<Device type="relay" id="HMIP-BSM" allowUserCreation="false">
+		<Name>Homematic HMIP-BSM PowerOutlet Switch W Energy</Name>
+		<ConfigUI> </ConfigUI>
 	</Device>
 
-
-	<Device type="relay" id="HMIP-PS">
-		<Name>Homematic HMIP-PSM etc Outlet Switch</Name>
-		<ConfigUI>
-				<Field id="SupportsOnState" type="checkbox" defaultValue="true" hidden ="true"></Field>
-				<Field id="SupportsSensorValue" type="checkbox" defaultValue="false" hidden ="true"></Field>
-
-			<Field	  id="show"		  type="label"  >
-			<Label>Nothing to configure</Label>
-			</Field>
-		</ConfigUI>
-		<States>
-		</States>
+	<Device type="relay" id="HMIP-PS" allowUserCreation="false">
+		<Name>Homematic HMIP-PS  etc Switch</Name>
+		<ConfigUI> </ConfigUI>
 	</Device>
 
-	<Device type="sensor" id="HMIP-SMI">
+	<Device type="sensor" id="HMIP-PS2" allowUserCreation="false">
+		<Name>Homematic HMIP-PS2 dual Relay output</Name>
+		<ConfigUI> </ConfigUI>
+	</Device>
+
+	<Device type="sensor" id="HMIP-PS4" allowUserCreation="false">
+		<Name>Homematic HMIP-PS4 quad Relay output</Name>
+		<ConfigUI> </ConfigUI>
+	</Device>
+
+	<Device type="dimmer" id="HMIP-ROLL" allowUserCreation="false">
+		<Name>Homematic HMIP-xROLL window curtain roll </Name>
+		<ConfigUI> </ConfigUI>
+	</Device>
+
+	<Device type="dimmer" id="ELV-SH-WSC" allowUserCreation="false">
+		<Name>Homematic ELV-SH-WSC 2 channel servo controller</Name>
+		<ConfigUI> </ConfigUI>
+	</Device>
+""
+
+	<Device type="custom" id="HMIP-SRH" allowUserCreation="false">
+		<Name>Homematic HMIP-SRH Window open/tilt/close </Name>
+		<ConfigUI> </ConfigUI>
+	</Device>
+
+	<Device type="sensor" id="HMIP-SMI" allowUserCreation="false">
 		<Name>Homematic SMI-Motion sensor</Name>
-		<ConfigUI>
-			<Field	  id="show"		  type="label"  >
-			<Label>Nothing to configure</Label>
-			</Field>
-		</ConfigUI>
-		<States>
-		</States>
+		<ConfigUI> </ConfigUI>
 	</Device>
 
 
-	<Device type="sensor" id="HMIP-DLD">
+	<Device type="sensor" id="HMIP-SAM" allowUserCreation="false">
+		<Name>Homematic SAM-Motion sensor</Name>
+		<ConfigUI> </ConfigUI>
+	</Device>
+
+
+	<Device type="sensor" id="HMIP-DLD" allowUserCreation="false">
 		<Name>Homematic DLD-Door-Lock</Name>
-		<ConfigUI>
-			<Field	  id="show"		  type="label"  >
-			<Label>Nothing to configure</Label>
-			</Field>
-		</ConfigUI>
-		<States>
-		</States>
+		<ConfigUI> </ConfigUI>
 	</Device>
 
-	<Device type="sensor" id="HMIP-ROOM">
+	<Device type="sensor" id="HMIP-ASIR" allowUserCreation="false">
+		<Name>Homematic HMIP-ASIR alarm</Name>
+		<ConfigUI> </ConfigUI>
+	</Device>
+
+	<Device type="sensor" id="HMIP-SPI" allowUserCreation="false">
+		<Name>Homematic SPI-Motion sensor</Name>
+		<ConfigUI> </ConfigUI>
+	</Device>
+
+
+	<Device type="sensor" id="HMIP-Rain" allowUserCreation="false">
+		<Name>Homematic Rain Sensor</Name>
+		<ConfigUI> </ConfigUI>
+	</Device>
+
+
+	<Device type="sensor" id="HMIP-Sunshine" allowUserCreation="false">
+		<Name>Homematic Sunshine Sensor</Name>
+		<ConfigUI> </ConfigUI>
+	</Device>
+
+
+	<Device type="sensor" id="HMIP-Wind" allowUserCreation="false">
+		<Name>Homematic Wind Sensor</Name>
+		<ConfigUI> </ConfigUI>
+	</Device>
+
+
+	<Device type="sensor" id="HMIP-STE2" allowUserCreation="false">
+		<Name>Homematic STE2 Dual Temperature Sensor</Name>
+		<ConfigUI> </ConfigUI>
+	</Device>
+
+	<Device type="sensor" id="HMIP-Temperature" allowUserCreation="false">
+		<Name>Homematic Temperature Sensor</Name>
+		<ConfigUI> </ConfigUI>
+	</Device>
+
+	<Device type="sensor" id="HMIP-Voltage" allowUserCreation="false">
+		<Name>Homematic Volatge input Sensor</Name>
+		<ConfigUI> </ConfigUI>
+	</Device>
+
+	<Device type="sensor" id="HMIP-Humidity" allowUserCreation="false">
+		<Name>Homematic Humidity Sensor</Name>
+		<ConfigUI> </ConfigUI>
+	</Device>
+
+
+	<Device type="sensor" id="HMIP-Illumination" allowUserCreation="false">
+		<Name>Homematic Illumination Sensor</Name>
+		<ConfigUI> </ConfigUI>
+	</Device>
+
+
+	<Device type="sensor" id="HMIP-SL" allowUserCreation="false">
+		<Name>Homematic HMIP-SLx Illumination Sensor</Name>
+		<ConfigUI> </ConfigUI>
+	</Device>
+
+
+	<Device type="relay" id="HMIP-Relay" allowUserCreation="false">
+		<Name>Homematic Relay</Name>
+		<ConfigUI> </ConfigUI>
+	</Device>
+
+
+	<Device type="dimmer" id="HMIP-Dimmer" allowUserCreation="false">
+		<Name>Homematic Dimmer</Name>
+		<ConfigUI> </ConfigUI>
+	</Device>
+
+	<Device type="dimmer" id="HMIP-Dimmer-V" allowUserCreation="false">
+		<Name>Homematic Dimmer Valve</Name>
+		<ConfigUI> </ConfigUI>
+	</Device>
+
+	<Device type="dimmer" id="HMIP-Dimmer-C" allowUserCreation="false">
+		<Name>Homematic Dimmer Color</Name>
+		<ConfigUI> </ConfigUI>
+	</Device>
+
+
+	<Device type="dimmer" id="HMIP-Dimmer-R" allowUserCreation="false">
+		<Name>Homematic Roll</Name>
+		<ConfigUI> </ConfigUI>
+	</Device>
+
+
+	<Device type="sensor" id="HMIP-LEVEL" allowUserCreation="false">
+		<Name>Homematic LEVEL</Name>
+		<ConfigUI> </ConfigUI>
+	</Device>
+
+	<Device type="sensor" id="HMIP-ROOM" allowUserCreation="false">
 		<Name>Homematic Room</Name>
-		<ConfigUI>
-			<Field	  id="show"		  type="label"  >
-			<Label>Nothing to configure</Label>
-			</Field>
-		</ConfigUI>
-		<States>
-		</States>
-
+		<ConfigUI> </ConfigUI>
 	</Device>
 
-	<Device type="sensor" id="HMIP-HEATING">
-		<Name>Homematic Heating collection</Name>
-		<ConfigUI>
-			<Field	  id="show"		  type="label"  >
-			<Label>Nothing to configure</Label>
-			</Field>
-		</ConfigUI>
-		<States>
-		</States>
-	</Device>
-
-
-	<Device type="sensor" id="HMIP-SYSVAR-FLOAT">
+	<Device type="sensor" id="HMIP-SYSVAR-FLOAT" allowUserCreation="false">
 		<Name>Homematic SYSvar-FLOAT</Name>
-		<ConfigUI>
-			<Field	  id="show"		  type="label"  >
-			<Label>Nothing to configure</Label>
-			</Field>
-		</ConfigUI>
-		<States>
-		</States>
+		<ConfigUI> </ConfigUI>
 	</Device>
 
-	<Device type="custom" id="HMIP-SYSVAR-STRING">
+	<Device type="custom" id="HMIP-SYSVAR-STRING" allowUserCreation="false">
 		<Name>Homematic SYSvar-STRING</Name>
-		<UiDisplayStateId>value</UiDisplayStateId>
-		<ConfigUI>
-			<Field	  id="show"		  type="label"  >
-			<Label>Nothing to configure</Label>
-			</Field>
-		</ConfigUI>
-		<States>
-		</States>
+		<ConfigUI> </ConfigUI>
 	</Device>
 
-	<Device type="sensor" id="HMIP-SYSVAR-BOOL">
+	<Device type="sensor" id="HMIP-SYSVAR-BOOL" allowUserCreation="false">
 		<Name>Homematic SYSvar-BOOL</Name>
-		<ConfigUI>
-			<Field	  id="show"		  type="label"  >
-			<Label>Nothing to configure</Label>
-			</Field>
-		</ConfigUI>
-		<States>
-		</States>
+		<ConfigUI> </ConfigUI>
 	</Device>
 
-	<Device type="sensor" id="HMIP-SYSVAR-ALARM">
+	<Device type="sensor" id="HMIP-SYSVAR-ALARM" allowUserCreation="false">
 		<Name>Homematic SYSvar-ALARM</Name>
-		<ConfigUI>
-			<Field	  id="show"		  type="label"  >
-			<Label>Nothing to configure</Label>
-			</Field>
-		</ConfigUI>
-		<States>
-		</States>
+		<ConfigUI> </ConfigUI>
 	</Device>
 
 
-	<Device type="sensor" id="HomematicHost">
+	<Device type="sensor" id="Homematic-Host">
 		<Name>Homematic Host</Name>
-		<ConfigUI>
-			<Field id="SupportsStatusRequest" type="checkbox" defaultValue="False" hidden="true"></Field>
-			<Field id="SupportsSensorValue" type="checkbox" defaultValue="true" hidden="true"></Field>
-			<Field id="SupportsOnState" type="checkbox" defaultValue="False" hidden="true"></Field>
-
-			<Field	  id="ipNumber"		  type="textfield"  >
-				<Label>overwrite ip Number if wanted</Label>
-			</Field>
-
-			<Field	  id="portNumber"		  type="textfield"  >
-				<Label>overwrite port Number if wanted</Label>
-			</Field>
-		</ConfigUI>
-
-		<States>
-				<State id="created">
-					<ValueType>String</ValueType>
-					<TriggerLabel>created</TriggerLabel>
-					<ControlPageLabel>created</ControlPageLabel>
-				</State>
-				<State id="numberOfDevices">
-					<ValueType>integer</ValueType>
-					<TriggerLabel>numberOfDevices</TriggerLabel>
-					<ControlPageLabel>numberOfDevices</ControlPageLabel>
-				</State>
-				<State id="numberOfRooms">
-					<ValueType>integer</ValueType>
-					<TriggerLabel>numberOfRooms</TriggerLabel>
-					<ControlPageLabel>numberOfRooms</ControlPageLabel>
-				</State>
-				<State id="numberOfVariables">
-					<ValueType>integer</ValueType>
-					<TriggerLabel>numberOfVariables</TriggerLabel>
-					<ControlPageLabel>numberOfVariables</ControlPageLabel>
-				</State>
-
-
-		</States>
-
+		<ConfigUI> </ConfigUI>
 	</Device>
 
-	<Device type="sensor" id="Homematic-AP">
+	<Device type="sensor" id="Homematic-AP" allowUserCreation="false">
 		<Name>Homematic AP</Name>
-		<ConfigUI>
-			<Field id="SupportsStatusRequest" type="checkbox" defaultValue="False" hidden="true"></Field>
-			<Field id="SupportsSensorValue" type="checkbox" defaultValue="true" hidden="true"></Field>
-			<Field id="SupportsOnState" type="checkbox" defaultValue="False" hidden="true"></Field>
-		</ConfigUI>
-
-
-		<States>
-				<State id="created">
-					<ValueType>String</ValueType>
-					<TriggerLabel>created</TriggerLabel>
-					<ControlPageLabel>created</ControlPageLabel>
-				</State>
-
-		</States>
-
+		<ConfigUI> </ConfigUI>
 	</Device>
 
 
