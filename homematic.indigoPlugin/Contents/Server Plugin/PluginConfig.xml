@@ -1,25 +1,24 @@
 <?xml version="1.0"?>
 <PluginConfig>
 
-	<Field id="infoLabel1" 				type="label"> 
-		<Label>Homematic  plugin  Developed by Karl Wachs
+	<Field id="infoLabel1" 				type="label" fontColor="orange" > 
+		<Label>Homematic  plugin  Developed by Karl Wachs March 2024
 Requirements: raspberry matic CCU v3  with addon CCU-Jack
+The default settings should be fine.
+The only REQUIRED settings is the  IP NUMBER  of your raspberrymatic RPI.
 
-This plugin will read all CCU info at startup and once every 3 minutes 
-   and all values every 3 secs(default)
+This plugin will read all CCU info at startup and once every 2 minutes (default)
+   and all values every 3 secs (default)
 It will then create and populate the corresponding indigo devices / states:
    devices, rooms, groups, variables, sys-info, vendor info  etc. 
 
-It can READ all sensor data (T, H, P, Co2, Particultes, Wind,Rain...) 
-   as well as any alarm data (Water,Smoke, Fire, ..) and 
-   relay / ouput states and dimmer values.
+It can READ all sensor data (T, H, P, Co2, Particultes, Wind, Rain,...) 
+   as well as any alarm data (Water, Smoke, Fire, ..) and 
+   relay / ouput states and dimmer values as well as button presses
 
-It can SET relays ouputs on/off, and can set dimmer values 
+It can SET relays outputs on/off, and can set dimmer values etc
 
-You can select not to create certain devices or variables in the plugin menu.
-
-The default settings should be fine.
-The only reuired settings is the ip number of your raspberrymatic RPI.
+For more details do menu / PRINT parameters and help to logfile 
 </Label>  
 	</Field>
 
@@ -39,7 +38,7 @@ The only reuired settings is the ip number of your raspberrymatic RPI.
 	</Field>
 
 	<Field id="folderNameDevices"       	type="textfield"   visibleBindingId="ShowGeneral" visibleBindingValue="true"  > 
-		<Label>Folder name for new DEVICES:</Label>  
+		<Label>Folder name for NEW devices:</Label>  
 	</Field>
 
 
@@ -150,10 +149,6 @@ The only reuired settings is the ip number of your raspberrymatic RPI.
 			<Option value="180" >3 minutes</Option>
 			<Option value="300" >5 minutes</Option>
 		</List>
-	</Field>
-
-	<Field id="portNumber"  	type="textfield"   visibleBindingId="ShowExpert" visibleBindingValue="true"  > 
-		<Label>.. portNumber of homematic server:</Label> 
 	</Field>
 
 

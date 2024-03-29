@@ -41,6 +41,33 @@
  	</Action>
 
 
+	<Action id="setVariable">
+		<Name>Variable set ..</Name>
+		<CallbackMethod>setVariableAction</CallbackMethod> 
+		<ConfigUI>
+			<Field id="lab00" type="label" fontColor="orange"> 
+				<Label>Send string or bool or number to homematic variable on the CCU 
+1. select variable to be written to
+2. enter value:
+   for BOOL use t/f or 1/0
+   for STRING any string
+   for NUMBER any integer or float </Label>
+			</Field>
+
+			<Field     id="deviceId" type="menu" defaultValue="0">
+				<Label>select variable to be set:</Label>
+				<List class="self" filter="variable" method="filterVariables"  dynamicReload="no"/>
+			</Field>
+
+			<Field  id="text" type="textfield" defaultValue="">
+				<Label>value to be sent to variable:</Label>
+			</Field>
+
+		</ConfigUI>
+
+    </Action>
+
+
 	<Action id="alarmSiren">
 		<Name>Alarm set</Name>
 		<CallbackMethod>alarmSIRENaction</CallbackMethod> 

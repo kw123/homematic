@@ -28,7 +28,6 @@ requests.packages.urllib3.disable_warnings(requests.packages.urllib3.exceptions.
 
 # left to be done:
 #  
-#  check curl -> request for variable action does not work with requests !! works with devices
 # 
 #
 #
@@ -63,10 +62,9 @@ kDefaultPluginPrefs = {
 	"accept_DutyCycle":							True,
 	"ShowDebug":								False,
 	"writeInfoToFile":							False,
-	"showLoginTest":							True,
+	"showLoginTest":							False,
 	"debugLogic":								False,
 	"debugConnect":								False,
-	"debugGetData":								False,
 	"debugGetData":								False,
 	"debugActions":								False,
 	"debugDigest":								False,
@@ -77,11 +75,11 @@ kDefaultPluginPrefs = {
 	"ShowExpert":								False,
 	"requestTimeout":							"10",
 	"delayOffForButtons":						"2",
-	"getCompleteUpdateEvery":					"120",
+	"getCompleteUpdateEvery":					"120", # in secs
 	"getValuesEvery":							"3000" # in millisecs
 }
 
-_defaultAllHomematic = { "type":"", "title":"", "indigoId":0, "indigoDevType":"deviceTypeId", "lastErrorMsg":0, "lastmessageFromHomematic":0, "indigoStatus":"active", "homemtaticStatus":"active", "childInfo":{} }
+_defaultAllHomematic = { "type":"", "title":"", "indigoId":0, "indigoDevType":"deviceTypeId", "lastErrorMsg":0, "lastmessageFromHomematic":0, "indigoStatus":"active", "homemtaticStatus":"active", "childInfo":{},"sValue":0}
 
 _debugAreas = {}
 for kk in kDefaultPluginPrefs:
@@ -122,21 +120,21 @@ class Plugin(indigo.PluginBase):
 		self.MAChome					= os.path.expanduser("~")
 		self.userIndigoDir				= self.MAChome + "/indigo/"
 		self.indigoPreferencesPluginDir = self.getInstallFolderPath+"Preferences/Plugins/"+self.pluginId+"/"
-		self.PluginLogFile				= indigo.server.getLogsFolderPath(pluginId=self.pluginId) +"/plugin.log"
+		self.PluginLogFile				= indigo.server.getLogsFolderPath( pluginId=self.pluginId ) +"/plugin.log"
 
-		formats=	{   logging.THREADDEBUG: "%(asctime)s %(msg)s",
+		formats =	{   logging.THREADDEBUG: "%(asctime)s %(msg)s",
 						logging.DEBUG:       "%(asctime)s %(msg)s",
 						logging.INFO:        "%(asctime)s %(msg)s",
 						logging.WARNING:     "%(asctime)s %(msg)s",
 						logging.ERROR:       "%(asctime)s.%(msecs)03d\t%(levelname)-12s\t%(name)s.%(funcName)-25s %(msg)s",
-						logging.CRITICAL:    "%(asctime)s.%(msecs)03d\t%(levelname)-12s\t%(name)s.%(funcName)-25s %(msg)s" }
+						logging.CRITICAL:    "%(asctime)s.%(msecs)03d\t%(levelname)-12s\t%(name)s.%(funcName)-25s %(msg)s"}
 
 		date_Format = { logging.THREADDEBUG: "%Y-%m-%d %H:%M:%S",		# 5
 						logging.DEBUG:       "%Y-%m-%d %H:%M:%S",		# 10
 						logging.INFO:        "%Y-%m-%d %H:%M:%S",		# 20
 						logging.WARNING:     "%Y-%m-%d %H:%M:%S",		# 30
 						logging.ERROR:       "%Y-%m-%d %H:%M:%S",		# 40
-						logging.CRITICAL:    "%Y-%m-%d %H:%M:%S" }		# 50
+						logging.CRITICAL:    "%Y-%m-%d %H:%M:%S"}		# 50
 		formatter = LevelFormatter(fmt="%(msg)s", datefmt="%Y-%m-%d %H:%M:%S", level_fmts=formats, level_date=date_Format)
 
 		self.plugin_file_handler.setFormatter(formatter)
@@ -158,19 +156,19 @@ class Plugin(indigo.PluginBase):
 		self.indiLOG.log(20,"detailed logging in     {}".format(self.PluginLogFile))
 		if self.pluginPrefs.get('showLoginTest', True):
 			self.indiLOG.log(20,"testing logging levels, for info only: ")
-			self.indiLOG.log( 0,"logger  enabled for     0 ==> TEST ONLY ")
-			self.indiLOG.log( 5,"logger  enabled for     THREADDEBUG    ==> TEST ONLY ")
-			self.indiLOG.log(10,"logger  enabled for     DEBUG          ==> TEST ONLY ")
-			self.indiLOG.log(20,"logger  enabled for     INFO           ==> TEST ONLY ")
-			self.indiLOG.log(30,"logger  enabled for     WARNING        ==> TEST ONLY ")
-			self.indiLOG.log(40,"logger  enabled for     ERROR          ==> TEST ONLY ")
-			self.indiLOG.log(50,"logger  enabled for     CRITICAL       ==> TEST ONLY ")
-			self.indiLOG.log(10,"Plugin short Name       {}".format(self.pluginShortName))
-		self.indiLOG.log(10,"my PID                  {}".format(self.myPID))	 
-		self.indiLOG.log(10,"Achitecture             {}".format(platform.platform()))	 
-		self.indiLOG.log(10,"OS                      {}".format(platform.mac_ver()[0]))	 
-		self.indiLOG.log(10,"indigo V                {}".format(indigo.server.version))	 
-		self.indiLOG.log(10,"python V                {}.{}.{}".format(sys.version_info[0], sys.version_info[1] , sys.version_info[2]))	 
+			self.indiLOG.log( 0, "logger  enabled for     0 ==> TEST ONLY ")
+			self.indiLOG.log( 5, "logger  enabled for     THREADDEBUG    ==> TEST ONLY ")
+			self.indiLOG.log(10, "logger  enabled for     DEBUG          ==> TEST ONLY ")
+			self.indiLOG.log(20, "logger  enabled for     INFO           ==> TEST ONLY ")
+			self.indiLOG.log(30, "logger  enabled for     WARNING        ==> TEST ONLY ")
+			self.indiLOG.log(40, "logger  enabled for     ERROR          ==> TEST ONLY ")
+			self.indiLOG.log(50, "logger  enabled for     CRITICAL       ==> TEST ONLY ")
+			self.indiLOG.log(10, "Plugin short Name       {}".format(self.pluginShortName))
+		self.indiLOG.log(10, "my PID                  {}".format(self.myPID))
+		self.indiLOG.log(10, "Achitecture             {}".format(platform.platform()))
+		self.indiLOG.log(10, "OS                      {}".format(platform.mac_ver()[0]))
+		self.indiLOG.log(10, "indigo V                {}".format(indigo.server.version))
+		self.indiLOG.log(10, "python V                {}.{}.{}".format(sys.version_info[0], sys.version_info[1] , sys.version_info[2]))
 
 		self.pythonPath = ""
 		if os.path.isfile("/Library/Frameworks/Python.framework/Versions/Current/bin/python3"):
@@ -201,14 +199,13 @@ class Plugin(indigo.PluginBase):
 		try:
 			self.initSelfVariables()
 
-			self.currentVersion	= self.readJson(self.indigoPreferencesPluginDir+"dataVersion",defReturn={}).get("currentVersion",{})
+			self.currentVersion	= self.readJson(self.indigoPreferencesPluginDir+"dataVersion", defReturn={}).get("currentVersion",{})
 
 			self.setDebugFromPrefs(self.pluginPrefs)
 
 			self.getFolderId()
 
 			self.pluginStartTime = time.time()
-
 
 		except Exception as e:
 			if "{}".format(e).find("None") == -1: self.indiLOG.log(40,"", exc_info=True)
@@ -222,10 +219,10 @@ class Plugin(indigo.PluginBase):
 
 
 	####----------------- @ startup set global parameters, create directories etc ---------
+
 	def initSelfVariables(self):
 		try:
 			self.writeToLogAfter 								= 180 # secs 
-			self.useCurlForVar 									= True
 			self.curlPath 										= "/usr/bin/curl"
 			self.variablesToDevicesLast							= {}
 			self.variablesToDevices 							= {}
@@ -237,6 +234,7 @@ class Plugin(indigo.PluginBase):
 			self.nextFullStateCheckAfter						= 251 # secs
 			self.oneCycleComplete								= False
 			self.lastDevStates									= {} # save execution time, only check those tha have chnaged w/o reading the states
+			self.resetlastDevStates								= 999999999999999
 			self.hostDevId										= 0
 			self.homematicIdtoTitle								= {}
 			self.numberOfRooms									= -1
@@ -250,12 +248,12 @@ class Plugin(indigo.PluginBase):
 			self.pendingCommand									= {}
 			self.requestSession									= ""
 			self.getcompleteUpdateLast							= 0
-			self.getCompleteUpdateEvery 						= float(self.pluginPrefs.get("getCompleteUpdateEvery", "90"))
-			self.getValuesEvery 								= float(self.pluginPrefs.get("getValuesEvery", "10"))/1000.
+			self.getCompleteUpdateEvery 						= float(self.pluginPrefs.get("getCompleteUpdateEvery",	kDefaultPluginPrefs["getCompleteUpdateEvery"]))
+			self.getValuesEvery 								= float(self.pluginPrefs.get("getValuesEvery", 			kDefaultPluginPrefs["getValuesEvery"]))/1000.
+			self.requestTimeout									= float(self.pluginPrefs.get("requestTimeout",  		kDefaultPluginPrefs["requestTimeout"]))
+			self.portNumber										= 		self.pluginPrefs.get("portNumber", 				kDefaultPluginPrefs["portNumber"])
+			self.ipNumber										= 		self.pluginPrefs.get("ipNumber",  				kDefaultPluginPrefs["ipNumber"])
 			self.getValuesLast									= 0
-			self.requestTimeout									= float(self.pluginPrefs.get("requestTimeout", "10"))
-			self.portNumber										= self.pluginPrefs.get("portNumber", "")
-			self.ipNumber										= self.pluginPrefs.get("ipNumber", "")
 			self.restartHomematicClass							= {}
 			self.folderNameDevicesID							= 0
 			self.roomMembers									= {}
@@ -265,8 +263,6 @@ class Plugin(indigo.PluginBase):
 			self.newDevice										= False
 			self.fillDevStatesErrorLog 							= 0
 			self.firstReadAll 									= False
-			try: 	self.homematicAllDevices					= self.readJson(self.indigoPreferencesPluginDir+"homematicAllDevices",defReturn={})
-			except:	self.homematicAllDevices					= {}
 			self.fixAllhomematic()
 			
 #			self.indiLOG.log(20,"k_supportedDeviceTypesFromHomematicToIndigo :\n{}".format(k_supportedDeviceTypesFromHomematicToIndigo))
@@ -278,7 +274,7 @@ class Plugin(indigo.PluginBase):
 
 			#time.sleep(1000)
 		except Exception as e:
-			if "{}".format(e).find("None") == -1: self.indiLOG.log(40,"", exc_info=True)
+			if "{}".format(e).find("None") == -1: self.indiLOG.log(40, "", exc_info=True)
 			exit(0)
 
 
@@ -288,13 +284,17 @@ class Plugin(indigo.PluginBase):
 	####-----------------	 ---------
 	def fixAllhomematic(self, address=""):
 		if address == "":
-			latestV = "address-vC"
+			self.homematicAllDevices = self.readJson(self.indigoPreferencesPluginDir+"homematicAllDevices.json", defReturn={})
+			latestV = "address-A"
 			if latestV not in self.homematicAllDevices:
 				self.homematicAllDevices = {}
-				self.homematicAllDevices[latestV] = copy.copy(_defaultAllHomematic )
+				self.homematicAllDevices[latestV] = copy.copy(_defaultAllHomematic)
 				self.homematicAllDevices[latestV]["indigoStatus"] = "active/comDisabled/deleted"
-				self.homematicAllDevices[latestV]["homemtaticStatus"] ="active/gone"
+				self.homematicAllDevices[latestV]["type"] = "here goes the type"
+				self.homematicAllDevices[latestV]["title"] = "here goes the title"
+				self.homematicAllDevices[latestV]["homemtaticStatus"] = "active/gone"
 				self.homematicAllDevices[latestV]["childInfo"] = {"homematicStateName1":"indigoId1","homematicStateName2":"indigoId2"} 
+				self.indiLOG.log(20," added default entry {} to homematicAllDevices: {}".format(latestV, self.homematicAllDevices[latestV]))
 
 	
 			for addr in self.homematicAllDevices:
@@ -326,7 +326,7 @@ class Plugin(indigo.PluginBase):
 		try:
 			for d in _debugAreas:
 				if theDict.get("debug"+d, False): self.debugAreas.append(d)
-			if writeToLog: self.indiLOG.log(20,"debug areas: {} ".format(self.debugAreas))
+			if writeToLog: self.indiLOG.log(20, "debug areas: {} ".format(self.debugAreas))
 		except	Exception as e:
 				if "{}".format(e).find("None") == -1: self.indiLOG.log(40,"", exc_info=True)
 
@@ -365,7 +365,7 @@ class Plugin(indigo.PluginBase):
 	def testPing(self, ipN):
 		try:
 			ss = time.time()
-			ret = subprocess.call("/sbin/ping  -c 1 -W 40 -o " + ipN, shell=True) # send max 2 packets, wait 40 msec   if one gets back stop
+			ret = subprocess.call("/sbin/ping  -c 1 -W 40 -o " + ipN, shell=True) # send max 2 packets, wait 40 msec   if one gets back: stop
 
 			#indigo.server.log(  ipN+"-1  {}".format(ret) +"  {}".format(time.time() - ss)  )
 
@@ -551,19 +551,36 @@ class Plugin(indigo.PluginBase):
 			out += '\n'
 			out += '\n'
 			out += '================================ HELP ===========================\n'
-			out += 'to install correctly: \n'
+			out += 'To install correctly: \n'
 			out += '1. install CCU-jack on the raspberry pi \n'
-			out += '2. in config set ip # , and if wanted chage folder name etc. For the rest the default should be ok\n'
+			out += '2. in config set ip # , and if wanted change folder name etc. For the rest the default should be ok\n'
 			out += 'after ~ 10 seconds after config the new devcies should appear in indigo \n'
 			out += 'You can configure some devices eg \n'
 			out += '   if min/max average.. states should be created\n'
 			out += '   if certain child devices should be created eg how many valves are used etc\n'
-			out += 'In the plugin menue you can set some devcies to be ignored or used again.\n'
+			out += 'In the plugin menu you can set some devices to be ignored or used again.\n'
 			out += 'Radiators and thermostats are fully supported and can be set\n'
-			out += 'You can switch on/off relays, dimmers, set sound and lights in actions\n'
+			out += '\n'
+			out += 'You can switch on/off relays, set dimmers, set sound and lights, alarms and displays, set variables in menu and actions\n'
+			out += '\n'
+			out += 'In file params_user.py you can define a new device if not already covered in parms.py\n'
+			out += '   this is only for device types that are covered current, but just show up under a differrnt name like FROLL and BROLL\n'
+			out += '   then set eg \n'
+			out += '    "HMIP-BROLL": "HMIP-FROLL", \n'
+			out += '   that will make a BROLL device look like an FROLL device to the plugin\n'
 			out += '\n'
 			out += '\n'
-			out += '\n'
+			out += '========== For device type BUTTON/ALARM/DIGITAL-input to work you need configure: \n'
+			out += '   You can use any kind of button/ALARM...  device (the type has to be registed as a button in the params.py file in the plugin directory)\n'
+			out += '   BUT you need to have somthing linked to the buttons of the device on homematic. W/o any action the states will stay stale.\n'
+			out += '   Set up a program that just triggers on one of the states of each button.\n'
+			out += '     Programerstellung: "\n'
+			out += '      Bedingung: Wenn .. "\n'
+			out += '      "Geraeteauswahl" <select the button device and channel x> "bei"   "Tastendruck kurz"\n'
+			out += '      "Geraeteauswahl" <select the button device and channel y> "bei"   "Tastendruck kurz"\n'
+			out += '      Aktivitaet: "\n'
+			out += '         No actual action has to be defined, could use kill all previous actions for this device\n'
+			out += '   Then the state / channel gets updated with a new time stamp and indigo will see the change \n'
 			out += '\n'
 			out += '========== For device type ASIR alarm action to work you need to\n'
 			out += '   (a) create a system variable on homematic eg "alarmInput" type string\n'
@@ -578,6 +595,7 @@ class Plugin(indigo.PluginBase):
 			out += '! must be "address/dur unit/durationvalue/acoustic alarm/optical alarm\n'
 			out += '! eg 00245F29B40C63/0/10/0/4\n'
 			out += '! then send commands to device ASIR to start alarm\n'
+			out += '!   the lines with if (debug) {... } can be deleted \n'
 			out += '\n'
 			out += 'var inp = dom.GetObject("alarmInput").Variable();\n'
 			out += 'var debug = false;\n'
@@ -675,8 +693,39 @@ class Plugin(indigo.PluginBase):
 	def getAllDataCallback(self, filter="", valuesDict="", typeId=""):
 
 		self.getcompleteUpdateLast = 0.
+		self.resetlastDevStates = time.time() + 10
 
 		return 
+	####-------------action filters  -----------
+	def filterVariables(self, filter="", valuesDict="", typeId="", xxx=""):
+
+		try:
+			ret = []
+			devTypes = k_actionTypes.get(filter,"variable")
+			#self.indiLOG.log(20,"filterDevices: filter given.. filter:{}, devTypes:{}, valuesDict:{}".format(filter, devTypes, valuesDict))
+			if devTypes == []: 
+				self.indiLOG.log(20,"filterDevices: no proper filter given.. filter:{}, devType:{}".format(filter, devType))
+				return ret
+
+			boolList = []
+			floatList = []
+			stringList = []
+	
+			for dev in indigo.devices.iter(self.pluginId):
+				#self.indiLOG.log(20,"filterDevices: comparing. devType:{}".format(dev.deviceTypeId))
+				if dev.deviceTypeId in devTypes: 
+					
+					address = dev.states["address"]
+					if self.homematicAllDevices[address]["sValue"] != 0: continue
+					if    dev.deviceTypeId.find("FLOAT")	> -1: floatList.append( [dev.id, dev.name+"="+str(dev.states["sensorValue"])+"=NUMBER"])
+					elif  dev.deviceTypeId.find("STRING")	> -1: stringList.append([dev.id, dev.name+"="+str(dev.states["value"])+"=STRING"])
+					elif  dev.deviceTypeId.find("BOOL")		> -1: boolList.append(  [dev.id, dev.name+"="+str(dev.states["onOffState"])+"=BOOL"])
+			ret = boolList + floatList + stringList
+		except	Exception as e:
+			if "{}".format(e).find("None") == -1: self.indiLOG.log(40,"", exc_info=True)
+
+		return ret
+
 	####-------------action filters  -----------
 	def filterDevices(self, filter="", valuesDict="", typeId="", xxx=""):
 
@@ -691,7 +740,6 @@ class Plugin(indigo.PluginBase):
 			for dev in indigo.devices.iter(self.pluginId):
 				#self.indiLOG.log(20,"filterDevices: comparing. devType:{}".format(dev.deviceTypeId))
 				if dev.deviceTypeId in devTypes: 
-					#self.indiLOG.log(20,"filterDevices: accepted: {}".format(dev.name))
 					ret.append([dev.id, dev.name])
 
 		except	Exception as e:
@@ -829,6 +877,33 @@ class Plugin(indigo.PluginBase):
 	####-------------ignore / unignore devices  ----------- END
 
 
+	#  ---------- variable action
+	def setVariableAction(self, action, typeId):
+		return self.setVariable(action.props, typeId)
+
+	def setVariable(self, action, typeId=""):
+
+		try:
+			
+			if self.decideMyLog("Actions"): self.indiLOG.log(20,"setVariable action:{}".format(str(action).replace("\n",", ")))
+
+			dev = indigo.devices[int(action["deviceId"])]
+			if dev.deviceTypeId not in k_mapHomematicToIndigoDevTypeStateChannelProps: return 
+			out = action["text"]
+			if dev.deviceTypeId.find("FLOAT") >-1:	
+				if action["text"].find(".") >-1:		out = float(action["text"])
+				else:									out = int(action["text"])
+			elif dev.deviceTypeId.find("BOOL")	>-1:	out = self.isBool2(action["text"],False,False)
+			elif dev.deviceTypeId.find("ALARM")	>-1:	out = self.isBool2(action["text"],False,False)
+			else:										out = action["text"]
+
+			self.doSendActionVariable( dev.states["address"], json.dumps({"v": out}) )
+
+		except Exception as e:
+			if "{}".format(e).find("None") == -1: self.indiLOG.log(40,"", exc_info=True)
+
+
+
 
 
 	#  ---------- thermostat action  boost
@@ -840,8 +915,6 @@ class Plugin(indigo.PluginBase):
 		try:
 			
 			if self.decideMyLog("Actions"): self.indiLOG.log(20,"boostThermostat action:{}".format(str(action).replace("\n",", ")))
-
-			if not self.isValidIP(self.ipNumber): return 
 
 			dev = indigo.devices[int(action["deviceId"])]
 
@@ -866,10 +939,6 @@ class Plugin(indigo.PluginBase):
 
 	# Main thermostat action set target temp called by Indigo Server.
 	####-------------
-	def boostThermostatAction(self, action, typeId):
-		return self.boostThermostat(action.props, typeId)
-
-	####-------------
 	def actionControlThermostat(self, action, typeId=""):
 
 		try:
@@ -883,8 +952,6 @@ class Plugin(indigo.PluginBase):
 				value = dev.states["setpointHeat"] + action.actionValue
 			else:
 				value = 18
-
-			if not self.isValidIP(self.ipNumber): return 
 
 			address = dev.states["address"]
 
@@ -980,7 +1047,7 @@ class Plugin(indigo.PluginBase):
 						#address/unit/length/acoust/optical
 			dj = { "v":"{}/{}/{}/{}/{}".format(addressDev, unit, DURATION, action["ACOUSTIC_ALARM_SELECTION"], action["OPTICAL_ALARM_SELECTION"]) }
 	
-			self.doSendActionVariable( addressVar, dj )
+			self.doSendActionVariable( addressVar, json.dumps(dj) )
 
 		except Exception as e:
 			if "{}".format(e).find("None") == -1: self.indiLOG.log(40,"", exc_info=True)
@@ -1000,10 +1067,6 @@ class Plugin(indigo.PluginBase):
 
 
 			if self.decideMyLog("Actions"): self.indiLOG.log(20,"doorLockUnLock  action:{}".format( str(action).replace("\n",", ")))
-
-			if not self.isValidIP(self.ipNumber): 
-				self.indiLOG.log(30,"doorLockUnLock {}  device:{}, bad IP number:{} ".format(action,self.ipNumber) )
-				return 
 
 
 			address = dev.states["address"].split("-")[0]
@@ -1047,10 +1110,6 @@ class Plugin(indigo.PluginBase):
 
 
 			if self.decideMyLog("Actions"): self.indiLOG.log(20,"actionControlDimmerRelay dev:{}, action:{}".format(dev.name, str(action).replace("\n",", ")))
-
-			if not self.isValidIP(self.ipNumber): 
-				self.indiLOG.log(30,"actionControlDimmerRelay {}  device:{}, bad IP number:{} ".format(dev.name, action, self.ipNumber) )
-				return 
 
 
 			address = dev.states["address"].split("-")[0]
@@ -1167,16 +1226,24 @@ class Plugin(indigo.PluginBase):
 	####-------------
 	def doSendAction(self, channels, address, state, dj ):
 		try:
+			if not self.isValidIP(self.ipNumber): 
+				self.indiLOG.log(30,"doSendAction  bad IP number:{} ".format(self.ipNumber) )
+				return 
 			thisRequestSession = requests.Session()
 			for ch in channels:	
 				html = "http://{}:{}/device/{}/{}/{}/~pv".format(self.ipNumber ,self.portNumber, address, ch, state )
 				r = "error"
-				if self.decideMyLog("Actions"): self.indiLOG.log(20,"doSendAction html:{}, dj:{}<<".format(html, dj))
+				if self.decideMyLog("Actions"): self.indiLOG.log(20,"doSendAction html: {}, dj:{}<<".format(html, dj))
 
 				try:
 					r = thisRequestSession.put(html, data=dj, timeout=self.requestTimeout, headers={'Connection':'close',"Content-Type": "application/json"})
 				except Exception as e:
-					self.indiLOG.log(30,"doSendActionVariable  bad return for html:{}, dj:{} ==> {}, err:{}".format(html, dj, r, e))
+					self.indiLOG.log(30,"doSendAction  bad return for html: {}, dj: {} ==> {}, err: {}".format(html, dj, r, e))
+
+				if type(r) != type("") and  r.status_code != 200:
+					self.indiLOG.log(30,"doSendAction return error:{}!=200, hmtl: {},  dj: {}".format(r.status_code, html, dj))
+				elif type(r) == type(""):
+					self.indiLOG.log(30,"doSendAction return error:{}!=200, hmtl: {},  dj: {}".format(r, html, dj))
 
 				if self.decideMyLog("Actions"): self.indiLOG.log(20,"doSendAction ret:{}".format(r))
 		except Exception as e:
@@ -1192,23 +1259,24 @@ class Plugin(indigo.PluginBase):
 	####-------------
 	def doSendActionVariable(self, address, dj ):
 		try:
+			if not self.isValidIP(self.ipNumber): 
+				self.indiLOG.log(30,"doSendActionVariable  bad IP number:{} ".format(self.ipNumber) )
+				return 
 			thisRequestSession = requests.Session()
 			html = "http://{}:{}/sysvar/{}/~pv".format(self.ipNumber ,self.portNumber, address)
 			r = "error"
 
-			if self.useCurlForVar:
-				cmd = self.curlPath + " -X PUT -d '" +json.dumps(dj)+"' " + html
-				ret = self.readPopen(cmd)
-				if self.decideMyLog("Actions"): self.indiLOG.log(20,"doSendActionVariable cmd:{},\nret:{}".format(cmd, ret))
+			if self.decideMyLog("Actions"): self.indiLOG.log(20,"doSendActionVariable html: {}, dj: {}<<".format(html, dj))
+			try:
+				r = thisRequestSession.put(html, data=dj, timeout=self.requestTimeout, headers={'Connection':'close',"Content-Type": "application/json"})
+			except Exception as e:
+				self.indiLOG.log(30,"doSendActionVariable  bad return for html:{}, dj:{} ==> {}, err:{}".format(html, dj, r, e))
+			if type(r) != type("") and  r.status_code != 200:
+				self.indiLOG.log(30,"doSendActionVariable return error:{}!=200, hmtl: {},  dj: {}".format(r.status_code, html, dj))
+			elif type(r) == type(""):
+				self.indiLOG.log(30,"doSendActionVariable return error:{}!=200, hmtl: {},  dj: {}".format(r, html, dj))
 
-			else:
-				if self.decideMyLog("Actions"): self.indiLOG.log(20,"doSendActionVariable html:{}, dj:{}<<".format(html, dj))
-				try:
-					r = thisRequestSession.put(html, data=dj, timeout=self.requestTimeout, headers={'Connection':'close',"Content-Type": "application/json"})
-				except Exception as e:
-					self.indiLOG.log(30,"doSendActionVariable  bad return for html:{}, dj:{} ==> {}, err:{}".format(html, dj, r, e))
-	
-				if self.decideMyLog("Actions"): self.indiLOG.log(20,"doSendActionVariable ret:{}".format(r))
+			if self.decideMyLog("Actions"): self.indiLOG.log(20,"doSendActionVariable ret:{}".format(str(r)))
 		except Exception as e:
 			if "{}".format(e).find("None") == -1: self.indiLOG.log(40,"", exc_info=True)
 
@@ -1642,6 +1710,7 @@ class Plugin(indigo.PluginBase):
 		key = ""
 		local = ""
 		checkAddress = "xxx001860C98C9E3E"
+		dt = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 		try:
 			if len(self.devStateChangeList) == 0: return
 			local = copy.deepcopy(self.devStateChangeList)
@@ -1696,18 +1765,23 @@ class Plugin(indigo.PluginBase):
 						else:
 							onlyIfChanged.append({"key":key,"value":value})
 
-						#if dev.id == 1488939244: self.indiLOG.log(10,"executeUpdateStatesList : t/f {}  {}  {}  {}  {} state:{} in?{}".format("lastSensorChange" in dev.states ,lastSensorChangeFound , key == "sensorValue" , key == "onOffState" , key in k_stateThatTriggersLastSensorChange.get(dev.deviceTypeId,[]), key, k_stateThatTriggersLastSensorChange.get(dev.deviceTypeId,[]) ))
+						if key in k_statesWithPreviousValue and key+"_PreviousValue" in dev.states:
+							onlyIfChanged.append({"key":key+"_PreviousValue","value":dev.states[key]})
+
 						if 	(
 								("lastSensorChange" in dev.states) and 
 								(not lastSensorChangeFound) and 
 								(key == "sensorValue" or key == "onOffState" or (dev.deviceTypeId in k_mapHomematicToIndigoDevTypeStateChannelProps and  "triggerLastSensorChange" in k_mapHomematicToIndigoDevTypeStateChannelProps[dev.deviceTypeId] and  key in k_mapHomematicToIndigoDevTypeStateChannelProps[dev.deviceTypeId]["triggerLastSensorChange"]) 	)
 							):
 							#if dev.id == 1488939244: self.indiLOG.log(10,"executeUpdateStatesList pass 2")
-							onlyIfChanged.append({"key":"lastSensorChange","value":datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")})
+							onlyIfChanged.append({"key":"lastSensorChange","value":dt})
 							lastSensorChangeFound = True # only add lastSensorChange once per dev.
 
 						# show in status field if .. 
 						if props.get("displayStateId","xxx") == "displayStatus" and key == props.get("displayS",""):
+							if not lastSensorChangeFound:
+								onlyIfChanged.append({"key":"lastSensorChange","value":dt})
+								lastSensorChangeFound = True # only add lastSensorChange once per dev.
 							onlyIfChanged.append({"key":"displayStatus","value":value,"uiValue":uiValue})
 							
 
@@ -1834,7 +1908,7 @@ class Plugin(indigo.PluginBase):
 
 
 	####-------------action  -----------
-	def filterThermostat():
+	def filterThermostat(self):
 		try:
 			ret = []
 			for dev in indigo.devices.iter(self.pluginId):
@@ -1875,9 +1949,7 @@ class Plugin(indigo.PluginBase):
 					elif stateType == "enum":			self.newStateList.append(self.getDeviceStateDictForEnumType(xx, xx, xx))
 					elif stateType == "separator":		self.newStateList.append(self.getDeviceStateDictForSeparatorType(xx, xx, xx))
 
-				if True:
-					## add min/max etc if designed
-					if state in k_statesWithfillMinMax and dev !="" and dev.pluginProps.get("minMaxEnable-"+state,True):
+				if state in k_statesWithfillMinMax and dev !="" and dev.pluginProps.get("minMaxEnable-"+state,True):
 					
 						if state in k_statesThatHaveMinMaxReal:
 							for yy in k_stateMeasures:
@@ -1889,7 +1961,11 @@ class Plugin(indigo.PluginBase):
 								self.newStateList.append(self.getDeviceStateDictForIntegerType(xx+"_"+yy, xx+"_"+yy, xx+"_"+yy))
 							for yy in k_stateMeasuresCount:
 								self.newStateList.append(self.getDeviceStateDictForIntegerType(xx+"_"+yy, xx+"_"+yy, xx+"_"+yy))
-	
+
+				if state in k_statesWithPreviousValue and dev !="" and dev.pluginProps.get("previousValue-"+state,True):
+						self.newStateList.append(self.getDeviceStateDictForRealType(xx+"_PreviousValue", xx+"_PreviousValue",xx+"_PreviousValue"))
+
+
 
 		return 
 
@@ -1910,6 +1986,9 @@ class Plugin(indigo.PluginBase):
 
 				if  dev.pluginProps.get("isChild",False):
 						self.doGetDevStateType(dev.deviceTypeId, k_ChildrenHaveTheseStates, dev=dev)
+
+			# reset last values dict to force update
+			if dev.id in self.lastDevStates: del self.lastDevStates[dev.id]
 
 		except	Exception as e:
 			self.indiLOG.log(20,"deviceTypeId:{}, {}".format(dev.deviceTypeId, dev.name))
@@ -2090,19 +2169,20 @@ class Plugin(indigo.PluginBase):
 			for dev in indigo.devices.iter(self.pluginId):
 				if "address" in dev.states:
 					devList.append((dev.id, dev.states["address"]))
+
 			for nn in range(len(devList)):
 				for kk in range(nn+1,len(devList)):
 					if devList[nn][1] == devList[kk][1]:
 						dev1 = indigo.devices[devList[nn][0]]
 						dev2 = indigo.devices[devList[kk][0]]
 						dev1ChildID = dev1.states.get("childOf","")
-						dev2ChildID= dev2.states.get("childOf","")
+						dev2ChildID = dev2.states.get("childOf","")
 						if dev1ChildID != "" and dev2.id == dev1ChildID:
 							xx= "fixme"
 							try:	xx = dev1.name.split(" ")[0].split("-child-")[-1]
 							except	Exception as e:
 								self.indiLOG.log(40,"", exc_info=True)
-							self.indiLOG.log(30,"doing  fix #1 adding: :{} to address".format(xx)) 
+							self.indiLOG.log(30,"doing  fix #1 adding: {} to address  {}".format(xx, dev2.name)) 
 							dev1.updateStateOnServer("address", dev1.states["address"]+"-child-"+xx)
 							continue
 						elif dev2ChildID != "" and dev1.id == dev2ChildID:
@@ -2110,11 +2190,11 @@ class Plugin(indigo.PluginBase):
 							try: 	xx = dev2.name.split(" ")[0].split("-child-")[-1]
 							except	Exception as e:
 								self.indiLOG.log(40,"", exc_info=True)
-							self.indiLOG.log(30,"doing  fix #2  adding: {} to address ".format(xx)) 
+							self.indiLOG.log(30,"doing  fix #2  adding: {} to address  {}".format( xx, dev1.name)) 
 							dev2.updateStateOnServer("address", dev2.states["address"]+"-child-"+xx)
 							continue
 
-						self.indiLOG.log(30,"device with same address:{}, delete one and restart plugin:\ndev1 == {:12} {:12} {:12} {:55s}- type:{:12}, created:{}\ndev2 == {:12} {:12} {:12} {:55s}- type:{:12}, created:{}\n".format( devList[nn][1], 
+						self.indiLOG.log(30,"device with same address:{}, delete one and restart plugin:\ndev1 == {:35} {:12} {:12} {:55s}- type:{:12}, created:{}\ndev2 == {:35} {:12} {:12} {:55s}- type:{:12}, created:{}\n".format( devList[nn][1], 
 																										dev1.states["address"], dev1.id, dev1ChildID, dev1.name, dev1.states["homematicType"], dev1.states["created"],    
 																										dev2.states["address"], dev2.id, dev2ChildID, dev2.name, dev2.states["homematicType"], dev2.states["created"] ))
 		except	Exception as e:
@@ -2268,11 +2348,8 @@ class Plugin(indigo.PluginBase):
 
 				if self.devsWithenabledChildren == []:
 					for dev in indigo.devices.iter(self.pluginId):
-						for st in dev.states:
-							if st.find("enabledChildren") > -1:
-								self.devsWithenabledChildren.append(dev.id)
-								#self.indiLOG.log(20,"enabledChildren:name:{}".format(dev.name ))
-								break
+						if "enabledChildren" in dev.states: 
+							self.devsWithenabledChildren.append(dev.id)
 
 				newL = []
 				for devId in self.devsWithenabledChildren:
@@ -2287,8 +2364,7 @@ class Plugin(indigo.PluginBase):
 					for ii in range(100):
 						if props.get("enable-"+str(ii), False ):
 							enabledChildren += str(ii)+","
-					enabledChildren = enabledChildren.strip(",")	
-					enList= enabledChildren.split(",")
+
 					for pr in props:
 						if pr.find("enable-") == 0:
 							etype = pr.split("-")[1]
@@ -2298,7 +2374,6 @@ class Plugin(indigo.PluginBase):
 							except: pass
 							enabledChildren += etype+","
 					enabledChildren = enabledChildren.strip(",")	
-					#self.indiLOG.log(20,"periodCheck: {},  enabledChildren:{}".format(dev.name, enabledChildren))
 					self.addToStatesUpdateDict(dev, "enabledChildren", enabledChildren)
 					if props.get("displayS","") == "enabledChildren" and "sensorValue" in dev.states:
 						self.addToStatesUpdateDict(dev, "sensorValue", 1, uiValue="channels:"+enabledChildren.strip(","))
@@ -2334,15 +2409,17 @@ class Plugin(indigo.PluginBase):
 					else:
 						chn = channelNumber; ich = iChannelNumber
 
-					#if doPrint: self.indiLOG.log(20,"fillDevStates: ---1---ich:{}, indigoInfo:{}".format(homematicStateName, v , channelNumber, devTypeId, ich, indigoInfo))
-
 					state 		= indigoInfo.get("indigoState",homematicStateName)
 					mult		= indigoInfo.get("mult",1)
 					dType		= indigoInfo.get("dType","integer")
 					uiForm		= indigoInfo.get("format","{}")
-					if doPrint: self.indiLOG.log(20,"fillDevStates: ---2 ====>      OK      state:{}, mult:{}, dType:{}, v:{},  devTypeId:{}, ich:{},".format( state,  mult, dType, v,  devTypeId, ich))
 
-					if mult != 1: v *= mult
+					try: 	offset 	= float(props.get("offset-"+state,0))
+					except: offset	= 0.
+					if doPrint: self.indiLOG.log(20,"fillDevStates: ---2 ====>      OK      state:{}, mult:{}, offset:{},  dType:{}, v:{},  devTypeId:{}, ich:{},".format( state,  mult, offset, dType, v,  devTypeId, ich))
+
+					if offset !=0:	v += offset
+					if mult   != 1:	v *= mult
 
 					if dType == "integer": 
 						try:
@@ -2350,16 +2427,16 @@ class Plugin(indigo.PluginBase):
 						except:
 							self.writeErrorToLog(address, "fillDevStates: {} st:{} ch#:{} has error, not an integer>{}<".format(dev.name, homematicStateName, channelNumber, v ))
 							v = 0
-							
-						#if address == "00325D89BB3F6A": self.indiLOG.log(20,"fillDevStates- 9   state:{}, v:{} ===========".format( state, v))
+
 						self.addToStatesUpdateDict(dev, state, v, uiValue= uiForm.format(v))
-						#if doPrint: self.indiLOG.log(20,"fillDevStates:  ---3---- displayS:{}, SupportsSensorValue:{}".format( props.get("displayS","--"), props.get("SupportsSensorValue",False)))
 						if props.get("displayS","--") == state and "sensorValue" in dev.states and props.get("SupportsSensorValue",False):
 							if doPrint: self.indiLOG.log(20,"fillDevStates {}:  add sensorvalue".format(dev.name))
-							self.addToStatesUpdateDict(dev, "sensorValue", round(float(v),0), uiValue= uiForm.format(v))
+							self.addToStatesUpdateDict(dev, "sensorValue", v, uiValue= uiForm.format(v))
 						if state in dev.states:
-							if True or dev.states[state] != v:
-								self.addToStatesUpdateDict(dev, state, v, uiValue= uiForm.format(v))
+							self.addToStatesUpdateDict(dev, state, v, uiValue= uiForm.format(v))
+							resetState = state.split("Total")[0]+"_reset"
+							if (resetState in dev.states) and ( v < 1 and ( dt[0:-5] > dev.states[resetState][0:-5]  or len(dev.states[resetState]) < 5) ) :
+								self.addToStatesUpdateDict(dev, resetState, dt)
 
 					elif dType == "real":
 						try:
@@ -2368,12 +2445,14 @@ class Plugin(indigo.PluginBase):
 							self.writeErrorToLog(address, "fillDevStates: {} adr:{} st:{} has error not a float>{}<".format(dev.name, homematicStateName, channelNumber, v ))
 							v = 0. 
 						if props.get("displayS","--") == state and "sensorValue" in dev.states and props.get("SupportsSensorValue",False):
-							if dev.states["sensorValue"] != v:
 								self.addToStatesUpdateDict(dev, "sensorValue", v, uiValue=uiForm.format(v))
 
 						if state in dev.states:
-							if True or dev.states[state] != v:
-								self.addToStatesUpdateDict(dev, state, v, uiValue= uiForm.format(v))
+							self.addToStatesUpdateDict(dev, state, v, uiValue= uiForm.format(v))
+							resetState = state.split("Total")[0]+"_reset"
+							if (resetState in dev.states) and ( v < 1 and ( dt[0:-5] > dev.states[resetState][0:-5]  or len(dev.states[resetState]) < 5) ) :
+								self.addToStatesUpdateDict(dev, resetState, dt)
+
 
 					elif dType == "booltruefalse":
 							TF = self.isBool2(v, doInverse, vInverse)
@@ -2386,23 +2465,21 @@ class Plugin(indigo.PluginBase):
 											self.addToStatesUpdateDict(dev, "lastEventOn", dtNow)
 										else:
 											self.addToStatesUpdateDict(dev, "lastEventOff", dtNow)
+
 							if state in dev.states:
 								TF = self.isBool2(v, False, v)
 								UIF = "on" if TF else "off" 
-								if True or dev.states[state] != v:
-									self.addToStatesUpdateDict(dev, state, v, uiValue=UIF)
+								self.addToStatesUpdateDict(dev, state, v, uiValue=UIF)
 
 					elif dType == "string":
-						#if doPrint:	self.indiLOG.log(20,"fillDevStates,--3--  dev:{}, key:{}, value:{}, intToState:{}".format(dev.name, homematicStateName, v , indigoInfo.get("intToState",False) ) )
 						if indigoInfo.get("intToState",False):
-							#if doPrint:	self.indiLOG.log(20,"fillDevStates - 4- ,  t1:{}, t2:{}".format(dev.name, homematicStateName in dev.states , homematicStateName in k_stateValueNumbersToTextInIndigo ) )
+							use = ""
 							if state in dev.states: 				use = state
 							elif homematicStateName in dev.states: 	use = homematicStateName
 							if use in dev.states and use in k_stateValueNumbersToTextInIndigo:
 								stautusReplacementList = k_stateValueNumbersToTextInIndigo[use]
 								vui = "{}".format( stautusReplacementList[ max(0, min(len(stautusReplacementList)-1, v)) ])
 								self.addToStatesUpdateDict(dev, use, "{}".format(vui))
-
 								if homematicStateName == "COLOR" and devTypeId in k_mapHomematicToIndigoDevTypeStateChannelProps and k_mapHomematicToIndigoDevTypeStateChannelProps[devTypeId]["props"].get("isSimpleColorDevice",False): self.setRGB07(dev, v)
 
 					elif dType == "datetime":
@@ -2530,7 +2607,6 @@ class Plugin(indigo.PluginBase):
 
 			if v != dev.states[state]:		
 				self.addToStatesUpdateDict(dev, state, v) 
-				self.addToStatesUpdateDict(dev, "lastSensorChange", dt)
 				self.addToStatesUpdateDict(dev, "onOffState", True)
 				if dev.id not in self.delayedAction:
 					self.delayedAction[dev.id] = []
@@ -2555,7 +2631,7 @@ class Plugin(indigo.PluginBase):
 	def upDateDeviceData(self, allValues, NumberOfhttpcalls):
 
 			#self.indiLOG.log(10,"all Values:{}".format(json.dumps(allValues, sort_keys=True, indent=2)))
-		## this for saving execution time. there are several states for each device, we dont need to reload the device multile times
+		## this for saving execution time. there are several states for each device, we don't need to reload the device multile times
 		devChild = ""
 		devTypeChild = ""
 		devCurrent = ""
@@ -2575,8 +2651,11 @@ class Plugin(indigo.PluginBase):
 		if allValues == {} or allValues == "": return 
 		if allValues is None: return 
 
+		lastDevStatesTemp = copy.copy(self.lastDevStates)
+		#self.indiLOG.log(20," upDateDeviceData lastDevStatesTemp:{}".format(str(lastDevStatesTemp)[0:100]))
 		updsystodev = False
 		for link in allValues:
+			if self.pluginState == "stop": return 
 			if link == "": continue
 			try:
 				lStart = time.time()
@@ -2626,7 +2705,6 @@ class Plugin(indigo.PluginBase):
 					try:	dt = datetime.datetime.fromtimestamp(ts).strftime(_defaultDateStampFormat)
 					except: dt = ""
 
-					#if address == "002E1F2991EB72": self.indiLOG.log(20," upDateDeviceData address:{}, chState:{:30}, v:{:5}, tso:{}".format(address,  chState , v, tso))
 
 					# now check how to use this 
 
@@ -2635,22 +2713,24 @@ class Plugin(indigo.PluginBase):
 					devIdNew = self.homematicAllDevices[address]["indigoId"] 
 					if devIdNew < 1: continue
 
-					if devIdNew not in self.lastDevStates:
-						 self.lastDevStates[devIdNew] = {}
+					if devIdNew not in lastDevStatesTemp:
+						lastDevStatesTemp[devIdNew] = {}
 
-					 # test if same value as last time, if yes skip, but do a fulll one every 100 secs anyway
-					if time.time() > self.nextFullStateCheck: # dont do this check if last full is xx secs ago
-						self.lastDevStates[devIdNew][chState] = [v, tso] 
+					# test if same value as last time, if yes skip, but do a fulll one every 100 secs anyway
+					if time.time() > self.nextFullStateCheck: # don't do this check if last full is xx secs ago
+						lastDevStatesTemp[devIdNew][chState] = [v, tso] 
 
 					else:
-						if chState not in self.lastDevStates[devIdNew]:
-							self.lastDevStates[devIdNew][chState] = [v, tso]
+						if chState not in lastDevStatesTemp[devIdNew]:
+							lastDevStatesTemp[devIdNew][chState] = [v, tso]
 						else:
-							if self.lastDevStates[devIdNew][chState][0] == v and self.lastDevStates[devIdNew][chState][1] == tso: 
+							if lastDevStatesTemp[devIdNew][chState][0] == v and lastDevStatesTemp[devIdNew][chState][1] == tso: 
 								continue
 							else:
-								#self.indiLOG.log(20," upDateDeviceData address:{},  devId:{}, chState: {}, old:{}, v:{}, tso:{}".format(address,  devIdNew, chState , self.lastDevStates[devIdNew][chState] , v, tso))
-								self.lastDevStates[devIdNew][chState] = [v, tso] 
+								#self.indiLOG.log(20," upDateDeviceData address:{},  devId:{}, chState: {}, old:{}, v:{}, tso:{}".format(address,  devIdNew, chState , lastDevStatesTemp[devIdNew][chState] , v, tso))
+								lastDevStatesTemp[devIdNew][chState] = [v, tso] 
+
+					#if address == "002E1F2991EB72": self.indiLOG.log(20," upDateDeviceData address:{}, chState:{:30}, v:{:5}, tso:{}".format(address,  chState , v, tso))
 
 					# data accepted, now load it into indigo states
 					if devIdCurrent == devIdNew:
@@ -2658,13 +2738,13 @@ class Plugin(indigo.PluginBase):
 					else:
 						try:
 							dev = indigo.devices[self.homematicAllDevices[address]["indigoId"] ]
-							if dev.id not in self.lastDevStates: 	self.lastDevStates[dev.id] = {}
+							if dev.id not in lastDevStatesTemp: 	self.lastDevStates[dev.id] = {}
 							devCurrent = dev
 							devIdCurrent = dev.id
 							devTypeId = dev.deviceTypeId
 							self.lastKeyDev = 0
 						except	Exception as e:
-							self.indiLOG.log(30,"removing dev w address:{}, and indigo id:{}, from internal list, indigo device was deleted, setting to ignored, reallow in menu (un)Ignore.. ".format(address, self.homematicAllDevices[address]["indigoId"] ))
+							self.indiLOG.log(30,"removing dev w address:{}, and indigo id:{}, from internal list, indigo device was deleted, setting to ignored, re-allow in menu (un)Ignore.. ".format(address, self.homematicAllDevices[address]["indigoId"] ))
 							self.homematicAllDevices[address]["indigoId"] = 0
 							self.homematicAllDevices[address]["indigoStatus"] = "deleted"
 
@@ -2733,12 +2813,13 @@ class Plugin(indigo.PluginBase):
 								continue
 
 					if devTypeId in ["HMIP-DLD"] and state == "LOCK_STATE":
-						self.addToStatesUpdateDict(dev, "lastSensorChange", dt)
 						self.addToStatesUpdateDict(dev, "onOffState", v > 1, uiValue=2 )
 						continue
 
 
-					#if address == "001860C98C9E3E": self.indiLOG.log(20," upDateDeviceData address:{},  newdevTypeId:{},chState:{}".format(address,  newdevTypeId, chState ))
+					if address == "xxx002820C9ABB408": doPrint = True
+					else:							   doPrint = False
+					if doPrint: self.indiLOG.log(20," upDateDeviceData address:{},  newdevTypeId:{},chState:{}".format(address,  newdevTypeId, chState ))
 					# normal types of  children
 					childAction = False
 					if devTypeId in k_devTypeHasChildren:
@@ -2749,17 +2830,18 @@ class Plugin(indigo.PluginBase):
 									try:
 										devChild = indigo.devices[chIdNew]
 										devTypeChild = devChild.deviceTypeId
+		
+										chId = chIdNew
+										if 	devTypeChild  in k_mapHomematicToIndigoDevTypeStateChannelProps and homematicStateName in  k_mapHomematicToIndigoDevTypeStateChannelProps[devTypeChild]["states"]: 
+											childAction = self.fillDevStates( devChild, devChild.pluginProps, address, homematicStateName, channelNumber, iChannelNumber, v, doInverse, vInverse, dt, checkCH=False, doprint=doPrint)
 									except:
-											self.indiLOG.log(30," upDateDeviceData address:{},  homematicStateName:{}  channelNumber:{} childIndigoId:{}, please remove child device from listing, does not exist?!".format(address,  homematicStateName, channelNumber, chIdNew))
+										self.writeErrorToLog(address, "upDateDeviceData: {}-{}-{} , id:{}  does not exist;   please disable child device in parent device edit".format(address, homematicStateName, channelNumber, chIdNew ), logLevel = 30)
 
-								chId = chIdNew
-								if 	devTypeChild  in k_mapHomematicToIndigoDevTypeStateChannelProps and homematicStateName in  k_mapHomematicToIndigoDevTypeStateChannelProps[devTypeChild]["states"]: 
-									childAction = self.fillDevStates( devChild, devChild.pluginProps, address, homematicStateName, channelNumber, iChannelNumber, v, doInverse, vInverse, dt, checkCH=False,  doprint= False) #doprint=address=="002820C9ABB461" and homematicStateName=="ACTUAL_TEMPERATURE" )
 
 					if not childAction:
-						if self.fillDevStates(dev, props, address, homematicStateName, channelNumber, iChannelNumber, v, doInverse, vInverse, dt,  doprint= False ):continue
+						if self.fillDevStates(dev, props, address, homematicStateName, channelNumber, iChannelNumber, v, doInverse, vInverse, dt, doprint=address=="14739"):continue
 
-					# and here the rest: UNREACH, CONFIG_PENDING, RSSI_DEVICE, LOW_BAT, RSSI_PEER
+					# and here the rest: UNREACH, CONFIG_PENDING, RSSI_DEVICE, LOW_BAT, RSSI_PEER, ... 
 					if state in dev.states:
 							self.addToStatesUpdateDict(dev, state, v, uiValue=vui)
 						
@@ -2769,11 +2851,17 @@ class Plugin(indigo.PluginBase):
 			except	Exception as e:
 				if "{}".format(e).find("None") == -1: self.indiLOG.log(40,"", exc_info=True)
 
+		if  time.time() - self.resetlastDevStates > 0:
+			self.lastDevStates = {}
+			self.resetlastDevStates = 999999999999999
+		else:
+			self.lastDevStates = copy.copy(lastDevStatesTemp)
 
 		if self.decideMyLog("Time"):  tMain = time.time() - tStart
 
 		if time.time() > self.nextFullStateCheck:  
 			self.nextFullStateCheck  = time.time() + self.nextFullStateCheckAfter
+
 
 		self.doallVarToDev(updsystodev)
 		self.executeUpdateStatesList()
@@ -2834,12 +2922,13 @@ class Plugin(indigo.PluginBase):
 	def doallRooms(self, doit):
 		try:
 			if doit and "address" in self.allDataFromHomematic["allRoom"]: 
-				#self.indiLOG.log(20,"createDevicesFromCompleteUpdate, rooms :{}; :{} .. all:{}".format( doRooms, "address" in self.allDataFromHomematic["allRoom"], str(self.allDataFromHomematic["allRoom"]["address"])[0:100]) )
+				#self.indiLOG.log(20,"doallRooms, rooms :{}; :{} .. all:{}".format( doRooms, "address" in self.allDataFromHomematic["allRoom"], str(self.allDataFromHomematic["allRoom"]["address"])[0:100]) )
  
 				self.numberOfRooms = 0
 				homematicType = "ROOM"
 				self.roomMembers = {}
 				for address in self.allDataFromHomematic["allRoom"]["address"]:
+					if self.pluginState == "stop": return 
 					try:
 						self.lastSucessfullHostContact = time.time()
 						if self.hostDevId  > 0 and time.time() - self.lastSucessfullHostContact  > 20:
@@ -2858,7 +2947,7 @@ class Plugin(indigo.PluginBase):
 							if dev.states["address"] == address: 
 								devFound = True
 								break
-						#self.indiLOG.log(20,"createDevicesFromCompleteUpdate, theType:{}, devFound:{};  address:{}".format(theType, devFound, address) )
+						#self.indiLOG.log(20,"doallRooms, theType:{}, devFound:{};  address:{}".format(theType, devFound, address) )
 
 						title = thisDev.get("title","")
 						name = "room-"+title +"-"+	address		
@@ -2894,7 +2983,7 @@ class Plugin(indigo.PluginBase):
 									self.roomMembers[homematicAddress].append(address)
 							except: pass
 
-						if self.decideMyLog("Digest"): self.indiLOG.log(10,"createDevicesFromCompleteUpdate,  devFound:{};  address:{}, ndevs:{}, room list:{} == {}".format( devFound, address, nDevices, roomListNames, roomListIDs) )
+						if self.decideMyLog("Digest"): self.indiLOG.log(10,"doallRooms,  devFound:{};  address:{}, ndevs:{}, room list:{} == {}".format( devFound, address, nDevices, roomListNames, roomListIDs) )
 						roomListNames = roomListNames.strip(";")
 						roomListIDs = roomListIDs.strip(";")
 						newprops["roomListIDs"] = roomListIDs
@@ -2919,7 +3008,7 @@ class Plugin(indigo.PluginBase):
 						if not dev.enabled: continue
 
 						self.homematicAllDevices[address]["indigoId"] 	= dev.id
-						self.homematicAllDevices[address]["indigoDevType"] 	=dev.deviceTypeId
+						self.homematicAllDevices[address]["indigoDevType"] 	= dev.deviceTypeId
 
 						props = dev.pluginProps
 						uiValue = uiValue="{} devices".format(nDevices)
@@ -2942,6 +3031,7 @@ class Plugin(indigo.PluginBase):
 	####-----------------	 ---------
 	def upDateSysvar(self, link, allValues, dtNow):
 				### sysvar ----------------------------------
+			lastDevStatesTemp = copy.copy(self.lastDevStates)
 			try:	
 				#if link.find("/3392") > -1: self.indiLOG.log(20,"upDateSysvar:     found 3392: link:{}, data:{}".format(link, allValues[link]) )
 
@@ -2954,19 +3044,21 @@ class Plugin(indigo.PluginBase):
 				chState = "value"
 				updsystodev = False
 				newValue = allValues[link].get("v","")
+
 				if devIdNew > 0: 
 					tso = allValues[link].get("ts",0)
 
 					## check if we need to update:
 					upd = False
-					if devIdNew not in self.lastDevStates:
-						 self.lastDevStates[devIdNew] = {}
-					if chState not in self.lastDevStates[devIdNew]:
-						self.lastDevStates[devIdNew][chState] = [newValue, tso]
+					if devIdNew not in lastDevStatesTemp:
+						lastDevStatesTemp[devIdNew] = {}
+					if chState not in lastDevStatesTemp[devIdNew]:
+						lastDevStatesTemp[devIdNew][chState] = [newValue, tso]
 						upd = True
 					else:
-						if self.lastDevStates[devIdNew][chState][0] != newValue or self.lastDevStates[devIdNew][chState][1] != tso: 
-							self.lastDevStates[devIdNew][chState] = [newValue, tso] 
+						if lastDevStatesTemp[devIdNew][chState][0] != newValue or lastDevStatesTemp[devIdNew][chState][1] != tso: 
+							#self.indiLOG.log(20,"upDateSysvar:  devIdNew:{:12},   v: {}=={}?  tso:{}=={}?".format( devIdNew, lastDevStatesTemp[devIdNew][chState][0] , newValue, lastDevStatesTemp[devIdNew][chState][1] ,tso))
+							lastDevStatesTemp[devIdNew][chState] = [newValue, tso] 
 							upd = True
 
 					if upd:
@@ -2974,6 +3066,12 @@ class Plugin(indigo.PluginBase):
 						#if address == "14739": self.indiLOG.log(20," upDateDeviceData  sysvar  address:{:5s}, dev:{},{} , states:{} allValues:{},".format(address,  devIdNew, dev.name, dev.states, allValues[link]) )
 						if   "sensorValue" 			in dev.states:	
 							unit = dev.states.get("unit","")
+							try: 	
+									if  dev.pluginProps.get("offset-sensorValue","0") != "0":
+										newValue +=  float(dev.pluginProps.get("offset-sensorValue",0))
+									#self.indiLOG.log(20,"upDateSysvar: {}    offset:{}, value:{},".format( dev.name, dev.pluginProps.get("offset-sensorValue",0), newValue))
+							except	Exception as e:
+								if "{}".format(e).find("None") == -1: self.indiLOG.log(40,"", exc_info=True)
 							if unit !="":
 								self.addToStatesUpdateDict(dev, "sensorValue", round(newValue,1), f"{newValue:.1f}{unit:}")
 							else:
@@ -3010,9 +3108,13 @@ class Plugin(indigo.PluginBase):
 								devInfo["type"][stateType]["values"][typeCounter][0] = newValue
 								found = True
 								break
+
 							
 			except	Exception as e:
 				if "{}".format(e).find("None") == -1: self.indiLOG.log(40,"", exc_info=True)
+
+			if  time.time() - self.resetlastDevStates > 0:
+				self.lastDevStates = copy.copy(lastDevStatesTemp)
 			return updsystodev
 
 
@@ -3038,6 +3140,8 @@ class Plugin(indigo.PluginBase):
 						vType = thisDev.get("type","string")
 						indigoType = "HMIP-SYSVAR-"+vType
 						title = thisDev.get("title","")
+						if "value" in thisDev:	sValue = thisDev["value"].get("s",100)
+						else: 					sValue = 100
 						unit = thisDev.get("unit","")
 
 						if not doWatchDog and title.find("WatchDog") == 0: continue
@@ -3050,6 +3154,7 @@ class Plugin(indigo.PluginBase):
 							self.fixAllhomematic(address=address)
 						self.homematicAllDevices[address]["homemtaticStatus"] 			= "active"
 						self.homematicAllDevices[address]["lastmessageFromHomematic"] 	= time.time()
+						self.homematicAllDevices[address]["sValue"] 	= sValue
 	
 						if self.homematicAllDevices[address]["indigoStatus"] not in ["active","create"]: continue
 
@@ -3127,7 +3232,6 @@ class Plugin(indigo.PluginBase):
 								props			= newprops
 								)
 							self.newDevice	= False							
-							self.lastDevStates[dev.id] = {}
 						if not dev.enabled: continue
 						
 						self.fixAllhomematic(address=address)
@@ -3146,6 +3250,12 @@ class Plugin(indigo.PluginBase):
 						self.addToStatesUpdateDict(dev, "description", thisDev.get("description",""))
 						self.addToStatesUpdateDict(dev, "homematicType", thisDev.get("type",""))
 						if vType == "FLOAT":
+							try: 	
+									if  dev.pluginProps.get("offset-sensorValue","0") != "0":
+										value +=  float(dev.pluginProps.get("offset-sensorValue",0))
+									#self.indiLOG.log(20,"doallSysVar:     offset:{}, value:{},".format(  dev.pluginProps.get("offset-sensorValue",0),  value))
+							except	Exception as e:
+								if "{}".format(e).find("None") == -1: self.indiLOG.log(40,"", exc_info=True)
 							if unit !="":
 								self.addToStatesUpdateDict(dev, "sensorValue", round(value,1), f"{value:.1f}{unit:}")
 							else:
@@ -3162,6 +3272,7 @@ class Plugin(indigo.PluginBase):
 						if "{}".format(e).find("None") == -1: self.indiLOG.log(40,"", exc_info=True)
 		except	Exception as e:
 			if "{}".format(e).find("None") == -1: self.indiLOG.log(40,"", exc_info=True)
+
 		self.newDevice = False
 		return
 
@@ -3173,6 +3284,7 @@ class Plugin(indigo.PluginBase):
 			if not doit: return 
 			devChild = {}
 			dev = {}
+			dt = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 			
 			for linkAdr in self.variablesToDevices:
 				changed = 0
@@ -3218,7 +3330,11 @@ class Plugin(indigo.PluginBase):
 												self.addToStatesUpdateDict(devChild[devId], key, value, uiValue=form.format(value))
 												if devChild[devId].pluginProps.get("displayS","--") == key and "sensorValue" in devChild[devId].states:
 													self.addToStatesUpdateDict(devChild[devId], "sensorValue", value, uiValue= form.format(value))
-												continue	
+												resetState = key.split("Total")[0]+"_reset"
+												if (resetState in devChild[devId].states) and (value < 1 and ( dt[0:-5] > devChild[devId].states[resetState][0:-5]  or len(devChild[devId].states[resetState]) < 5) ): # only reset once in 60 minutes 
+													self.addToStatesUpdateDict(devChild[devId], resetState, dt)
+
+												continue
 										
 								if key in dev[address].states: # update parent if it was not child 
 									self.addToStatesUpdateDict(dev[address], key, value, uiValue= form.format(value))
@@ -3241,11 +3357,13 @@ class Plugin(indigo.PluginBase):
 			if  "address" not in self.allDataFromHomematic["allDevice"]:  return 
 			doHeating = self.pluginPrefs.get("accept_HEATING",True)
 			deviceFound = {}
+			theDict = {}
 			self.numberOfDevices = 0
 			allValueLinks = self.allDataFromHomematic["allDevice"].get("allValueLinks",{})
 			#self.indiLOG.log(20,"doallDevices, valuelinks: {}...<".format( str(allValueLinks)[0:100] ) )
+
 			for address in self.allDataFromHomematic["allDevice"]["address"]:
-				if self.pluginState == "stop": return theDict 
+				if self.pluginState == "stop": return 
 				if len(address) < 2: continue
 				devinfoForChild = {}
 				deviceFound[address] = True
@@ -3269,8 +3387,8 @@ class Plugin(indigo.PluginBase):
 					self.homematicAllDevices[address]["homemtaticStatus"] = "active"
 					self.homematicAllDevices[address]["lastmessageFromHomematic"] = time.time()
 
-					if self.homematicAllDevices[address]["indigoStatus"] not in ["active","create"]: continue
-					#if address =="002EA0C98EEE0B":  self.indiLOG.log(20,"doallDevices, :{};  title:{}, aldev:{}".format( address, title, self.homematicAllDevices[address] ) )
+					if self.homematicAllDevices[address]["indigoStatus"] not in ["active","create"]: 
+						continue
 
 					name = title 
 					if name.find(address) == -1:
@@ -3289,7 +3407,7 @@ class Plugin(indigo.PluginBase):
 							if homematicTypeUpper+"||" == xx:  # ad || to the end and check if it matches.
 								indigoType =  k_supportedDeviceTypesFromHomematicToIndigo[xx]
 								break
-						else: # this is do the characters appear in 
+						else: # this is how the characters appear in
 							if homematicTypeUpper.find(xx) == 0:
 								indigoType =  k_supportedDeviceTypesFromHomematicToIndigo[xx]
 								break
@@ -3392,7 +3510,7 @@ class Plugin(indigo.PluginBase):
 								)
 							self.newDevice	= False							
 							self.homematicAllDevices[address]["indigoId"] = dev.id
-							self.lastDevStates[dev.id] = {}
+
 							self.addToStatesUpdateDict(dev, "created", datetime.datetime.now().strftime(_defaultDateStampFormat))
 							self.addToStatesUpdateDict(dev, "address", address)
 							if dev.deviceTypeId in k_indigoDeviceisThermostatDevice and dev.hvacMode == indigo.kHvacMode.Off:
@@ -3406,13 +3524,14 @@ class Plugin(indigo.PluginBase):
 									if "init" in yy:
 										self.addToStatesUpdateDict(dev, yy["indigoState"], yy["init"])
 							self.executeUpdateStatesList()
+							self.sleep(0.1)
 							dev = indigo.devices[dev.id]
 							props = dev.pluginProps
 							devFound = True
 							self.fixAllhomematic(address=address)
 							self.homematicAllDevices[address]["type"] = homematicType
 							self.homematicAllDevices[address]["title"] = title
-							self.homematicAllDevices[address]["indigoId"] =dev.id
+							self.homematicAllDevices[address]["indigoId"] = dev.id
 							self.homematicAllDevices[address]["indigoDevType"] = dev.deviceTypeId
 							for st in dev.states:
 								if st.find("enabledChildren"):
@@ -3451,6 +3570,7 @@ class Plugin(indigo.PluginBase):
 						if childInfo != {}: 
 							parentProps = dev.pluginProps
 							for mType in copy.copy(childInfo):
+
 								#  {childInfo = childInfo:{'Temperature': [429389644, '4', 'HMIP-Temperature'], 'Humidity': [1093019429, '4', 'HMIP-Humidity'], 'Relay': [1422531914, '7', 'HMIP-Relay'], 'Dimmer': [738580295, '11', 'HMIP-Dimmer']}
 								if mType not in childInfo:
 									continue
@@ -3459,13 +3579,15 @@ class Plugin(indigo.PluginBase):
 								except:
 									childInfo[mType] = [0,"-99",mType] # set to default channel =-99 = all 
 									continue
+								#if address == "002D1D89B2B4B7" : self.indiLOG.log(20,"createDevicesFromCompleteUpdate, 1   :{}; mType:{};  enable:{},  childInfo:{}".format( dev.name, mType, parentProps.get("enable-"+mType, False), childInfo) )
 								if not parentProps.get("enable-"+mType, False): 
 									if chId > 0:
 										if chId in indigo.devices:
 											delDev = indigo.devices[chId]
 											indigo.device.delete(delDev)
-											childInfo[mType] = [0, chn, childInfo[mType][2]]
-									anyChange = True
+										childInfo[mType] = [0, chn, childInfo[mType][2]]
+										anyChange = True
+									chId = 0
 									continue
 								if chId > 0: 
 									try:
@@ -3480,13 +3602,13 @@ class Plugin(indigo.PluginBase):
 								if chId == 0: 
 									try: 	ii = int(mType)
 									except: ii = -1
-									self.indiLOG.log(20,"createDevicesFromCompleteUpdate, 4 :{};  address:{}-child, indigoType:{}, mType:{}, childDevType:{}".format( dev.name, address, indigoType, mType, childDevType  ) )
+									#self.indiLOG.log(20,"createDevicesFromCompleteUpdate, 4 :{};  address:{}-child, indigoType:{}, mType:{}, childDevType:{}".format( dev.name, address, indigoType, mType, childDevType  ) )
 									self.newDevice	= True
 									if name+"-child-{} of {}".format(mType, dev.id) in indigo.devices:
 										dev1 = indigo.devices[name+"-child-{} of {}".format(mType, dev.id) ]
 									else:
 										if childDevType not in k_mapHomematicToIndigoDevTypeStateChannelProps:
-											self.indiLOG.log(20,"createDevicesFromCompleteUpdate, 5 childDevType:{} not in k_mapHomematicToIndigoDevTypeStateChannelProps".format( childDevType  ) )
+											#self.indiLOG.log(20,"createDevicesFromCompleteUpdate, 5 childDevType:{} not in k_mapHomematicToIndigoDevTypeStateChannelProps".format( childDevType  ) )
 											continue
 
 										props			 = k_mapHomematicToIndigoDevTypeStateChannelProps[childDevType]["props"]
@@ -3508,7 +3630,10 @@ class Plugin(indigo.PluginBase):
 											folder			= self.folderNameDevicesID,
 											props			= k_mapHomematicToIndigoDevTypeStateChannelProps[childDevType]["props"]
 											)
-										self.newDevice	= False							
+										self.newDevice	= False	
+										self.sleep(0.1)
+										dev1 = indigo.devices[dev1.id]  # get a fresh copy
+										#if True: self.indiLOG.log(20,"createDevicesFromCompleteUpdate, 6 :{};  add state address =={}".format( dev1.name, address+"-child-"+mType) )
 										self.addToStatesUpdateDict(dev1, "created", datetime.datetime.now().strftime(_defaultDateStampFormat))
 										self.addToStatesUpdateDict(dev1, "address", address+"-child-"+mType)
 										anyChange = True
@@ -3518,9 +3643,11 @@ class Plugin(indigo.PluginBase):
 								self.addToStatesUpdateDict(dev1, "title", title)
 								self.addToStatesUpdateDict(dev1, "homematicType", homematicType)
 								self.addToStatesUpdateDict(dev1, "childOf", dev.id)
+								self.executeUpdateStatesList()					
 
 								if self.decideMyLog("Digest"): self.indiLOG.log(10,"createDevicesFromCompleteUpdate, :{};  address:{}-child, indigoType-child".format( dev1.name, address) )
 						if anyChange: 
+							if address == "002D1D89B2B4B7" : self.indiLOG.log(10,"createDevicesFromCompleteUpdate, anychange :{};  childInfo:{}".format( dev.name, childInfo) )
 							self.addToStatesUpdateDict(dev, "childInfo",  json.dumps(childInfo))
 							self.addToStatesUpdateDict(dev, "enabledChildren",  enabledChildren.strip(","))
 							for mType in childInfo:
@@ -3534,6 +3661,7 @@ class Plugin(indigo.PluginBase):
 								for homematicStateName in homematicStateNames:
 									if homematicStateName not in k_dontUseStatesForOverAllList:
 										self.homematicAllDevices[address]["childInfo"][chn][homematicStateName] = chId
+							self.executeUpdateStatesList()					
 					
 
 				except	Exception as e:
@@ -3591,6 +3719,8 @@ class Plugin(indigo.PluginBase):
 
 		self.firstReadAll = True
 
+
+		self.executeUpdateStatesList()					
 
 		return
 
@@ -3874,7 +4004,7 @@ class Plugin(indigo.PluginBase):
 		if address not in self.homematicAllDevices: return 
 		if time.time() - self.homematicAllDevices[address]["lastErrorMsg"] > self.writeToLogAfter:
 			self.indiLOG.log(logLevel, text)
-		self.homematicAllDevices[address]["lastErrorMsg"] = time.time()
+			self.homematicAllDevices[address]["lastErrorMsg"] = time.time()
 		return 
 
 	####-----------------	 ---------

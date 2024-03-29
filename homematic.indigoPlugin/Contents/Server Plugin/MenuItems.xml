@@ -4,9 +4,13 @@
 
 	<MenuItem id="dummyActions"><Name>Action items ----------------------</Name></MenuItem>
 
+
 	<MenuItem id="boost">
 		<Name>Boost thermostat</Name>
 		<ConfigUI>
+			<Field id="lab00" type="label" fontColor="orange"> 
+				<Label>Send boost command to homematic  thermostat</Label>
+			</Field>
 
 			<Field     id="deviceId" type="menu" defaultValue="0">
 				<Label>select thermostate device:</Label>
@@ -35,6 +39,9 @@
 	<MenuItem id="unlock">
 		<Name>Unlock Door..</Name>
 		<ConfigUI>
+			<Field id="lab00" type="label" fontColor="orange"> 
+				<Label>Send command to homematic door lock</Label>
+			</Field>
 
 			<Field     id="deviceId" type="menu" defaultValue="0">
 				<Label>select door lock device:</Label>
@@ -58,11 +65,43 @@
 
     </MenuItem>
 
+	<MenuItem id="setVariable">
+		<Name>Variable set ..</Name>
+		<ConfigUI>
+			<Field id="lab00" type="label" fontColor="orange"> 
+				<Label>Send string or bool or number to homematic variable on the CCU 
+1. select variable to be written to
+2. enter value:
+   for BOOL use t/f or 1/0
+   for STRING any string
+   for NUMBER any integer or float </Label>
+			</Field>
+
+			<Field     id="deviceId" type="menu" defaultValue="0">
+				<Label>select variable to be set:</Label>
+				<List class="self" filter="variable" method="filterVariables"  dynamicReload="no"/>
+			</Field>
+
+			<Field  id="text" type="textfield" defaultValue="">
+				<Label>value to be sent to variable:</Label>
+			</Field>
+
+			<Field  id="exec" type="button" >
+				<Title>Execute </Title>
+				<CallbackMethod>setVariable</CallbackMethod> 
+			</Field>
+		</ConfigUI>
+
+    </MenuItem>
+
 
 	<MenuItem id="alarmSiren">
 		<Name>Alarm set ..</Name>
 		<ConfigUI>
 
+			<Field id="lab00" type="label" fontColor="orange"> 
+				<Label>command to alarm device on CCU</Label>
+			</Field>
 
 			<Field     id="alarmDevId" type="menu" defaultValue="0">
 				<Label>select alarm device:</Label>

@@ -32,7 +32,7 @@ def getNumber(val):
 				for i in range(len(val)-1):														# reject -0 1 2.3 4  not consecutive numbers:..
 					if (len(''.join([c for c in valList[i] if c in '-1234567890.'])) ==1 ):		# check if this character is a number, if yes:
 						count +=1																# 
-						if count >= lenXX									: break				# end of # of numbers, end of test: break, its a number
+						if count >= lenXX									: break				# end of # of numbers, end of test: break, it is a number
 						if (len(''.join([c for c in valList[i+1] if c in '-1234567890.'])) )== 0: return "x" #  next is not a number and not all numbers accounted for, so it is numberXnumber
 				return 														float(xx)			# must be a real number, everything else is excluded
 			else:																				# only text left,  no number in this string

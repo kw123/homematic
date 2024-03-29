@@ -1,10 +1,18 @@
 
+changes in V2022.5.5 2024-03-29
+==================  
+
+added menu/action option to send a value to any homematic sysvar 
+added option to add an offset to states like temperature, humidity etc.
+
+
+
 changes in V2022.5.4 2024-03-20
 ==================  
 
 added several new device types and more functionality
 
-this version is fully functional, mst devices are supported, most functions are supported.
+this version is fully functional, most devices are supported, homematic  most functions are supported.
 
 supported device types (66 + sub versions)
 ###	homatic name        indigo dev type               what kind of device type 

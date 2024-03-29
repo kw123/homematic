@@ -199,7 +199,7 @@ k_isVoltageDevice = [
 	"HMIP-SFD"
 ]
 
-# these dont have eg low battery, or unreach ...
+# these don't have eg low battery, or unreach ...
 k_isNotRealDevice =[
 	"HMIP-RCV-50",
 	"HMIP-ROOM",
@@ -274,6 +274,22 @@ k_alreadyDefinedStatesInIndigo = [
 	"setpointHeat",
 	"sensorValue"
 ]
+k_statesWithOffsetInProperties = [
+	"temperatureInput1",
+	"humidityInput1",
+	"Temperature",
+	"sensorValue",
+	"Humidity"
+]
+
+k_statesWithPreviousValue = [
+	"temperatureInput1",
+	"humidityInput1",
+	"Temperature",
+	"sensorValue",
+	"Humidity",
+	"WIND_DIR"
+]
 
 
 # homematic delivers some info in varibales, here we put them into teh corresponding dev/states 
@@ -281,7 +297,7 @@ k_mapTheseVariablesToDevices = {
 	"Rain": {
 		"Counter":["RainTotal", 1., "{:.1f}[mm]"],
 		"CounterToday":["RainToday", 1., "{:.1f}[mm]"],
-		"CounterYesterday":["RAINYesterday", 1., "{:.1f}[mm]"],
+		"CounterYesterday":["RainYesterday", 1., "{:.1f}[mm]"],
 },
 	"Sunshine":{
 		"Counter":["SunshineTotal", 1.,  "{:.0f}[min]"],
@@ -582,7 +598,8 @@ k_mapHomematicToIndigoDevTypeStateChannelProps = {
 			"RAIN_END":{"dType": "datetime","channelNumber":"1"},
 			"RAIN_RATE":{"dType": "real","indigoState":"RainRate","channelNumber":"1"},
 			"RAIN_TODAY":{"dType": "real","indigoState":"RainToday","channelNumber":"1"},
-			"RAIN_YESTERDAY":{"dType": "real","indigoState":"RainyYesterday","channelNumber":"1"},
+			"RAIN_YESTERDAY":{"dType": "real","indigoState":"RainYesterday","channelNumber":"1"},
+			"Rain_reset":{"dType": "string"},
 			"RAIN_TOTAL":{"dType": "real","indigoState":"RainTotal","channelNumber":"1"}
 		},
 		"actionParams":{},
@@ -600,10 +617,10 @@ k_mapHomematicToIndigoDevTypeStateChannelProps = {
 		"states":{
 			"channelNumber":{"dType": "string"},
 			"childOf":{"dType": "integer"},
-			"channelNumber":{"dType": "string"},
 			"SunshineToday":{"dType": "integer","channelNumber":"1"},
 			"SunshineYesterday":{"dType": "integer","channelNumber":"1"},
 			"SunshineTotal":{"dType":"integer","channelNumber":"1"},
+			"Sunshine_reset":{"dType": "string"},
 			"SUNSHINEDURATION":{"dType":"integer","indigoState":"SunshineDurationRaw","channelNumber":"1"}
 		},
 		"actionParams":{},
@@ -650,6 +667,7 @@ k_mapHomematicToIndigoDevTypeStateChannelProps = {
 				'<Field id="enable-Temperature"  type="checkbox" defaultValue="true" > <Label>create Temperature device </Label></Field>'+
 				'<Field id="enable-Humidity"     type="checkbox" defaultValue="true" > <Label>create Humidity device </Label></Field>'+
 				'<Field id="enable-Relay"        type="checkbox" defaultValue="true" > <Label>create Relay device </Label></Field>'+
+				'<Field id="enable-Dimmer"       type="checkbox" defaultValue="true" > <Label>create Dmmer (light) device </Label></Field>'+
 			'</ConfigUI>',
 		"triggerLastSensorChange":"CO2",
 		"props":{
@@ -692,16 +710,16 @@ k_mapHomematicToIndigoDevTypeStateChannelProps = {
 		"states":{
 			"UNREACH":{"dType":"booltruefalse","duplicateState":"onOffState","inverse":True,"channelNumber":"0"},
 			"ERROR_COMMUNICATION_PARTICULATE_MATTER_SENSOR":{"dType":"string","intToState":True,"channelNumber":"0"},
-			"TYPICAL_PARTICLE_SIZE":{"dType":"real","channelNumber":"1","format":"{:.1f}um"},
+			"TYPICAL_PARTICLE_SIZE":{"dType":"real","channelNumber":"1","format":"{:.1f} um"},
 			"NUMBER_CONCENTRATION_PM_10":{"dType":"real","channelNumber":"1","format":"{:.1f}/cm3"},
 			"NUMBER_CONCENTRATION_PM_2_5":{"dType":"real","channelNumber":"1","format":"{:.1f}/cm3"},
 			"NUMBER_CONCENTRATION_PM_1":{"dType":"real","channelNumber":"1","format":"{:.1f}/cm3"},
-			"MASS_CONCENTRATION_PM_10":{"dType":"real","channelNumber":"1","format":"{:.1f}ug/m3"},
-			"MASS_CONCENTRATION_PM_2_5":{"dType":"real","channelNumber":"1","format":"{:.1f}ug/m3"},
-			"MASS_CONCENTRATION_PM_1":{"dType":"real","channelNumber":"1","format":"{:.1f}ug/m3"},
-			"MASS_CONCENTRATION_PM_1_24H_AVERAGE":{"dType":"real","channelNumber":"1","format":"{:.1f}ug/m3"},
-			"MASS_CONCENTRATION_PM_2_5_24H_AVERAGE":{"dType":"real","channelNumber":"1","format":"{:.1f}ug/m3"},
-			"MASS_CONCENTRATION_PM_10_24H_AVERAGE":{"dType":"real","channelNumber":"1","format":"{:.1f}ug/m3"},
+			"MASS_CONCENTRATION_PM_10":{"dType":"real","channelNumber":"1","format":"{:.1f} ug/m3"},
+			"MASS_CONCENTRATION_PM_2_5":{"dType":"real","channelNumber":"1","format":"{:.1f} ug/m3"},
+			"MASS_CONCENTRATION_PM_1":{"dType":"real","channelNumber":"1","format":"{:.1f} ug/m3"},
+			"MASS_CONCENTRATION_PM_1_24H_AVERAGE":{"dType":"real","channelNumber":"1","format":"{:.1f} ug/m3"},
+			"MASS_CONCENTRATION_PM_2_5_24H_AVERAGE":{"dType":"real","channelNumber":"1","format":"{:.1f} ug/m3"},
+			"MASS_CONCENTRATION_PM_10_24H_AVERAGE":{"dType":"real","channelNumber":"1","format":"{:.1f} ug/m3"},
 			"enabledChildren":{"dType": "string"},
 			"childInfo":{"dType": "string","init":'{"Temperature":[0,"1","HMIP-Temperature"],"Humidity":[0,"1","HMIP-Humidity"]}'}
 		},
@@ -771,21 +789,15 @@ k_mapHomematicToIndigoDevTypeStateChannelProps = {
 
 	"HMIP-MOD-OC8":{
 		"states":{
+			"UNREACH":{"dType":"booltruefalse","duplicateState":"onOffState","inverse":True,"channelNumber":"0"},
 			"ACTUAL_TEMPERATURE":mergeDicts(k_Temperature,{"channelNumber":"0"}),
 			"childInfo":{"dType": "string","init":'{"1":[0,"9","HMIP-Relay"], "2":[0,"13","HMIP-Relay"], "3":[0,"17","HMIP-Relay"],  "4":[0,"21","HMIP-Relay"],  "5":[0,"25","HMIP-Relay"],  "6":[0,"29","HMIP-Relay"],  "7":[0,"33","HMIP-Relay"],  "8":[0,"37","HMIP-Relay"]}'},
 			"enabledChildren":{"dType": "string"}
 		},
-		"actionParams":{
-			"states":{
-				"OnOff":"STATE",
-			},
-			"channels":{
-				"OnOff":['int(dev.states["channelNumber"])+1', 'int(dev.states["channelNumber"])+2','int(dev.states["channelNumber"])+3'],
-			}
-		},
+		"actionParams":{},
 		"deviceXML":
 			'<ConfigUI>'+
-				'<Field id="enable-1" type="checkbox" defaultValue="true" > <Label>create output device 1 for channel #9 </Label></Field>'+
+				'<Field id="enable-1" type="checkbox" defaultValue="true"  > <Label>create output device 1 for channel #9 </Label></Field>'+
 				'<Field id="enable-2" type="checkbox" defaultValue="false" > <Label>create output device 2 for channel #13 </Label></Field>'+
 				'<Field id="enable-3" type="checkbox" defaultValue="false" > <Label>create output device 3 for channel #17 </Label></Field>'+
 				'<Field id="enable-4" type="checkbox" defaultValue="false" > <Label>create output device 4 for channel #21 </Label></Field>'+
@@ -794,9 +806,9 @@ k_mapHomematicToIndigoDevTypeStateChannelProps = {
 				'<Field id="enable-7" type="checkbox" defaultValue="false" > <Label>create output device 7 for channel #33 </Label></Field>'+
 				'<Field id="enable-8" type="checkbox" defaultValue="false" > <Label>create output device 8 for channel #37  </Label></Field> '
 			'</ConfigUI>',
-		"triggerLastSensorChange":"",
+		"triggerLastSensorChange":"UNREACH",
 		"props":{
-			"displayS":"enabledChildren",
+			"displayS":"UNREACH",
 			"enable-1":True,
 			"enable-2":False,
 			"enable-3":False,
@@ -805,9 +817,9 @@ k_mapHomematicToIndigoDevTypeStateChannelProps = {
 			"enable-6":False,
 			"enable-7":False,
 			"enable-8":False,
-			"SupportsOnState": False,
+			"SupportsOnState": True,
 			"SupportsStatusRequest":False,
-			"SupportsSensorValue":True
+			"SupportsSensorValue":False
 		}
 	},
 
@@ -838,8 +850,7 @@ k_mapHomematicToIndigoDevTypeStateChannelProps = {
 				'<Field id="enable-B99" type="checkbox" defaultValue="true"  > <Label>create button for channel 13,14,15,16</Label></Field>'+
 				'<Field id="show" type="label">'+
 				'  <Label>'+
-				'   For the digital input channels need to have some action linked to the buttons of the device. w/o any action def the states will stay stale.'+
-				'      You can eg program that just triggers on one of the states of each button. No actual action has to be defined'+
+				'   For the digital input channels see menu / PRINT parameters and help to logfile to setup correctly'+
 				'   For the analog inout channel you need to set "ch 0: ...Statusmeldungen =0/0" '+
 				'      it still takes 150 seconds to send a new Voltage'+ 
 				'      with ch2 and 3 you can set threshold that will trigger a send when threshold is passed'+
@@ -978,7 +989,6 @@ k_mapHomematicToIndigoDevTypeStateChannelProps = {
 		"triggerLastSensorChange":"",
 		"props":{
 			"numberOfPhysicalChannels": 12,
-			"displayStateId":"activeValves",
 			"displayS":"enabledChildren",
 			"enable-1": True,
 			"enable-2": False,
@@ -1004,7 +1014,6 @@ k_mapHomematicToIndigoDevTypeStateChannelProps = {
 			"ACTUAL_TEMPERATURE": 		mergeDicts(k_Temperature,{"indigoState":"temperatureInput1","channelNumber":"1"}),
 			"SET_POINT_TEMPERATURE":	mergeDicts(k_Temperature,{"indigoState":"setpointHeat","channelNumber":"-1"}),
 			"HUMIDITY":					mergeDicts(k_Humidity,{"indigoState":"humidityInput1"}),
-			"WINDOW_STATE":{"dType": "string","intToState":True},
 			"SWITCH_POINT_OCCURED":{"dType": "booltruefalse"},
 			"FROST_PROTECTION":{"dType": "booltruefalse"},
 			"PARTY_MODE":{"dType": "booltruefalse"},
@@ -1039,7 +1048,6 @@ k_mapHomematicToIndigoDevTypeStateChannelProps = {
 			"SupportsHvacFanMode": False,
 			"SupportsHvacOperationMode": False,
 			"SupportsCoolSetpoint": False,
-			"SupportsStatusRequest": False,
 			"ShowCoolHeatEquipmentStateUI": False,
 			"SupportsHeatSetpoint": True,
 			"NumHumidityInputs": 1,
@@ -1085,7 +1093,6 @@ k_mapHomematicToIndigoDevTypeStateChannelProps = {
 			"SupportsHvacFanMode": False,
 			"SupportsHvacOperationMode": False,
 			"SupportsCoolSetpoint": False,
-			"SupportsStatusRequest": False,
 			"ShowCoolHeatEquipmentStateUI": False,
 			"SupportsHeatSetpoint": True,
 			"NumHumidityInputs": 0,
@@ -1186,12 +1193,13 @@ k_mapHomematicToIndigoDevTypeStateChannelProps = {
 				'<Field id="enable-3" type="checkbox" defaultValue="false" >  <Label>Enable 3. dimmer </Label></Field>'+
 			'</ConfigUI>',
 		"props":{
+			"displayS":"UNREACH",
 			"enable-1": True,
 			"enable-2": False,
 			"enable-3": False,
 			"SupportsStatusRequest":False,
-			"SupportsSensorValue":True,
-			"SupportsOnState": False
+			"SupportsSensorValue":False,
+			"SupportsOnState": True
 		}
 	},
 
@@ -1214,13 +1222,14 @@ k_mapHomematicToIndigoDevTypeStateChannelProps = {
 				'<Field id="enable-4" type="checkbox" defaultValue="false" >  <Label>Enable 4. dimmer </Label></Field>'+
 			'</ConfigUI>',
 		"props":{
+			"displayS":"UNREACH",
 			"enable-1": True,
 			"enable-2": False,
 			"enable-3": False,
 			"enable-4": False,
 			"SupportsStatusRequest":False,
-			"SupportsSensorValue":True,
-			"SupportsOnState": False
+			"SupportsSensorValue":False,
+			"SupportsOnState": True
 		}
 	},
 
@@ -1392,7 +1401,6 @@ k_mapHomematicToIndigoDevTypeStateChannelProps = {
 			"enable-1": True,
 			"enable-2": False,
 			"SupportsStatusRequest":False,
-			"SupportsStatusRequest":False,
 			"SupportsSensorValue":False,
 			"SupportsOnState": True
 		}
@@ -1425,7 +1433,6 @@ k_mapHomematicToIndigoDevTypeStateChannelProps = {
 			"enable-2": False,
 			"enable-3": False,
 			"enable-4": False,
-			"SupportsStatusRequest":False,
 			"SupportsStatusRequest":False,
 			"SupportsSensorValue":False,
 			"SupportsOnState": True
@@ -1626,7 +1633,7 @@ k_mapHomematicToIndigoDevTypeStateChannelProps = {
 		"actionParams":{
 			"states":{
 				"OnOff":"SMOKE_DETECTOR_COMMAND", # use this key to send command to homematic
-				"OnOff":"SMOKE_DETECTOR_EVENT", # use this key to send command to homematic
+				#"OnOff":"SMOKE_DETECTOR_EVENT", # use this key to send command to homematic  check
 			},
 			"channels":{
 				"OnOff":["1"]
@@ -1677,7 +1684,6 @@ k_mapHomematicToIndigoDevTypeStateChannelProps = {
 			"SABOTAGE_STICKY":{"dType": "booltruefalse","channelNumber":"0"},
 			"SABOTAGE":{"dType": "booltruefalse","channelNumber":"0"},
 			"BLOCKED_TEMPORARY":{"dType": "booltruefalse","channelNumber":"0"},
-			"BLOCKED_TEMPORARY":{"dType": "booltruefalse","channelNumber":"0"},
 			"CODE_STATE":{"dType": "string","intToState":True,"channelNumber":"0"}
 		},
 		"actionParams":{},
@@ -1706,10 +1712,9 @@ k_mapHomematicToIndigoDevTypeStateChannelProps = {
 		"deviceXML":
 			'<ConfigUI>'+
 				'<Field  id="show" type="label" >'+
-				'<Label>Nothing to configure here'+
-				'   You can use any kind of button device (the type has to be registed as a button in the params file in the plugin directroy)'+
-				'   BUT you need to have some kind channel linked to the buttons of the device. w/o any channel def the states will stay stale.'+
-				'   You can eg program that just triggers on one of the states of each button. No actual action has to be defined</Label>'+
+				'<Label>Nothing to configure here\n'+
+				' See menu / PRINT parameters and help to logfile to setup buttons correctly'+
+				'</Label>'+
 				'</Field>'+
 			'</ConfigUI>',
 		"triggerLastSensorChange":"",
@@ -1890,11 +1895,6 @@ k_stateValueNumbersToTextInIndigo ={
 		"UNKNOWN",  			# 1
 		"OVERFLOW"  					# 2
 	],
-	"WIND_DIR_RANGE_STATUS":[ 
-		"NORMAL",  			# 0
-		"UNKNOWN",  			# 1
-		"OVERFLOW"  					# 2
-	],
 	"SMOKE_DETECTOR_ALARM_STATUS":[
 		"IDLE_OFF",  			# 0
 		"PRIMARY_ALARM",  					# 1
@@ -2014,6 +2014,7 @@ k_stateValueNumbersToTextInIndigo ={
 # all derived from lists and dicts above
 
 ## here some shortcuts
+k_indigoDeviceisVariableDevice			= []
 k_devTypeHasChildren 					= []
 k_devsThatAreChildDevices 				= []
 k_deviceTypesParentWithButtonPressChild	= []
@@ -2021,7 +2022,7 @@ k_indigoDeviceisDoorLockDevice			= []
 k_indigoDeviceisThermostatDevice 		= []
 k_indigoDeviceisDisplayDevice 			= ["HMIP-WRCD"]
 k_logMessageAtCreation 					= {}
-k_actionTypes 							= { "thermostat":[], "doorLock":[] ,"SYSVAR-STRING":[] ,"alarm":[],"display":[]}
+k_actionTypes 							= { "thermostat":[], "doorLock":[] ,"SYSVAR-STRING":[] ,"alarm":[],"display":[],"variable":[]}
 k_createStates 							= {}
 
 # add states and props if member of a category, saves a lot of lines above 
@@ -2033,6 +2034,9 @@ for devType in k_mapHomematicToIndigoDevTypeStateChannelProps:
 	if devType not in k_createStates:
 		k_createStates[devType] = {}
 
+	if devType.find("SYSVAR") > -1:
+			k_indigoDeviceisVariableDevice.append(devType)
+	
 	if devType in k_isVoltageDevice:
 		if "OPERATING_VOLTAGE" not in dd["states"]:
 			dd["states"]["OPERATING_VOLTAGE"] = {"channelNumber": "0","dType": "real","indigoState":"OperatingVoltage"}
@@ -2096,6 +2100,19 @@ for devType in k_mapHomematicToIndigoDevTypeStateChannelProps:
 					dd["deviceXML"] = newString
 					dd["props"]["minMaxEnable-"+state] = False
 
+			if state in k_statesWithPreviousValue:
+				if dd["deviceXML"].find("Nothing to configure") > -1:
+					dd["deviceXML"] = "<ConfigUI> </ConfigUI>"
+	
+				ll = dd["deviceXML"].find("</ConfigUI>")
+				temp = dd["deviceXML"][0:ll]
+
+				if "previousValue-"+state not in dd["props"]:
+					newString  = temp + '<Field id="previousValue-'+state+ '" type="checkbox"  defaultValue="false" >   <Label>Enable '+state+' previous value</Label></Field></ConfigUI>'
+					dd["deviceXML"] = newString
+					dd["props"]["previousValue-"+state] = False
+
+
 		if state in k_doubleState:
 			stateD = k_doubleState[state]
 			if stateD not in k_createStates[devType]:
@@ -2111,6 +2128,24 @@ for devType in k_mapHomematicToIndigoDevTypeStateChannelProps:
 				dd["deviceXML"] = newString
 				dd["props"]["minMaxEnable-"+state] = False
 
+		if state in k_statesWithOffsetInProperties:
+				if dd["deviceXML"].find("Nothing to configure") > -1:
+					dd["deviceXML"] = "<ConfigUI> </ConfigUI>"
+	
+				ll = dd["deviceXML"].find("</ConfigUI>")
+				temp = dd["deviceXML"][0:ll]
+
+				if "offset-"+state not in dd["props"]:
+					newString  = temp + '<Field id="offset-'+state+ '" type="textfield"  defaultValue="0" >   <Label>offset '+state+'</Label></Field></ConfigUI>'
+					dd["deviceXML"] = newString
+					dd["props"]["offset-"+state ] = "0"
+			
+
+
+tType = "variable"
+for devType in k_indigoDeviceisVariableDevice:
+	if devType not in k_actionTypes[tType]:
+			k_actionTypes[tType].append(devType)
 
 tType = "display"
 for devType in k_indigoDeviceisDisplayDevice:
