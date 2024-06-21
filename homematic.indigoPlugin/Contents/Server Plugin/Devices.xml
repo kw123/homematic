@@ -58,6 +58,12 @@
 	</Device>
 
 
+	<Device type="sensor" id="HMIP-MIOB" allowUserCreation="false">
+		<Name>Homematic MIOB parent device</Name>
+		<ConfigUI> </ConfigUI>
+	</Device>
+
+
 	<Device type="sensor" id="HMIP-SRD" allowUserCreation="false">
 		<Name>Homematic SRD-Rain Indicator</Name>
 		<ConfigUI> </ConfigUI>

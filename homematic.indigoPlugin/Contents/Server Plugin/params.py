@@ -28,6 +28,7 @@ k_supportedDeviceTypesFromHomematicToIndigo = {
 	"HMIP-RC":			"HMIP-BUTTON",				# any handheld switch 
 	"HMIP-RC8":			"HMIP-BUTTON",				# 8 button 
 	"HMIP-KRC":			"HMIP-BUTTON",				# 4 button hand device
+	"HMIP-DBB":			"HMIP-BUTTON",				# 4 button hand device
 	"HMIP-KRCA":		"HMIP-BUTTON",				# 4 button hand device
 	"HMIP-FCI": 		"HMIP-BUTTON",				# x channel behind wall switch / button
 	"HMIP-STI":			"HMIP-BUTTON",				# capacitor single / double button 
@@ -61,6 +62,7 @@ k_supportedDeviceTypesFromHomematicToIndigo = {
 	"HMIP-SPI":			"HMIP-SMI",					# movement sensor
 	"HMIP-MOD-OC8": 	"HMIP-MOD-OC8",				# 8 channel open collector output switch
 	"HMIP-MIO16-PCB": 	"HMIP-MIO16-PCB",			# multi channel i/o 4 analog trigger, digital trigger, 4 open collector, 4 relay output
+	"HMIP-MIOB": 		"HMIP-MIOB",				# multi channel i/o 4 for heating system
 	"HMIP-MP3P": 		"HMIP-MP3P",				# sound/ light output 
 	"HMIP-ASIR": 		"HMIP-ASIR",				# alarm siren
 	"HMIP-FROLL": 		"HMIP-ROLL",				# Jalousie(Jealousy) / curtains  up / down  / left right
@@ -184,6 +186,7 @@ k_isVoltageDevice = [
 	"HMIP-SMI",	
 	"HMIP-MOD-OC8",	
 	"HMIP-MIO16-PCB",	
+	"HMIP-MIOB",
 	"HMIP-MP3P",	
 	"HMIP-FALMOT",
 	"HMIP-DLD",
@@ -822,6 +825,47 @@ k_mapHomematicToIndigoDevTypeStateChannelProps = {
 			"SupportsSensorValue":False
 		}
 	},
+	"HMIP-MIOB":{
+		"states":{
+			"UNREACH":{"dType":"booltruefalse","duplicateState":"onOffState","inverse":True,"channelNumber":"0"},
+			"childInfo":{
+				"dType": "string","init":
+					'{"R1":[0,"1","HMIP-Relay"], "R2":[0,"5","HMIP-Relay"],'+
+					'"D1":[0,"11","HMIP-Dimmer-R"],'+
+					'"B1":[0,"9","HMIP-BUTTON"], "B2":[0,"10","HMIP-BUTTON"] }' 
+			},
+			"enabledChildren":{"dType": "string"}
+		},
+		"actionParams":{
+			"states":{"Dimm":"LEVEL"}, "channels":{"Dimm":["11"],"OnOff":["11"]}, "mult":{"Dimm":0.01}
+		},
+		"deviceXML":
+			'<ConfigUI>'+
+				'<Field id="enable-R1"  type="checkbox" defaultValue="true"  > <Label>create output device 1 for channel #1 </Label></Field>'+
+				'<Field id="enable-R2"  type="checkbox" defaultValue="false" > <Label>create output device 2 for channel #5 </Label></Field>'+
+				'<Field id="enable-D1"  type="checkbox" defaultValue="true"  > <Label>create Dimmer device   for channle 11</Label></Field>'+
+				'<Field id="enable-B1"  type="checkbox" defaultValue="false" > <Label>create INPUT  device 1 for channel #9 </Label></Field>'+
+				'<Field id="enable-B2"  type="checkbox" defaultValue="false" > <Label>create INPUT  device 2 for channel #10</Label></Field>'+
+				'<Field id="show" type="label">'+
+				'  <Label>'+
+				'   enable child devices as you see fit'+
+				'  </Label>'+
+				'</Field>'+
+			'</ConfigUI>',
+		"triggerLastSensorChange":"",
+		"props":{
+			"displayS":"UNREACH",
+			"enable-R1":  True,
+			"enable-R2":  False,
+			"enable-D1":  False,
+			"enable-B1":  False,
+			"enable-B2":  False,
+			"SupportsStatusRequest":False,
+			"SupportsSensorValue": False,
+			"SupportsOnState":  True
+		}
+	},
+
 
 	"HMIP-MIO16-PCB":{
 		"states":{
@@ -1660,13 +1704,25 @@ k_mapHomematicToIndigoDevTypeStateChannelProps = {
 			"PASSAGE_COUNTER_VALUE-right":{"dType": "integer","channelNumber":"3"},
 			"PPREVIUOS_PASSAGE-left":{"dType": "string","channelNumber":"99"},
 			"PPREVIUOS_PASSAGE-right":{"dType": "string","channelNumber":"99"},
+			"direction":{"dType": "string"},
 			"LAST_PASSAGE-left":{"dType": "string","channelNumber":"99"},
 			"LAST_PASSAGE-right":{"dType": "string","channelNumber":"99"}
 		},
 		"actionParams":{},
-		"deviceXML":'<ConfigUI> <Field id="show" type="label"> <Label>Nothing to configure</Label> </Field></ConfigUI>',
+		"deviceXML":
+			'<ConfigUI>'+
+				'<Field id="useWhatForDirection" type="menu"  defaultValue="left-right" tooltip="pick one">'+
+					'<Label>Use what string for state direction:</Label>'+
+					'<List>'+
+						'<Option value="left-right"  >left - right</Option>'+
+						'<Option value="in-out"  >in - out</Option>'+
+						'<Option value="out-in"  >out - in</Option>'+
+					'</List>'+
+				'</Field>'+
+			'</ConfigUI>',
 		"triggerLastSensorChange":"",
 		"props":{
+			"useWhatForDirection":"left-right",
 			"SupportsStatusRequest":False,
 			"SupportsSensorValue":False,
 			"SupportsOnState": True

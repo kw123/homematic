@@ -1,4 +1,22 @@
 
+changes in V2022.6.6 2024-06-21
+==================  
+
+added new devices:
+	"HMIP-MIOB": 		"HMIP-MIOB",				# multi channel i/o 4 for heating system
+	"HMIP-DBB":			"HMIP-BUTTON",				# 4 button hand device
+
+
+
+
+changes in V2022.5.6 2024-05-15
+==================  
+
+fixed behavior of key buttons if pressed long. It was retriggering do to saving state only in temp dict, not updating the "press dict" into dev states.
+Now the dev state gets updated for any key press state ( PRESS_SHORT, PRESS_LONG, PRESS_LONG_START, PRESS_LONG_RELEASE)
+if PRESS_SHORT only it worked before (not multiple signals from key) , PRESS_LONG_RELEASE might come several secs after the PRESS_LONG/PRESS_LONG_START.
+
+
 changes in V2022.5.5 2024-03-29
 ==================  
 
