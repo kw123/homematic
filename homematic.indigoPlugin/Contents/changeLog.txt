@@ -13,10 +13,11 @@ temperature changes every 20 secs (20 time less frequently than fast changing va
    added for rainTotal, SunshineMinutes Energy  _thisweek, _week-1,-2,-3,-4, _January .._Decmber , _thisMonth, _Today etc
 
 
-added new devices:
+4. added new devices:
 	"ELV-SH-TACO",				# Temperature and acceleration sensor 
     
 
+5. added menue item to set any homematic indigo device staet or property 
 
 
 changes in V2022.6.6 2024-06-21
