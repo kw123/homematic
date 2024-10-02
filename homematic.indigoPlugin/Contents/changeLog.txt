@@ -1,5 +1,5 @@
 
-changes in V2022.6.6 2024-06-21
+changes in V2022.7.6 2024-06-21
 ==================  
 
 1. reduced cpu usage by 50% by reading quickly and slowly changing values at differnt intervals
