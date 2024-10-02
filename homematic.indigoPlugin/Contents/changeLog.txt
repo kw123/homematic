@@ -2,9 +2,29 @@
 changes in V2022.6.6 2024-06-21
 ==================  
 
+1. reduced cpu usage by 50% by reading quickly and slowly changing values at differnt intervals
+80% of the states do not chnage frequently
+button presses read at 0.5-5 secs (you can set that in config)
+temperature changes every 20 secs (20 time less frequently than fast changing values)
+
+2. changed state "UNREACH" (false/true) to "online" (true/false)
+
+3. added states xxxMinAt xxxMaxAt to show the tme stamp when min max value of states xxx was measureed 
+   added for rainTotal, SunshineMinutes Energy  _thisweek, _week-1,-2,-3,-4, _January .._Decmber , _thisMonth, _Today etc
+
+
+added new devices:
+	"ELV-SH-TACO",				# Temperature and acceleration sensor 
+    
+
+
+
+changes in V2022.6.6 2024-06-21
+==================  
+
 added new devices:
 	"HMIP-MIOB": 		"HMIP-MIOB",				# multi channel i/o 4 for heating system
-	"HMIP-DBB":			"HMIP-BUTTON",				# 4 button hand device
+	"HMIP-DBB":			"HMIP-BUTTON",				# handheld remote switch
 
 
 

@@ -58,6 +58,19 @@
 	</Device>
 
 
+	<Device type="sensor" id="ELV-SH-TACO" allowUserCreation="false">
+		<Name>Homematic ELV-SH-TACO parent device</Name>
+		<ConfigUI> </ConfigUI>
+	</Device>
+
+
+	<Device type="sensor" id="HMIP-Direction" allowUserCreation="false">
+		<Name>Homematic Direction device</Name>
+		<ConfigUI> </ConfigUI>
+	</Device>
+
+
+
 	<Device type="sensor" id="HMIP-MIOB" allowUserCreation="false">
 		<Name>Homematic MIOB parent device</Name>
 		<ConfigUI> </ConfigUI>

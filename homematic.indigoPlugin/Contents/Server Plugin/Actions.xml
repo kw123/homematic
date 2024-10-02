@@ -20,7 +20,7 @@
 
 
 	<Action id="unlock">
-		<Name>Unlock Door</Name>
+		<Name>Unlock CCU Door</Name>
 		<CallbackMethod>doorLockUnLockAction</CallbackMethod> 
 		<ConfigUI>
 
@@ -42,7 +42,7 @@
 
 
 	<Action id="setVariable">
-		<Name>Variable set ..</Name>
+		<Name>Set Variable on CCU ..</Name>
 		<CallbackMethod>setVariableAction</CallbackMethod> 
 		<ConfigUI>
 			<Field id="lab00" type="label" fontColor="orange"> 
@@ -69,7 +69,7 @@
 
 
 	<Action id="alarmSiren">
-		<Name>Alarm set</Name>
+		<Name>Set Alarm Device on CCU ..</Name>
 		<CallbackMethod>alarmSIRENaction</CallbackMethod> 
 		<ConfigUI>
 
@@ -142,7 +142,7 @@
 
 
 	<Action id="setDisplayWRCD">
-		<Name>Display set ..</Name>
+		<Name>Set Display Device on CCU..</Name>
 		<CallbackMethod>sendStringToDisplayAction</CallbackMethod> 
 		<ConfigUI>
 

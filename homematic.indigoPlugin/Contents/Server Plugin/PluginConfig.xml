@@ -48,7 +48,7 @@ For more details do menu / PRINT parameters and help to logfile
 		<Label>Show Devices section........................................................:</Label>  
 	</Field>
 
-	<Field id="ignoreNewDevices"    	type="checkbox"  visibleBindingId="ShowGeneral" visibleBindingValue="true"   > 
+	<Field id="ignoreNewDevices"    	type="checkbox"  visibleBindingId="ShowDevices" visibleBindingValue="true"   > 
 		<Label>Ignore NEW Devices:</Label>   
 	</Field>
 
@@ -77,7 +77,6 @@ For more details do menu / PRINT parameters and help to logfile
 		<Label>Show DEBUG section........................................................:</Label>  
 	</Field>
 
-	<Field id="infoLabel226"       type="label"    visibleBindingId="ShowDebug" visibleBindingValue="true"  fontColor="green" >  <Label>== Debug:... </Label> 						</Field>
 	<Field id="writeInfoToFile"    type="checkbox" visibleBindingId="ShowDebug" visibleBindingValue="true" > <Label> write info read from hub to files in pref directory:</Label> 	</Field>
 	<Field id="showLoginTest"      type="checkbox" visibleBindingId="ShowDebug" visibleBindingValue="true" > <Label> show logging test at startup:</Label>  						</Field>
 	<Field id="debugLogic"         type="checkbox" visibleBindingId="ShowDebug" visibleBindingValue="true" > <Label>... (1) Logic:</Label>											</Field>
@@ -125,24 +124,20 @@ For more details do menu / PRINT parameters and help to logfile
 	</Field>
 
 
-	<Field id="getValuesEvery"    	type="menu"  visibleBindingId="ShowExpert" visibleBindingValue="true"   > 
-		<Label>Get all VALUES from homematic every:</Label>   
+	<Field id="getValuesEvery"    	type="menu"  visibleBindingId="ShowExpert" visibleBindingValue="true"  tooltop="there are 3 schedules to get values 1. for button presses etc that is the value here, 2 intermediate changing values like wind (time*5) and 3. slowly changing values like temperature (time*20.) "  > 
+		<Label>Get VALUES from homematic every:</Label>   
 		<List>
 			<Option value="500"   >0.5 secs</Option>
-			<Option value="1000"  >1 secs</Option>
+			<Option value="1000"  >1 secs default</Option>
 			<Option value="2000"  >2 secs</Option>
-			<Option value="3000"  >3 secs default</Option>
+			<Option value="3000"  >3 secs</Option>
 			<Option value="5000"  >5 secs</Option>
-			<Option value="10000" >10 secs</Option>
 		</List>
 	</Field>
 
 	<Field id="getCompleteUpdateEvery"    	type="menu"  visibleBindingId="ShowExpert" visibleBindingValue="true"   > 
 		<Label>Get COMPLETE info from homematic every:</Label>   
 		<List>
-			<Option value="15" >15 secs</Option>
-			<Option value="20" >20 secs</Option>
-			<Option value="30" >30 secs</Option>
 			<Option value="60" >1 minutes </Option>
 			<Option value="90" >1.5 minutes</Option>
 			<Option value="120" >2 minutes default</Option>

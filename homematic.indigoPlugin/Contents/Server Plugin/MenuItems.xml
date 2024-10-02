@@ -66,7 +66,7 @@
     </MenuItem>
 
 	<MenuItem id="setVariable">
-		<Name>Variable set ..</Name>
+		<Name>Set Variable on CCU ..</Name>
 		<ConfigUI>
 			<Field id="lab00" type="label" fontColor="orange"> 
 				<Label>Send string or bool or number to homematic variable on the CCU 
@@ -96,7 +96,7 @@
 
 
 	<MenuItem id="alarmSiren">
-		<Name>Alarm set ..</Name>
+		<Name>Set Alarm Device on CCU ..</Name>
 		<ConfigUI>
 
 			<Field id="lab00" type="label" fontColor="orange"> 
@@ -177,7 +177,7 @@
 
 
 	<MenuItem id="setDisplayWRCD">
-		<Name>Display set ..</Name>
+		<Name>Set Display Device on CCU ..</Name>
 		<ConfigUI>
 
 			<Field     id="lab0" type="label" fontColor="orange">
@@ -600,13 +600,89 @@
 		</ConfigUI>
     </MenuItem>
 
+	<MenuItem id="setDevState">
+		<Name>Set a state of any Homematic Indigo device to ..</Name>
+		<ConfigUI>
+			<Field     id="MSG" type="textfield" defaultValue="">
+				<Label>MSG from plugin:</Label>
+			</Field>
+			<Field     id="devId" type="menu" defaultValue="0">
+				<Label>select device:</Label>
+				<List class="self" filter="all" method="filterHomematicAllDevicesReturnDevID"  dynamicReload="true" />
+			</Field>
+
+			<!-->  this is to refresh the menu items after device was selected-->
+			<Field  id="refreshCallbackMethod" type="textfield" defaultValue="dynamicCallbackSetdeviceID" hidden="true"></Field>
+	
+			<Field id="stateName" type="menu"> 
+				<Label>select state name to be overwritten</Label> 
+				<List class="self"  filter="" method="selectState"  dynamicReload="true" />
+			</Field>
+
+			<Field id="oldValue" type="textfield" readonly="true"> 
+				<Label>old value of state</Label> 
+			</Field>
+
+			<Field id="newValue" type="textfield"> 
+				<Label>new value for state</Label> 
+			</Field>
+
+
+			<Field id="newValueUi" type="textfield"> 
+				<Label>new value Ui for state, leave empty to ignore</Label> 
+			</Field>
+
+			<Field id="executeOverwrite" type="button"> 
+				<Label>overwrite now</Label> 
+				<Title>OVERWRITE</Title><CallbackMethod>executeOverwriteButtonState</CallbackMethod>
+			</Field>
+
+		</ConfigUI>
+	</MenuItem>
+
+	<MenuItem id="setDevProp">
+		<Name>Set a property of any Homematic Indigo device to ..</Name>
+		<ConfigUI>
+			<Field     id="MSG" type="textfield" defaultValue="">
+				<Label>MSG from plugin:</Label>
+			</Field>
+			<Field     id="devId" type="menu" defaultValue="0">
+				<Label>select device:</Label>
+				<List class="self" filter="all" method="filterHomematicAllDevicesReturnDevID"  dynamicReload="true" />
+			</Field>
+
+			<!-->  this is to refresh the menu items after device was selected-->
+			<Field  id="refreshCallbackMethod" type="textfield" defaultValue="dynamicCallbackSetdeviceID" hidden="true"></Field>
+	
+			<Field id="propertyName" type="menu"> 
+				<Label>select property name to be overwritten</Label> 
+				<List class="self"  filter="" method="selectProperty"  dynamicReload="true" />
+			</Field>
+
+			<Field id="oldValue" type="textfield" readonly="true"> 
+				<Label>old value of property</Label> 
+			</Field>
+
+			<Field id="newValue" type="textfield"> 
+				<Label>new value for property</Label> 
+			</Field>
+
+			<Field id="executeOverwrite" type="button"> 
+				<Label>overwrite now</Label> 
+				<Title>OVERWRITE</Title><CallbackMethod>executeOverwriteButtonProperty</CallbackMethod>
+			</Field>
+
+		</ConfigUI>
+	</MenuItem>
+
+
 
 	<MenuItem id="dummy1"><Name>Management items ---------------</Name></MenuItem>
 
 
 
 	<MenuItem id="refreshAllData">
-		<Name>Refresh all devices ..</Name>
+		<Name>Refresh all devices in Indigo..</Name>
 		<ConfigUI>
 
 			<Field id="printConfig" type="button"> 
@@ -620,7 +696,7 @@
 
 
 	<MenuItem id="ignoreHomaticDevice">
-		<Name>(un)Ignore specifc homematic devices..</Name>
+		<Name>(un)Ignore specifc homematic devices in Indigo ..</Name>
 		<ConfigUI>
 
 			<Field     id="address" type="menu" defaultValue="0">
@@ -658,6 +734,11 @@
 			<Field id="printConfig" type="button"> 
 				<Label>PRINT Config parameters and host info to log </Label> 
 				<Title>PRINT </Title><CallbackMethod>printConfigMenu</CallbackMethod>
+			</Field>
+
+			<Field id="printDevices" type="button"> 
+				<Label>PRINT device list to log </Label> 
+				<Title>PRINT </Title><CallbackMethod>printDevices</CallbackMethod>
 			</Field>
 
 		</ConfigUI>
