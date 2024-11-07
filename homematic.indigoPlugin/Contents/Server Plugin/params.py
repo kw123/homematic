@@ -221,14 +221,24 @@ k_deviceTypesWithButtonPress=[
 	"HMIP-BUTTON",
 ]
 
+k_deviceTypesWithOnOff=[
+	"HMIP-OnOff",
+]
+
 
 k_buttonPressStates = {
+	"STATE":{"refresh":"1"},
 	"PRESS_SHORT":{"refresh":"1"},
 	"PRESS_LONG":{"refresh":"1"},
 	"PRESS_LONG_RELEASE":{"refresh":"1"},
 	"PRESS_LONG_START":{"refresh":"1"},
 	"OPTICAL_ALARM_ACTIVE":{"refresh":"1"},
 	"ACOUSTIC_ALARM_ACTIVE":{"refresh":"1"}
+}
+
+
+k_OnOffStates = {
+	"STATE":{"refresh":"1"}
 }
 
 
@@ -315,15 +325,16 @@ k_deviceWithDayWeekMonth = {
 		"rateState":	"RainRate_mm_pH", 
 		"onOffState":	"Raining", 
 		"reset":		"RainTotal_Reset",
-		"deviceby":		1,
-		"roundBy":		0
+		"devideby":		1,
+		"roundBy":		0,
+		"roundByRate":	1
 	},
 	"HMIP-PSM":{
 		"indigoState":	"Energy_Wh", 
 		"rateState":	"", 
 		"onOffState":	"", 
 		"reset":		"Energy_Wh_Reset",
-		"deviceby":		1,
+		"devideby":		1,
 		"roundBy":		0
 	},
 	"HMIP-Sunshine":{
@@ -331,7 +342,7 @@ k_deviceWithDayWeekMonth = {
 		"rateState":	"", 
 		"onOffState":	"", 
 		"reset":		"SunshineMinutes_Reset",
-		"deviceby":		1,
+		"devideby":		1,
 		"roundBy":		0,
 		"format":		"{:.0f} Min"
 	}
@@ -363,7 +374,7 @@ k_mapMonthNumberToMonthName = {
 }
 
 
-k_refreshTimes = [1., 5., 20.]
+k_refreshTimes = [1., 7., 30.]
 
 k_repeatGet = {
 	"1":k_refreshTimes[0],
@@ -423,7 +434,32 @@ k_dontUseStatesForOverAllList = [
 # for action channel info eg "channels": 'int(dev.states["channelNumber"])+1' is converted with "eval()" to a real number 
 # deviceXml describes the xml code in devices.xml.
 k_mapHomematicToIndigoDevTypeStateChannelProps = { 
+
 	# general types
+	"HMIP-OnOff":{
+		"states":{
+			"channelNumber":{"dType": "string"},
+			"childOf":{"dType": "integer"},
+			"STATE":{"indigoState": "onOffState", "dType": "booltruefalse", "channelNumber": "-99", "refresh":"1"}
+		},
+		"actionParams":{},
+		"deviceXML":'<ConfigUI>'+
+		'<Field id="inverse"   type="checkbox"  defaultValue="false" > <Label>invert on/off state</Label> </Field>'+
+		'<Field id="useForOn"  type="textfield" defaultValue="on" >    <Label>use what string for ON </Label> </Field>'+
+		'<Field id="useForOff" type="textfield" defaultValue="off" >   <Label>use what string for OFF </Label> </Field>'+
+		'</ConfigUI>',
+		"triggerLastSensorChange":"",
+		"props":{
+			"inverse":False,
+			"useForOn":"on",
+			"useForOff":"off",
+			"SupportsStatusRequest":False,
+			"SupportsSensorValue": False,
+			"SupportsOnState":  True
+		}
+	},
+
+
 	"HMIP-Relay":{
 		"states":{
 			"channelNumber":{"dType": "string"},
@@ -701,10 +737,7 @@ k_mapHomematicToIndigoDevTypeStateChannelProps = {
 			"Month-12":{"dType": "real","indigoState":k_deviceWithDayWeekMonth["HMIP-Rain"]["indigoState"]+"_"+k_mapMonthNumberToMonthName["12"]},
 			"Year":    {"dType": "real","indigoState":k_deviceWithDayWeekMonth["HMIP-Rain"]["indigoState"]+"_ThisYear"},
 			"LastYear":  {"dType": "real","indigoState":k_deviceWithDayWeekMonth["HMIP-Rain"]["indigoState"]+"_LastYear"},
-			"timeStamp":{"dType": "string","indigoState":k_deviceWithDayWeekMonth["HMIP-Rain"]["indigoState"]+"_TimeStamp"},
-			"last":{"dType": "real","indigoState":k_deviceWithDayWeekMonth["HMIP-Rain"]["indigoState"]+"_Last"},
-			"lastTimeStamp":{"dType": "string","indigoState":k_deviceWithDayWeekMonth["HMIP-Rain"]["indigoState"]+"_LastTimeStamp"},
-			"rainrate":{"dType": "integer","indigoState":"RainRate_mm_pH"}
+			"rainrate":{"dType": "real","indigoState":"RainRate_mm_pH"}
 		},
 		"noIndigoState":k_buttonPressStates,
 		"actionParams":{},
@@ -1114,7 +1147,9 @@ k_mapHomematicToIndigoDevTypeStateChannelProps = {
 			"SECTION_STATUS":{"dType":"string","intToState":True,"channelNumber":"1",		"refresh":"3"},
 			"WP_OPTIONS":{"dType":"string","intToState":True,"channelNumber":"1",			"refresh":"3"},
 			"PROCESS":{"dType":"string","intToState":True,"channelNumber":"1",				"refresh":"3"},
-			"SECTION":{"channelNumber": "1","dType": "integer",								"refresh":"3"}
+			"SECTION":{"channelNumber": "1","dType": "integer",								"refresh":"3"},
+			"batteryLevel":{"dType": "integer"},
+			"lastBatteryReplaced":{"dType": "string"}
 		},
 		"actionParams":{
 			"states":{
@@ -1128,9 +1163,16 @@ k_mapHomematicToIndigoDevTypeStateChannelProps = {
 				"Off":"2"
 			}
 		},
-		"deviceXML":'<ConfigUI> <Field id="show" type="label"> <Label>Nothing to configure</Label> </Field></ConfigUI>',
+		"deviceXML":
+				'<ConfigUI>'+ 
+				'<Field id="operatingVoltage100" type="textfield"  defaultValue="4.6" > <Label>set Battery Volt at 100%</Label> </Field>'+
+				'<Field id="operatingVoltage0" type="textfield"  defaultValue="3.3" > <Label>set Battery Volt at 0%</Label> </Field>'+
+				'</ConfigUI>',
 		"triggerLastSensorChange":"LOCK_STATE",
 		"props":{
+			"operatingVoltage100":"4.6",
+			"operatingVoltage0":"3.3",
+			"SupportsBatteryLevel":True,
 			"displayStateId":"LOCK_STATE",
 			"SupportsStatusRequest":False,
 			"SupportsSensorValue": False,
@@ -1264,6 +1306,8 @@ k_mapHomematicToIndigoDevTypeStateChannelProps = {
 			"BOOST_MODE":{"dType": "booltruefalse",																			"refresh":"3"},
 			"QUICK_VETO_TIME":{"dType": "real",																				"refresh":"3"},
 			"BOOST_TIME":{"dType": "real",																					"refresh":"3"},
+			"batteryLevel":{"dType": "integer"},
+			"lastBatteryReplaced":{"dType": "string"},
 			"childInfo":{"dType": "string","init":'{"Dimmer-V":[0,"1","HMIP-Dimmer-V"]}'},
 			"enabledChildren":{"dType": "string"}
 		},
@@ -1279,9 +1323,16 @@ k_mapHomematicToIndigoDevTypeStateChannelProps = {
 				"Dimm":["1"]
 			}
 		},
-		"deviceXML":'<ConfigUI> <Field id="show" type="label"> <Label>Nothing to configure</Label> </Field></ConfigUI>',
+		"deviceXML":
+				'<ConfigUI>'+ 
+				'<Field id="operatingVoltage100" type="textfield"  defaultValue="3.0 > <Label>set Battery Volt at 100%</Label> </Field>'+
+				'<Field id="operatingVoltage0" type="textfield"  defaultValue="2.2" > <Label>set Battery Volt at 0%</Label> </Field>'+
+				'</ConfigUI>',
 		"triggerLastSensorChange":"temperatureInput1,setpointHeat",
 		"props":{
+			"operatingVoltage100":"3.0",
+			"operatingVoltage0":"2.2",
+			"SupportsBatteryLevel":True,
 			"enable-Dimmer-V":True,
 			"SupportsStatusRequest":False,
 			"SupportsHvacFanMode": False,
@@ -1558,13 +1609,22 @@ k_mapHomematicToIndigoDevTypeStateChannelProps = {
 		"states":{
 			"UNREACH":k_UNREACHP,
 			"STATE": {"channelNumber": "1","dType":"string", "intToState":True,"indigoState":"WINDOW_STATE",	"refresh":"1"},
-			"SABOTAGE":{"channelNumber": "0","dType": "booltruefalse",											"refresh":"3"}
+			"SABOTAGE":{"channelNumber": "0","dType": "booltruefalse",											"refresh":"3"},
+			"batteryLevel":{"dType": "integer"},
+			"lastBatteryReplaced":{"dType": "string"}
 		},
 		"actionParams":{
 		},
-		"deviceXML":'<ConfigUI> <Field id="show" type="label"> <Label>Nothing to configure</Label> </Field></ConfigUI>',
+		"deviceXML":
+				'<ConfigUI>'+
+				'<Field id="operatingVoltage100" type="textfield"  defaultValue="1.5" > <Label>set Battery Volt at 100%</Label> </Field>'+
+				'<Field id="operatingVoltage0" type="textfield"  defaultValue="1.1" > <Label>set Battery Volt at 0%</Label> </Field>'+
+				'</ConfigUI>',
 		"triggerLastSensorChange":"WINDOW_STATE",
 		"props":{
+			"operatingVoltage100":"1.5",
+			"operatingVoltage0":"1.1",
+			"SupportsBatteryLevel":True,
 			"SupportsStatusRequest":False,
 			"SupportsSensorValue":False,
 			"SupportsOnState": False,
@@ -1738,7 +1798,9 @@ k_mapHomematicToIndigoDevTypeStateChannelProps = {
 			"BOOST_MODE":{"dType": "booltruefalse",										"refresh":"3"},
 			"QUICK_VETO_TIME":{"dType": "real",											"refresh":"3"},
 			"BOOST_TIME":{"dType": "real",												"refresh":"3"},
-			"HEATING_COOLING":{"dType": "string","intToState":True,						"refresh":"3"}
+			"HEATING_COOLING":{"dType": "string","intToState":True,						"refresh":"3"},
+			"batteryLevel":{"dType": "integer"},
+			"lastBatteryReplaced":{"dType": "string"}
 		},
 		"actionParams":{
 			"states":{
@@ -1750,9 +1812,16 @@ k_mapHomematicToIndigoDevTypeStateChannelProps = {
 				"BOOST_MODE":["1"]
 			}
 		},
-		"deviceXML":'<ConfigUI> <Field id="show" type="label"> <Label>Nothing to configure</Label> </Field></ConfigUI>',
+		"deviceXML":
+				'<ConfigUI>'+
+				'<Field id="operatingVoltage100" type="textfield"  defaultValue="3.0 > <Label>set Battery Volt at 100%</Label> </Field>'+
+				'<Field id="operatingVoltage0" type="textfield"  defaultValue="2.2" > <Label>set Battery Volt at 0%</Label> </Field>'+
+				'</ConfigUI>',
 		"triggerLastSensorChange":"temperatureInput1,setpointHeat",
 		"props":{
+			"operatingVoltage100":"3.0",
+			"operatingVoltage0":"2.2",
+			"SupportsBatteryLevel":True,
 			"SupportsStatusRequest":False,
 			"SupportsHvacFanMode": False,
 			"SupportsHvacOperationMode": False,
@@ -1797,12 +1866,20 @@ k_mapHomematicToIndigoDevTypeStateChannelProps = {
 			"CURRENT_ILLUMINATION":mergeDicts(k_Illumination,{"indigoState":"CURRENT_ILLUMINATION"}),
 			"CURRENT_ILLUMINATION_STATUS":{"dType": "string","intToState":True,			"refresh":"3"},
 			"MOTION":{"dType": "booltruefalse",											"refresh":"1"},
-			"MOTION_DETECTION_ACTIVE":{"dType": "booltruefalse",						"refresh":"3"}
+			"MOTION_DETECTION_ACTIVE":{"dType": "booltruefalse",						"refresh":"3"},
+			"batteryLevel":{"dType": "integer"},
+			"lastBatteryReplaced":{"dType": "string"}
 		},
 		"actionParams":{},
-		"deviceXML":'<ConfigUI> <Field id="show" type="label"> <Label>Nothing to configure</Label> </Field></ConfigUI>',
+		"deviceXML":
+				'<ConfigUI>'+
+				'<Field id="operatingVoltage100" type="textfield"  defaultValue="3.0 > <Label>set Battery Volt at 100%</Label> </Field>'+
+				'<Field id="operatingVoltage0" type="textfield"  defaultValue="2.2" > <Label>set Battery Volt at 0%</Label> </Field>'+
+				'</ConfigUI>',
 		"triggerLastSensorChange":"MOTION",
 		"props":{
+			"operatingVoltage100":"3.0",
+			"operatingVoltage0":"2.2",
 			"displayS":"MOTION",
 			"SupportsStatusRequest":False,
 			"SupportsSensorValue": False,
@@ -1831,7 +1908,9 @@ k_mapHomematicToIndigoDevTypeStateChannelProps = {
 	"HMIP-SWDM":{
 		"states":{
 			"UNREACH":k_UNREACHP,
-			"STATE":{"dType": "string","intToState":True,"channelNumber":"1",						"refresh":"3"}
+			"STATE":{"dType": "string","intToState":True,"channelNumber":"1",						"refresh":"3"},
+			"batteryLevel":{"dType": "integer"},
+			"lastBatteryReplaced":{"dType": "string"}
 		},
 		"actionParams":{
 			"states":{
@@ -1850,9 +1929,15 @@ k_mapHomematicToIndigoDevTypeStateChannelProps = {
 						'<Option value="no"   >keep as is	</Option>'+
 					'</List>'+
 				'</Field>'+
+				'<Field id="operatingVoltage100" type="textfield"  defaultValue="1.5" > <Label>set Battery Volt at 100%</Label> </Field>'+
+				'<Field id="operatingVoltage0" type="textfield"  defaultValue="1.1" > <Label>set Battery Volt at 0%</Label> </Field>'+
 			'</ConfigUI>',
 		"triggerLastSensorChange":"STATE",
 		"props":{
+			"operatingVoltage100":"1.5",
+			"operatingVoltage0":"1.1",
+			"SupportsBatteryLevel":True,
+			"displayS":"ALARMSTATE",
 			"displayS":"STATE",
 			"invertState":"no",
 			"SupportsStatusRequest":False,
@@ -1868,12 +1953,21 @@ k_mapHomematicToIndigoDevTypeStateChannelProps = {
 			"MOISTURE_DETECTED":{"dType": "booltruefalse","channelNumber":"1",					"refresh":"1"},
 			"WATERLEVEL_DETECTED":{"dType": "booltruefalse","channelNumber":"1",				"refresh":"1"},
 			"ERROR_NON_FLAT_POSITIONING":{"dType": "booltruefalse","channelNumber":"0",			"refresh":"1"},
-			"ERROR_CODE":{"channelNumber": "-99","dType": "integer",							"refresh":"3"}
+			"ERROR_CODE":{"channelNumber": "0","dType": "integer",								"refresh":"3"},
+			"batteryLevel":{"dType": "integer"},
+			"lastBatteryReplaced":{"dType": "string"}
 		},
 		"actionParams":{},
-		"deviceXML":'<ConfigUI> <Field id="show" type="label"> <Label>Nothing to configure</Label> </Field></ConfigUI>',
+		"deviceXML":
+				'<ConfigUI>'+
+				'<Field id="operatingVoltage100" type="textfield"  defaultValue="3.0 > <Label>set Battery Volt at 100%</Label> </Field>'+
+				'<Field id="operatingVoltage0" type="textfield"  defaultValue="2.2" > <Label>set Battery Volt at 0%</Label> </Field>'+
+				'</ConfigUI>',
 		"triggerLastSensorChange":"ALARMSTATE,WATERLEVEL_DETECTED",
 		"props":{
+			"operatingVoltage100":"3.0",
+			"operatingVoltage0":"2.2",
+			"SupportsBatteryLevel":True,
 			"displayS":"ALARMSTATE",
 			"SupportsStatusRequest":False,
 			"SupportsSensorValue":False,
@@ -1922,7 +2016,9 @@ k_mapHomematicToIndigoDevTypeStateChannelProps = {
 			"pT-r":{"dType": "string",   "indigoState":"PREVIOUS_PASSAGE-right"},
 			"dir": {"dType": "string",   "indigoState":"direction"},
 			"lT-l":{"dType": "string",   "indigoState":"LAST_PASSAGE-left"},
-			"lT-r":{"dType": "string",   "indigoState":"LAST_PASSAGE-right"}
+			"lT-r":{"dType": "string",   "indigoState":"LAST_PASSAGE-right"},
+			"batteryLevel":{"dType": "integer"},
+			"lastBatteryReplaced":{"dType": "string"}
 		},
 		"noIndigoState":{"PASSAGE_COUNTER_VALUE":{"refresh":"1"}},
 		"actionParams":{},
@@ -1936,9 +2032,14 @@ k_mapHomematicToIndigoDevTypeStateChannelProps = {
 						'<Option value="out-in"  >out - in</Option>'+
 					'</List>'+
 				'</Field>'+
+				'<Field id="operatingVoltage100" type="textfield"  defaultValue="3.0 > <Label>set Battery Volt at 100%</Label> </Field>'+
+				'<Field id="operatingVoltage0" type="textfield"  defaultValue="2.2" > <Label>set Battery Volt at 0%</Label> </Field>'+
 			'</ConfigUI>',
 		"triggerLastSensorChange":"",
 		"props":{
+			"operatingVoltage100":"3.0",
+			"operatingVoltage0":"2.2",
+			"SupportsBatteryLevel":True,
 			"useWhatForDirection":"left-right",
 			"SupportsStatusRequest":False,
 			"SupportsSensorValue":False,
@@ -1958,13 +2059,22 @@ k_mapHomematicToIndigoDevTypeStateChannelProps = {
 			"SABOTAGE_STICKY":{"dType": "booltruefalse","channelNumber":"0",		"refresh":"3"},
 			"SABOTAGE":{"dType": "booltruefalse","channelNumber":"0",				"refresh":"3"},
 			"BLOCKED_TEMPORARY":{"dType": "booltruefalse","channelNumber":"0",		"refresh":"3"},
-			"CODE_STATE":{"dType": "string","intToState":True,"channelNumber":"0",	"refresh":"1"}
+			"CODE_STATE":{"dType": "string","intToState":True,"channelNumber":"0",	"refresh":"1"},
+			"batteryLevel":{"dType": "integer"},
+			"lastBatteryReplaced":{"dType": "string"}
 		},
 		"noIndigoState":k_keyPressStates,
 		"actionParams":{},
-		"deviceXML":'<ConfigUI> <Field id="show" type="label"> <Label>Nothing to configure</Label> </Field></ConfigUI>',
+		"deviceXML":
+				'<ConfigUI>'+
+				'<Field id="operatingVoltage100" type="textfield"  defaultValue="3.0 > <Label>set Battery Volt at 100%</Label> </Field>'+
+				'<Field id="operatingVoltage0" type="textfield"  defaultValue="2.2" > <Label>set Battery Volt at 0%</Label> </Field>'+
+				'</ConfigUI>',
 		"triggerLastSensorChange":"",
 		"props":{
+			"operatingVoltage100":"3.0",
+			"operatingVoltage0":"2.2",
+			"SupportsBatteryLevel":True,
 			"NumberOfUsersMax": 8,
 			"SupportsStatusRequest":False,
 			"SupportsSensorValue":False,
@@ -1983,19 +2093,41 @@ k_mapHomematicToIndigoDevTypeStateChannelProps = {
 			"buttonPressedTimePrevious":{"dType":"string","channelNumber":"-99"},
 			"buttonPressedTypePrevious":{"dType":"string","channelNumber":"-99"},
 			"lastValuesText":{"dType":"string","channelNumber":"-99"},
+			"childInfo":{"dType": "string", "init":'{"1":[0,"1","HMIP-OnOff"], "2":[0,"2","HMIP-OnOff"], "3":[0,"3","HMIP-OnOff"],  "4":[0,"4","HMIP-OnOff"],  "5":[0,"5","HMIP-OnOff"],  "6":[0,"6","HMIP-OnOff"], "7":[0,"7","HMIP-OnOff"], "8":[0,"8","HMIP-OnOff"]}'},
+			"enabledChildren":{"dType": "string"},
+			"batteryLevel":{"dType": "integer"},
+			"lastBatteryReplaced":{"dType": "string"}
 		},
 		"noIndigoState":k_buttonPressStates,
 		"actionParams":{},
 		"deviceXML":
-			'<ConfigUI>'+
-				'<Field id="show" type="label" >'+
-				'<Label>Nothing to configure here\n'+
-				' See menu / PRINT parameters and help to logfile to setup buttons correctly'+
-				'</Label>'+
-				'</Field>'+
-			'</ConfigUI>',
+		'<ConfigUI>'+
+			'<Field id="enableOnOff" type="checkbox" defaultValue="false" >  														 <Label>Enable on option</Label></Field>'+
+			'<Field id="enable-1" type="checkbox" defaultValue="false" visibleBindingId="enableOnOff" visibleBindingValue="true" >  <Label>Enable channel 1 as on off channel</Label></Field>'+
+			'<Field id="enable-2" type="checkbox" defaultValue="false" visibleBindingId="enableOnOff" visibleBindingValue="true" >  <Label>Enable channel 2 as on off channel</Label></Field>'+
+			'<Field id="enable-3" type="checkbox" defaultValue="false" visibleBindingId="enableOnOff" visibleBindingValue="true" >  <Label>Enable channel 3 as on off channel</Label></Field>'+
+			'<Field id="enable-4" type="checkbox" defaultValue="false" visibleBindingId="enableOnOff" visibleBindingValue="true" >  <Label>Enable channel 4 as on off channel</Label></Field>'+
+			'<Field id="enable-5" type="checkbox" defaultValue="false" visibleBindingId="enableOnOff" visibleBindingValue="true" >  <Label>Enable channel 5 as on off channel</Label></Field>'+
+			'<Field id="enable-6" type="checkbox" defaultValue="false" visibleBindingId="enableOnOff" visibleBindingValue="true" >  <Label>Enable channel 6 as on off channel</Label></Field>'+
+			'<Field id="enable-7" type="checkbox" defaultValue="false" visibleBindingId="enableOnOff" visibleBindingValue="true" >  <Label>Enable channel 7 as on off channel</Label></Field>'+
+			'<Field id="enable-8" type="checkbox" defaultValue="false" visibleBindingId="enableOnOff" visibleBindingValue="true" >  <Label>Enable channel 7 as on off channel</Label></Field>'+
+			'<Field id="operatingVoltage100" type="textfield"  defaultValue="1.5" > <Label>set Battery Volt at 100%</Label> </Field>'+
+			'<Field id="operatingVoltage0" type="textfield"  defaultValue="1.1" > <Label>set Battery Volt at 0%</Label> </Field>'+
+		'</ConfigUI>',
 		"triggerLastSensorChange":"",
 		"props":{
+			"operatingVoltage100":"1.5",
+			"operatingVoltage0":"1.1",
+			"SupportsBatteryLevel":True,
+			"enableOnOff": False,
+			"enable-1": False,
+			"enable-2": False,
+			"enable-3": False,
+			"enable-4": False,
+			"enable-5": False,
+			"enable-6": False,
+			"enable-7": False,
+			"enable-8": False,
 			"SupportsStatusRequest":False,
 			"SupportsSensorValue":False,
 			"SupportsOnState": True
@@ -2295,6 +2427,7 @@ k_indigoDeviceisVariableDevice			= []
 k_devTypeHasChildren 					= []
 k_devsThatAreChildDevices 				= []
 k_deviceTypesParentWithButtonPressChild	= []
+k_deviceTypesParentWithOnOffChild		= []
 k_indigoDeviceisDoorLockDevice			= []
 k_indigoDeviceisThermostatDevice 		= []
 k_indigoDeviceisDisplayDevice 			= ["HMIP-WRCD"]
@@ -2318,12 +2451,6 @@ for devType in k_mapHomematicToIndigoDevTypeStateChannelProps:
 		if "OPERATING_VOLTAGE" not in dd["states"]:
 			dd["states"]["OPERATING_VOLTAGE"] = {"channelNumber": "0","dType": "real","indigoState":"OperatingVoltage"}
 
-
-	if devType in k_devTypeHasChildren:
-		dd["props"]["isEnabledChannelDevice"] = True
-
-
-
 	if "childInfo" in dd["states"]:
 		if devType not in k_devTypeHasChildren:
 			k_devTypeHasChildren.append(devType)
@@ -2332,6 +2459,11 @@ for devType in k_mapHomematicToIndigoDevTypeStateChannelProps:
 			if dd["states"]["childInfo"]["init"].find("HMIP-BUTTON" ) > 0:
 				if devType not in k_deviceTypesParentWithButtonPressChild:
 					k_deviceTypesParentWithButtonPressChild.append(devType)
+
+		if "init" in dd["states"]["childInfo"]:
+			if dd["states"]["childInfo"]["init"].find("HMIP-OnOff" ) > 0:
+				if devType not in k_deviceTypesParentWithOnOffChild:
+					k_deviceTypesParentWithOnOffChild.append(devType)
 
 	if "childOf" in dd["states"]:
 		if devType not in k_devsThatAreChildDevices:
@@ -2342,9 +2474,18 @@ for devType in k_mapHomematicToIndigoDevTypeStateChannelProps:
 			dd["states"]["LOW_BAT"] = {"channelNumber": "0","dType": "booltruefalse","indigoState":"LOW_BAT"}
 
 
+	if "LOW_BAT" in dd["states"] and "batteryLevel" not in dd["states"] :
+			dd["states"]["batteryLevel"] = {"dType": "integer"}
+			dd["states"]["lastBatteryReplaced"] = {"dType": "string"}
+			dd["props"]["SupportsBatteryLevel"] = True
+
+
 	if "LOCK_STATE" in dd["states"]:
 		if devType not in k_indigoDeviceisDoorLockDevice:
 			k_indigoDeviceisDoorLockDevice.append(devType)
+
+
+
 
 	if "SET_POINT_TEMPERATURE" in dd["states"]:
 		if devType not in k_indigoDeviceisThermostatDevice:
@@ -2354,6 +2495,8 @@ for devType in k_mapHomematicToIndigoDevTypeStateChannelProps:
 
 	if "enable-" in str(dd["props"]):
 		k_logMessageAtCreation[devType] = "in DEVICE EDIT, please select active child devices"
+
+
 
 
 	for homematicStateName in dd["states"]:

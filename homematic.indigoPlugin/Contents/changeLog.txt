@@ -1,4 +1,14 @@
 
+changes in V2022.7.8 2024-11-07
+==================  
+added varous states as options
+ - batterylevel decices from either operating voltage or low_battery (100% if not true, 10% else)
+ - enable min max battery voltage for 100 / 0% battery level
+
+added new dev type for button devices as ON/OFF switches, besides currently only moment  types = (on for 3 secs then off again)
+
+
+
 changes in V2022.7.6 2024-06-21
 ==================  
 
@@ -17,7 +27,7 @@ temperature changes every 20 secs (20 time less frequently than fast changing va
 	"ELV-SH-TACO",				# Temperature and acceleration sensor 
     
 
-5. added menue item to set any homematic indigo device staet or property 
+5. added menue item to set any homematic indigo device state or property 
 
 
 changes in V2022.6.6 2024-06-21

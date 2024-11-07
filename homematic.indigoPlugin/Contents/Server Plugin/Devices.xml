@@ -160,6 +160,14 @@
 		<ConfigUI> </ConfigUI>
 	</Device>
 
+
+	<Device type="sensor" id="HMIP-OnOff" allowUserCreation="false">
+		<Name>Homematic HMIP-ONOff input</Name>
+		<ConfigUI> </ConfigUI>
+	</Device>
+
+
+
 	<Device type="sensor" id="HMIP-PS2" allowUserCreation="false">
 		<Name>Homematic HMIP-PS2 dual Relay output</Name>
 		<ConfigUI> </ConfigUI>
