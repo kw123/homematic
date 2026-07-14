@@ -294,11 +294,6 @@
     <ConfigUI> </ConfigUI>
   </Device>
 
-  <Device type="sensor" id="HMIP-BUTTON-V" allowUserCreation="false">
-    <Name>Homematic Virtual Button</Name>
-    <ConfigUI> </ConfigUI>
-  </Device>
-
   <Device type="sensor" id="HMIP-ROOM" allowUserCreation="false">
     <Name>Homematic Room</Name>
     <ConfigUI> </ConfigUI>

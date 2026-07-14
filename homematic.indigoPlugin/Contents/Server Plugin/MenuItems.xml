@@ -684,12 +684,34 @@
 	<MenuItem id="refreshAllData">
 		<Name>Refresh all devices in Indigo..</Name>
 		<ConfigUI>
-
 			<Field id="printConfig" type="button"> 
 				<Label>get all data ie device info details from homematic server NOW </Label> 
 				<Title>EXECUTE</Title><CallbackMethod>getAllDataCallback</CallbackMethod>
 			</Field>
+		</ConfigUI>
+	</MenuItem>
 
+	<MenuItem id="relinkDevices">
+		<Name>Relink child orphans..</Name>
+		<ConfigUI>
+			<Field id="numberOfDevices" type="menu" defaultValue="5"> 
+				<Label>Maximum number of devices handled at a time</Label> 
+				<List>
+					<Option value="1">1</Option>
+					<Option value="2">2</Option>
+					<Option value="5">5</Option>
+					<Option value="10">10</Option>
+					<Option value="99">99</Option>
+			</List>
+			</Field>
+			<Field id="dorelink" type="button"> 
+				<Label>re link orphaned childred back to their parents</Label> 
+				<Title>EXECUTE</Title><CallbackMethod>setActiverelinkParentsToChildren</CallbackMethod>
+			</Field>
+			<Field     id="lab0" type="label" fontColor="orange">
+				<Label>It might take a few seconds to start and to finish execution.
+Please check logfile printout, you might need to rerun the process</Label>
+			</Field>
 		</ConfigUI>
 	</MenuItem>
 
@@ -740,6 +762,16 @@
 				<Label>PRINT device list to log </Label> 
 				<Title>PRINT </Title><CallbackMethod>printDevices</CallbackMethod>
 			</Field>
+
+			<Field id="printDeviceProps" type="button"> 
+				<Label>PRINT device props to log </Label> 
+				<Title>PRINT </Title><CallbackMethod>printDevicePropsMenu</CallbackMethod>
+			</Field>
+			<Field id="printDeviceXML" type="button"> 
+				<Label>PRINT device XML file to log </Label> 
+				<Title>PRINT </Title><CallbackMethod>printDeviceXMLMenu</CallbackMethod>
+			</Field>
+
 
 		</ConfigUI>
 	</MenuItem>

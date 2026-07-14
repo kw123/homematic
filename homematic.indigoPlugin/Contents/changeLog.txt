@@ -1,12 +1,66 @@
-
-changes in V2022.7.8 2024-11-07
+changes in V2022.12.10 2026-07-07
 ==================  
-added varous states as options
+bug fix audit:
+- fixed undefined variables that crashed child-device handling (chI -> chIndex, return of wrong var in dofillDevStatesButtonChild)
+- child devices are now created with their intended props (isChild=True and inherited *_Ignore settings were silently dropped)
+- offset device config field is now stored under the prop name the code reads (offset-STATE); user offsets were ignored before
+- keypad: userPrevious state is now filled (was overwriting user instead)
+- fixed inverted find() checks (temperatureStatesEnabled, enabledChildren registration)
+- rain rate: timestamps in rate store normalized to seconds (mixed secs/msecs made rates wrong by x1000 on one path)
+- init self.triggerList (creating a trigger for the plugin event raised AttributeError)
+- getCompleteupdate now restarts its connection class after an error (reset wrong attribute before)
+- delayed off-actions: empty per-device lists are cleaned up again
+- fixed several broken/incomplete log messages (undefined vars in duplicate-address report, missing format args)
+
+
+changes in V2022.11.10 2026-04-06
+==================  
+fixed some format statements.
+fixed day totals shift from day to day 
+
+
+
+changes in V2022.11.9 2025-10-09
+==================  
+added dev types:
+ELV-SH-KRC:						# single button remote
+ELV-SH-CRC:						# single button remote
+ELV-SH-SMSI:					# earth moisture sensor
+
+
+changes in V2022.10.9 2025-10-09
+==================  
+added dev types:
+ELV-SH-SMSI:					# power outlet inside
+HMIP-PSMCO:						# power outlet inside
+ELV-SH-SMSI:					# earth Moisture and temp sensor 
+
+
+
+changes in V2022.9.9 2025-06-02
+==================  
+added dev types:
+ELV-SH-WSM						# garden water valve,   on/off relay and measurements flow and volume
+
+
+changes in V2022.8.9 2024-12-20
+==================  
+added dev types:
+HMIP-PSMCO  an ouside power outlet w energy measurement 
+ELV-SH-CTH  an inside / outside temp  & Humditity sensor, smaller formfactor 
+HMIP-LSC    an LED RGB chain driver, can set RGB values, color temp. indigo device is an RGB lamp
+HMIP-FSM (5/16)  relay with energy measurement
+
+
+changes in V2022.7.9 2024-11-07
+==================  
+added various states as options
  - batterylevel decices from either operating voltage or low_battery (100% if not true, 10% else)
  - enable min max battery voltage for 100 / 0% battery level
 
 added new dev type for button devices as ON/OFF switches, besides currently only moment  types = (on for 3 secs then off again)
 
+fixed alarmstate for SWD sensor, was not updated, water level and moisture level states were ok.
 
 
 changes in V2022.7.6 2024-06-21

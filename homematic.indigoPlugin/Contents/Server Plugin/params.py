@@ -9,8 +9,8 @@ from params_user import *
 
 def mergeDicts(a,b):
 	z = copy.copy(a)
-	for xx in b:
-		z[xx] = b[xx]
+	for rr in b:
+		z[rr] = b[rr]
 	return z
 
 try:
@@ -21,22 +21,27 @@ except:
 k_supportedDeviceTypesFromHomematicToIndigo = {
 ###	homatic name        indigo dev type               what kind of device type 
 	"HMIP-FALMOT":		"HMIP-FALMOT",				# floor heating system valve driver 
+	"HMIP-ESI":			"HMIP-ESI",					# GAS meter counter 
 	"HMIP-DLD": 		"HMIP-DLD",					# Door-Lock
-	"HMIP-DBB": 		"HMIP-BUTTON",				# handheld remote switch 
-	"HMIP-DSD": 		"HMIP-BUTTON",				# battery board ring sensor/ switch 
+	"HMIP-DSD": 		"HMIP-BUTTON",				# battery board ring sensor/ switch
 	"HMIP-BRC":			"HMIP-BUTTON",				# behind wall switch 
-	"HMIP-RC":			"HMIP-BUTTON",				# any handheld switch 
+	"HMIP-RCV":			"HMIP-BUTTON-V",			# virtuell butons
+	"HMIP-RC1":			"HMIP-BUTTON",				# any handheld switch 
+	"HMIP-RC2":			"HMIP-BUTTON",				# any handheld switch 
+	"HMIP-RC4":			"HMIP-BUTTON",				# any handheld switch 
 	"HMIP-RC8":			"HMIP-BUTTON",				# 8 button 
 	"HMIP-KRC":			"HMIP-BUTTON",				# 4 button hand device
-	"HMIP-DBB":			"HMIP-BUTTON",				# 4 button hand device
+	"HMIP-DBB":			"HMIP-BUTTON",				# 4 button hand device handheld remote switch
 	"HMIP-KRCA":		"HMIP-BUTTON",				# 4 button hand device
 	"HMIP-FCI": 		"HMIP-BUTTON",				# x channel behind wall switch / button
 	"HMIP-STI":			"HMIP-BUTTON",				# capacitor single / double button 
-	"HMIP-WRC2": 		"HMIP-BUTTON",				# wall switch 5
+	"HMIP-WRC2": 		"HMIP-BUTTON",				# wall switch 
 	"HMIP-WRCC2": 		"HMIP-BUTTON",				# wall switch 2
 	"HMIP-WRC4": 		"HMIP-BUTTON",				# wall switch 4 
 	"HMIP-WRC6": 		"HMIP-BUTTON",				# wall switch 6
 	"HMIP-WRCR": 		"HMIP-BUTTON",				# wall switch rotate
+	"ELV-SH-KRC": 		"HMIP-BUTTON",				# key single button remote
+	"ELV-SH-CRC": 		"HMIP-BUTTON",				# key single button remote
 	"HMIP-WRCD":		"HMIP-WRCD",				# switch w display
 	"HMIP-WKP": 		"HMIP-WKP",					# key pad 
 	"HMIP-SWO-PR": 		"HMIP-SWO-PR",				# weather sensor temp, hum ,rain, wind, wind direction, sun
@@ -45,8 +50,9 @@ k_supportedDeviceTypesFromHomematicToIndigo = {
 	"HMIP-SRD": 		"HMIP-SRD",					# rain sensor
 	"HMIP-SL": 			"HMIP-SL",					# Light sensor
 	"HMIP-SFD": 		"HMIP-SFD",					# particulate sensor 
-	"HMIP-STE2": 		"HMIP-STE2",					# particulate sensor 
+	"HMIP-STE2": 		"HMIP-STE2",				# particulate sensor 
 	"HMIP-STHO": 		"HMIP-STHO",				# Temp-Humidity Sensor
+	"ELV-SH-CTH": 		"HMIP-STHO",				# Temp Humidity Sensor
 	"HMIP-SCTH": 		"HMIP-SCTH",				# CO2 Temp Humidity Sensor
 	"HMIP-SWSD": 		"HMIP-SWSD",				# smoke alarm
 	"HMIP-SCI": 		"HMIP-SWDM",				# contact sensor
@@ -54,7 +60,7 @@ k_supportedDeviceTypesFromHomematicToIndigo = {
 	"HMIP-SRH": 		"HMIP-SRH",					# window open=2/tilted=1/close=0
 	"HMIP-STV": 		"HMIP-SWDM",				# tilt sensor
 	"HMIP-SWDO": 		"HMIP-SWDM",				# optical sensor
-	"HMIP-SWD||": 		"HMIP-SWD",					# eater sensor,  || only accept strict HMIP-SWD no additional characters
+	"HMIP-SWD||": 		"HMIP-SWD",					# wasser sensor,  || only accept strict HMIP-SWD no additional characters
 	"HMIP-SPDR": 		"HMIP-SPDR",				# left right pass sensor 
 	"HMIP-SAM":			"HMIP-SAM",					# gravity, movement sensor on/off
 	"HMIP-SMI":			"HMIP-SMI",					# movement sensor inside
@@ -66,34 +72,39 @@ k_supportedDeviceTypesFromHomematicToIndigo = {
 	"HMIP-MP3P": 		"HMIP-MP3P",				# sound/ light output 
 	"HMIP-ASIR": 		"HMIP-ASIR",				# alarm siren
 	"HMIP-FROLL": 		"HMIP-ROLL",				# Jalousie(Jealousy) / curtains  up / down  / left right
-	"ELV-SH-WSC": 		"ELV-SH-WSC",				# 2 channel servo controller
 	"HMIP-PDT": 		"HMIP-PDT",					# dimmer output 
 	"HMIP-FDT": 		"HMIP-PDT",					# dimmer output
 	"HMIP-BDT":			"HMIP-PDT",					# dimmer outlet
 	"HMIP-DRD3":		"HMIP-PDT3",				# 3 dimmer fuse box 
 	"HMIP-DRBL":		"HMIP-PDT4",				# 4 dimmer fuse box 
+	"HMIP-PCBS2":		"HMIP-PS2",					# 2 on/off board relay
+	"HMIP-PS||":		"HMIP-PS",					# on/off outlet -PS only
+	"HMIP-PS-":			"HMIP-PS",					# any simple on/off outlet. anything with PS-xx
 	"HMIP-DRSI1":		"HMIP-PS",					# on/off germnan fuse box relay
-	"HMIP-PS||":		"HMIP-PS",					# on/off outlet
-	"HMIP-FS":			"HMIP-PS",					# on.off outlet
-	"HMIP-PS-":			"HMIP-PS",					# any simple on/off outlet
+	"HMIP-FSI":			"HMIP-PS",					# on/off outlet
 	"HMIP-PCBS||":		"HMIP-PS",					# on/off board relay
 	"HMIP-PCBS-":		"HMIP-PS",					# on/off board relay
-	"HMIP-PCBS2":		"HMIP-PS2",					# 2 on/off board relay
-	"ELV-SH-SW1-BA":	"HMIP-PS",					# on/off board relay w battery
-	"ELV-SH-TACO":		"ELV-SH-TACO",				# Temperature and acceleration sensor 
 	"HMIP-WGC":			"HMIP-PS",					# garage door controller 
 	"HMIP-DRSI4":		"HMIP-PS4",					# on/off german fuse box 4-relay
 	"HMIP-PSM": 		"HMIP-PSM",					# on/off outlet w energy measurements
-	"HMIP-FSM": 		"HMIP-PSM",					# on/off outlet w energy measurements
+	"HMIP-PSMCO": 		"HMIP-PSM",					# on/off outlet w energy measurements device for outside
 	"HMIP-USBSM": 		"HMIP-PSM",					# on/off outlet w energy measurements USB 
 	"HMIP-BSM":			"HMIP-PSM",					# PowerOutlet Switch W Energy measurement
+	"ELV-SH-PSMCI": 	"HMIP-PSM",					# on/off outlet w energy measurements device for inside
+	"ELV-SH-TACO":		"ELV-SH-TACO",				# Temperature and acceleration sensor 
+	"ELV-SH-WSM":		"ELV-SH-WSM",				# Water flow relay and measurements
+	"ELV-SH-WSC": 		"ELV-SH-WSC",				# 2 channel servo controller
+	"ELV-SH-CTV": 		"ELV-SH-CTV",				# tilt sensor
+	"ELV-SH-SW1-BA":	"HMIP-PS",					# on/off board relay w battery
+	"ELV-SH-SMSI":		"ELV-SH-SMSI",				# earth Moisture and temp sensor 
+	"HMIP-FSM": 		"HMIP-FSM",					# on/off outlet w energy measurements, difference to PSM are the channel numbers
 	"HMIP-ETRV":		"HMIP-ETRV",				# eTRV-RadiatorValve
-	"HMIP-BWTH": 		"HMIP-WTH",					# wall thermostat
 	"HMIP-WTH": 		"HMIP-WTH",					# wall thermostat
-	"HMIP-HEATING": 	"HMIP-HEATING",				# heating group of several EVTR and WTH, not a real device 
+	"HMIP-BWTH": 		"HMIP-WTH",					# wall thermostat
+ 	"HMIP-HEATING": 	"HMIP-HEATING",				# heating group of several EVTR and WTH, not a real device 
 	"RPI-RF-MOD": 		"Homematic-AP",				# RPI host
 	"HMIP-HAP": 		"Homematic-AP",				# ACCESS point
-	"ROOM": 			"HMIP-ROOM"				# room, not a real device , shows devices in room
+	"ROOM": 			"HMIP-ROOM"					# room, not a real device , shows devices in room
 }
 
 #merge with user defined devices
@@ -116,15 +127,15 @@ k_stateMeasuresCount = [
 
 #for dev states props
 k_statesThatHaveMinMaxReal = [
-	"Temperature", "Power", "Current", "Voltage", "OperatingVoltage", "Illumination", "sensorValue","RainRate_mm_pH"
+	"Temperature", "Power", "Current", "Voltage", "OperatingVoltage", "Illumination", "sensorValue"
 ]
 
 k_statesThatHaveMinMaxInteger = [
-	"Humidity", "WindSpeed", "CO2"
+	"Humidity", "WindSpeed", "CO2","Moisture"
 ]
 
 k_statesWithfillMinMax = k_statesThatHaveMinMaxReal + k_statesThatHaveMinMaxInteger
-
+k_statesWithTrend = copy.copy(k_statesWithfillMinMax)
 
 k_ChildrenHaveTheseStates ={
 		"childOf":"integer",
@@ -143,6 +154,7 @@ k_checkIfPresentInValues = ["TEMPERATURE","HUMIDITY","RAIN","ILLUMINATION","WIND
 
 
 k_isBatteryDevice = [
+	"HMIP-ESI",			
 	"HMIP-STHO",			
 	"HMIP-WTH",
 	"HMIP-SWDM",
@@ -155,8 +167,6 @@ k_isBatteryDevice = [
 	"HMIP-SW1",
 	"HMIP-SWSD",
 	"HMIP-DLD",
-	"HMIP-SCTH",
-	"HMIP-SCTH",
 	"HMIP-MP#P",
 	"HMIP-SMI",
 	"HMIP-BUTTON",
@@ -164,15 +174,16 @@ k_isBatteryDevice = [
 	"HMIP-SPDR",
 	"HMIP-SRH",	
 	"ELV-SH-TACO",
+	"ELV-SH-CTV",
+	"ELV-SH-SMSI",
+	"ELV-SH-WSM",
 	"HMIP-ETRV"
 ]
 
 # add some states ie operating voltage to these devceis 
 k_isVoltageDevice = [
-	"ELV-SH-WSC",
 	"HMIP-ASIR",
 	"HMIP-STHO",	
-	"HMIP-SCTH",		
 	"HMIP-WTH",
 	"HMIP-SWDM",
 	"HMIP-SWD",
@@ -201,13 +212,15 @@ k_isVoltageDevice = [
 	"HMIP-PDT4",
 	"HMIP-SRH",	
 	"HMIP-ROLL",	
+	"ELV-SH-CTV",
 	"ELV-SH-TACO",
+	"ELV-SH-WSM",
 	"HMIP-SFD"
 ]
 
 # these don't have eg low battery, or unreach ...
 k_isNotRealDevice =[
-	"HMIP-RCV-50",
+	"HMIP-BUTTON-V",
 	"HMIP-ROOM",
 	"HMIP-SYSVAR-FLOAT",
 	"HMIP-SYSVAR-STRING",
@@ -217,12 +230,15 @@ k_isNotRealDevice =[
 ]
 
 
-k_deviceTypesWithButtonPress=[
+k_deviceTypesWithButtonPress = [
 	"HMIP-BUTTON",
+	"HMIP-BUTTON-V",
 ]
 
 k_deviceTypesWithOnOff=[
 	"HMIP-OnOff",
+	"HMIP-PSM",
+	"HMIP-SWDM",
 ]
 
 
@@ -285,7 +301,8 @@ k_allDevicesHaveTheseStates = {
 	"created":"string",
 	"title":"string",
 	"homematicType":"string",
-	"lastSensorChange":"string"
+	"lastSensorChange":"string",
+	"lastBadValue":"string"
 }
 
 # these sates are alreadu defined in indigo 
@@ -312,6 +329,7 @@ k_statesWithPreviousValue = [
 	"Temperature",
 	"sensorValue",
 	"Humidity",
+	"Moisture",
 	"WIND_DIR"
 ]
 
@@ -319,8 +337,35 @@ k_deviceIsRateDevice = [
 	"HMIP-Rain"
 ]
 
+
+k_at0ToThis= {
+	"day": 		"_Today",
+	"week":		"_ThisWeek",
+	"month": 	"_ThisMonth",
+	"year": 	"_ThisYear"
+	}
+
+k_deviceWithDayWeekMonthChildren = [
+	"HMIP-SWO-PR"
+	]
+	
 k_deviceWithDayWeekMonth = {
+	"ELV-SH-WSM":{
+		"homematicStateName":	"Water_Volume", 
+		"dtype":		"integer", 
+		"refresh":		"3", 
+		"channelNumber":"2", 
+		"indigoState":	"Volume", 
+		"reset":		"Volume_Reset",
+		"devideby":		1,
+		"roundBy":		1,
+		"roundByRate":	1
+	},
 	"HMIP-Rain":{
+		"homematicStateName":	"RAIN_COUNTER", 
+		"dtype":		"real", 
+		"refresh":		"3", 
+		"channelNumber":"1", 
 		"indigoState":	"RainTotal", 
 		"rateState":	"RainRate_mm_pH", 
 		"onOffState":	"Raining", 
@@ -330,37 +375,50 @@ k_deviceWithDayWeekMonth = {
 		"roundByRate":	1
 	},
 	"HMIP-PSM":{
+		"homematicStateName":	"ENERGY_COUNTER", 
+		"dtype":		"real", 
+		"refresh":		"3", 
+		"channelNumber":"", 
 		"indigoState":	"Energy_Wh", 
 		"rateState":	"", 
 		"onOffState":	"", 
 		"reset":		"Energy_Wh_Reset",
 		"devideby":		1,
-		"roundBy":		0
+		"roundBy":		0,
+		"format":		"{:,.0f}"
+	},
+	"HMIP-ESI":{
+		"homematicStateName":	"GAS_VOLUME", 
+		"dtype":		"real", 
+		"refresh":		"3", 
+		"channelNumber":"2", 
+		"indigoState":	"cubic_meter", 
+		"rateState":	"", 
+		"onOffState":	"", 
+		"reset":		"cubic_meter_Reset",
+		"devideby":		1,
+		"roundBy":		0,
+		"format":		"{:,.0f}cm"
 	},
 	"HMIP-Sunshine":{
+		"homematicStateName":	"SUNSHINEDURATION", 
+		"dtype":		"integer", 
+		"refresh":		"3", 
+		"channelNumber":"", 
 		"indigoState":	"SunshineMinutes", 
 		"rateState":	"", 
 		"onOffState":	"", 
 		"reset":		"SunshineMinutes_Reset",
 		"devideby":		1,
 		"roundBy":		0,
-		"format":		"{:.0f} Min"
+		"format":		"{:.0f}://{:.0f}"
 	}
 }
 
-# homematic delivers some info in varibales, here we put them into teh corresponding dev/states 
-k_mapTheseVariablesToDevices = {
-}
-
-
-k_doNotCreateStateForChildDevices = [
-	"online",
-	"UNREACH"
-]
 
 k_mapMonthNumberToMonthName = {
 	"1": "January",
-	"2": "Februray",
+	"2": "February",
 	"3": "March",
 	"4": "April",
 	"5": "May",
@@ -372,6 +430,84 @@ k_mapMonthNumberToMonthName = {
 	"11": "November",
 	"12": "December"
 }
+
+
+k_addDMW = {
+			"at0":{"dType": "string","indigoState":"_At0"},
+			"Day-7":{"dType": "real","indigoState":"_Day-7"},
+			"Day-6":{"dType": "real","indigoState":"_Day-6"},
+			"Day-5":{"dType": "real","indigoState":"_Day-5"},
+			"Day-4":{"dType": "real","indigoState":"_Day-4"},
+			"Day-3":{"dType": "real","indigoState":"_Day-3"},
+			"Day-2":{"dType": "real","indigoState":"_Day-2"},
+			"Day-1":{"dType": "real","indigoState":"_Yesterday"},
+			"Day-0":{"dType": "real","indigoState":"_Today"},
+			"Week-0":{"dType": "real","indigoState":"_ThisWeek"},
+			"Week-1":{"dType": "real","indigoState":"_Week-1"},
+			"Week-2":{"dType": "real","indigoState":"_Week-2"},
+			"Week-3":{"dType": "real","indigoState":"_Week-3"},
+			"Week-4":{"dType": "real","indigoState":"_Week-4"},
+			"Month-0":{"dType": "real","indigoState":"_ThisMonth"},
+			"Month-1" :{"dType": "real","indigoState":"_"+k_mapMonthNumberToMonthName["1"]},
+			"Month-2" :{"dType": "real","indigoState":"_"+k_mapMonthNumberToMonthName["2"]},
+			"Month-3" :{"dType": "real","indigoState":"_"+k_mapMonthNumberToMonthName["3"]},
+			"Month-4" :{"dType": "real","indigoState":"_"+k_mapMonthNumberToMonthName["4"]},
+			"Month-5" :{"dType": "real","indigoState":"_"+k_mapMonthNumberToMonthName["5"]},
+			"Month-6" :{"dType": "real","indigoState":"_"+k_mapMonthNumberToMonthName["6"]},
+			"Month-7" :{"dType": "real","indigoState":"_"+k_mapMonthNumberToMonthName["7"]},
+			"Month-8" :{"dType": "real","indigoState":"_"+k_mapMonthNumberToMonthName["8"]},
+			"Month-9" :{"dType": "real","indigoState":"_"+k_mapMonthNumberToMonthName["9"]},
+			"Month-10":{"dType": "real","indigoState":"_"+k_mapMonthNumberToMonthName["10"]},
+			"Month-11":{"dType": "real","indigoState":"_"+k_mapMonthNumberToMonthName["11"]},
+			"Month-12":{"dType": "real","indigoState":"_"+k_mapMonthNumberToMonthName["12"]},
+			"Year":    {"dType": "real","indigoState":"_ThisYear"},
+			"LastYear": {"dType": "real","indigoState":"_LastYear"},
+			"Reset":   {"dType": "string","indigoState":"_Reset"}
+}
+
+
+# homematic delivers some info in variables, here we put them into the corresponding dev/states 
+k_mapTheseVariablesToDevices = {
+}
+
+k_GlobalConst_ICONLIST	= [
+	["NoImage", 			"NoImage"],
+	["PowerOff", 			"PowerOn"],
+	["PowerOn", 			"PowerOff"],
+	["DimmerOn", 			"DimmerOff"],
+	["DimmerOff", 			"DimmerOn"],
+	["FanOff", 				"FanHigh"],
+	["FanHigh", 			"FanOff"],
+	["SprinklerOff", 		"SprinklerOn"],
+	["SprinklerOn", 		"SprinklerOff"],
+	["SensorOff", 			"SensorOn"],
+	["SensorOn", 			"SensorOff"],
+	["SensorOn", 			"SensorTripped"],
+	["SensorTripped", 		"SensorOn"],
+	["SensorOff", 			"SensorTripped"],
+	["SensorTripped", 		"SensorOff"],
+	["EnergyMeterOff", 		"EnergyMeterOn"],
+	["LightSensorOn", 		"LightSensor"],
+	["LightSensor", 		"LightSensorOn"],
+	["MotionSensor", 		"MotionSensorTripped"],
+	["MotionSensorTripped",	"MotionSensor"],
+	["DoorSensorOpened",	"DoorSensorClosed"],
+	["DoorSensorClosed", 	"DoorSensorOpened"],
+	["WindowSensorClosed",	"WindowSensorOpened"],
+	["WindowSensorOpened",	"WindowSensorClosed"],
+	["TemperatureSensor",	"TemperatureSensorOn"],
+	["HumiditySensor",		"HumiditySensorOn"],
+	["HumidifierOff",		"HumidifierOn"],
+	["DehumidifierOff",		"DehumidifierOn"],
+	["TimerOn", 			"TimerOff"],
+	["TimerOff", 			"TimerOn"]]
+
+
+
+k_doNotCreateStateForChildDevices = [
+	"online",
+	"UNREACH"
+]
 
 
 k_refreshTimes = [1., 7., 30.]
@@ -391,9 +527,10 @@ k_Power = {				"indigoState": "Power",				"dType": "real",			"format": "{:.1f}W"
 k_Current = {			"indigoState": "Current",			"dType": "real",			"format": "{:.2f}A",	"channelNumber": "7"				,													"refresh":"3"}
 k_Frequency = {			"indigoState": "Frequency",			"dType": "real",			"format": "{:.1f}Hz",	"channelNumber": "7"				,													"refresh":"3"}
 k_Illumination = {		"indigoState": "Illumination",		"dType": "real",			"format": "{:.1f}Lux"										,													"refresh":"1"}
+k_Moisture = {			"indigoState": "Moisture",			"dType": "integer",			"format": "{:}%"											,													"refresh":"1"}
 k_Temperature = {		"indigoState": "Temperature",		"dType": "real",			"format": "{:.1f}ºC"										,													"refresh":"3"}
 k_Acceleration = {		"indigoState": "Acceleration",		"dType": "real",			"format": "{:.1f}m/s"										,													"refresh":"1"}
-k_Humidity = {			"indigoState": "Humidity",			"dType": "integer",			"format": "{}%"												,													"refresh":"3"}
+k_Humidity = {			"indigoState": "Humidity",			"dType": "integer",			"format": "{}%"	,		"channelNumber": "7"				,													"refresh":"3"}
 
 
 # tehse states do not come directly from hoematic, thy are calculated from otgher states and timing
@@ -437,9 +574,10 @@ k_mapHomematicToIndigoDevTypeStateChannelProps = {
 
 	# general types
 	"HMIP-OnOff":{
+		"file_deviceXML":{"Devicetype" :"sensor", "Name": "Homematic HMIP-ONOff input"},
 		"states":{
-			"channelNumber":{"dType": "string"},
-			"childOf":{"dType": "integer"},
+			"channelNumber":	{"dType": "string"},
+			"childOf":			{"dType": "integer"},
 			"STATE":{"indigoState": "onOffState", "dType": "booltruefalse", "channelNumber": "-99", "refresh":"1"}
 		},
 		"actionParams":{},
@@ -459,11 +597,11 @@ k_mapHomematicToIndigoDevTypeStateChannelProps = {
 		}
 	},
 
-
 	"HMIP-Relay":{
+		"file_deviceXML":{"Devicetype" :"relay", "Name": "Homematic Relay"},
 		"states":{
-			"channelNumber":{"dType": "string"},
-			"childOf":{"dType": "integer"},
+			"channelNumber":	{"dType": "string"},
+			"childOf":			{"dType": "integer"},
 			"STATE":mergeDicts(k_RelayMap,{"channelNumber":"-99"})
 		},
 		"actionParams":{
@@ -480,9 +618,10 @@ k_mapHomematicToIndigoDevTypeStateChannelProps = {
 	},
 
 	"HMIP-Dimmer":{
+		"file_deviceXML":{"Devicetype" :"dimmer", "Name": "Homematic Dimmer"},
 		"states":{
-			"channelNumber":{"dType": "string"},
-			"childOf":{"dType": "integer"},
+			"channelNumber":	{"dType": "string"},
+			"childOf":			{"dType": "integer"},
 			"LEVEL":mergeDicts(k_DimmerMap,{"channelNumber":"-99"})
 		},
 		"actionParams":{
@@ -502,11 +641,12 @@ k_mapHomematicToIndigoDevTypeStateChannelProps = {
 	},
 
 	"HMIP-Dimmer-C":{
+		"file_deviceXML":{"Devicetype" :"dimmer", "Name": "Homematic Dimmer Color"},
 		"states":{
-			"channelNumber":{"dType": "string"},
-			"childOf":{"dType": "integer"},
-			"LEVEL":mergeDicts(k_DimmerMap,{"channelNumber":"-99"}),
-			"COLOR":{"dType":"string","intToState":True,"channelNumber":"6",		"refresh":"3"}
+			"channelNumber":	{"dType": "string"},
+			"childOf":			{"dType": "integer"},
+			"COLOR":{			"dType":"string","replaceNumberByString":"COLOR","channelNumber":"6",		"refresh":"3"}
+,			"LEVEL":mergeDicts(k_DimmerMap,{"channelNumber":"-99"})
 		},
 		"actionParams":{
 			"states":{"Dimm":"LEVEL" },
@@ -527,13 +667,14 @@ k_mapHomematicToIndigoDevTypeStateChannelProps = {
 	},
 
 	"HMIP-Dimmer-V":{
+		"file_deviceXML":{"Devicetype" :"dimmer", "Name": "Homematic Dimmer Valve"},
 		"states":{
-			"channelNumber":{"dType": "string"},
-			"childOf":{"dType": "integer"},
 			"LEVEL":mergeDicts(k_DimmerMap,{"channelNumber":"-99"}),
-			"LEVEL_STATUS":{"dType":"string","intToState":True,"channelNumber":"-99",		"refresh":"3"},
-			"FROST_PROTECTION":{"dType":"booltruefalse","channelNumber":"-99",				"refresh":"3"},
-			"VALVE_STATE":{"dType":"string","intToState":True,"channelNumber":"-99",		"refresh":"3"}
+			"channelNumber":	{"dType": "string"},
+			"childOf":			{"dType": "integer"},
+			"LEVEL_STATUS":		{"dType":"string",			"channelNumber":"-99",	"replaceNumberByString":"LEVEL_STATUS",	"refresh":"3"},
+			"FROST_PROTECTION":	{"dType":"booltruefalse",	"channelNumber":"-99",											"refresh":"3"},
+			"VALVE_STATE":		{"dType":"string",			"channelNumber":"-99",	"replaceNumberByString":"VALVE_STATE",	"refresh":"3"}
 		},
 		"actionParams":{
 			"states":{"Dimm":"LEVEL" },
@@ -552,11 +693,12 @@ k_mapHomematicToIndigoDevTypeStateChannelProps = {
 	},
 
 	"HMIP-Dimmer-R":{
+		"file_deviceXML":{"Devicetype" :"dimmer", "Name": "Homematic Roll"},
 		"states":{
-			"channelNumber":{"dType": "string"},
-			"childOf":{"dType": "integer"},
 			"LEVEL":mergeDicts(k_DimmerMap,{"channelNumber":"4"}),
-			"LEVEL_STATUS":{"dType":"string","intToState":True,"channelNumber":"-99",		"refresh":"3"}
+			"channelNumber":	{"dType": "string"},
+			"childOf":			{"dType": "integer"},
+			"LEVEL_STATUS":		{"dType":"string","replaceNumberByString":"LEVEL_STATUS","channelNumber":"-99",		"refresh":"3"}
 		},
 		"actionParams":{
 			"states":{"Dimm":"LEVEL" },
@@ -576,13 +718,14 @@ k_mapHomematicToIndigoDevTypeStateChannelProps = {
 
 
 	"HMIP-LEVEL":{
+		"file_deviceXML":{"Devicetype" :"sensor", "Name": "Homematic LEVEL"},
 		"states":{
 			"channelNumber":{"dType": "string"},
-			"childOf":{"dType": "integer"},
-			"LEVEL":{"dType":"integer","mult":100,"format":"{}%","channelNumber":"-99",		"refresh":"1"},
-			"LEVEL_STATUS":{"dType":"string","intToState":True,"channelNumber":"-99",		"refresh":"3"},
-			"FROST_PROTECTION":{"dType":"booltruefalse","channelNumber":"-99",				"refresh":"3"},
-			"VALVE_STATE":{"dType":"string","intToState":True,"channelNumber":"-99",		"refresh":"3"}
+			"childOf":				{"dType": "integer"},
+			"LEVEL":				{"dType":"integer",			"channelNumber":"-99",	"mult":100,"format":"{}%",								"refresh":"1"},
+			"LEVEL_STATUS":			{"dType":"string",			"channelNumber":"-99",					"replaceNumberByString":"LEVEL_STATUS",	"refresh":"3"},
+			"FROST_PROTECTION":		{"dType":"booltruefalse",	"channelNumber":"-99",															"refresh":"3"},
+			"VALVE_STATE":			{"dType":"string",			"channelNumber":"-99",					"replaceNumberByString":"VALVE_STATE",	"refresh":"3"}
 		},
 		"actionParams":{},
 		"deviceXML":'<ConfigUI> <Field id="show" type="label"> <Label>Nothing to configure</Label> </Field></ConfigUI>',
@@ -596,11 +739,12 @@ k_mapHomematicToIndigoDevTypeStateChannelProps = {
 	},
 
 	"HMIP-Voltage":{
+		"file_deviceXML":{"Devicetype" :"sensor", "Name": "Homematic Volatge input Sensor"},
 		"states":{
-			"channelNumber":{"dType": "string"},
-			"childOf":{"dType": "integer"},
-			"VOLTAGE":{"dType":"real","indigoState":"Voltage","format":"{:.2f}V","channelNumber":"-99",		"refresh":"3"},
-			"VOLTAGE_STATUS":{"dType":"string","intToState":True,"channelNumber":"-99",						"refresh":"3"}
+			"channelNumber":		{"dType": "string"},
+			"childOf":				{"dType": "integer"},
+			"VOLTAGE":				{"dType":"real",	"channelNumber":"-99",	"indigoState":"Voltage","format":"{:.2f}V",						"refresh":"3"},
+			"VOLTAGE_STATUS":		{"dType":"string",	"channelNumber":"-99",					"replaceNumberByString":"VOLTAGE_STATUS",		"refresh":"3"}
 		},
 		"actionParams":{},
 		"deviceXML":'<ConfigUI> <Field id="show" type="label"> <Label>Nothing to configure</Label> </Field></ConfigUI>',
@@ -615,9 +759,10 @@ k_mapHomematicToIndigoDevTypeStateChannelProps = {
 
 
 	"HMIP-Acceleration":{
+		"file_deviceXML":{"Devicetype" :"sensor", "Name": "Homematic Acceleration Sensor"},
 		"states":{
-			"channelNumber":{"dType": "string"},
-			"childOf":{"dType": "integer"},
+			"channelNumber":	{"dType": "string"},
+			"childOf":			{"dType": "integer"},
 			"ACCELERATION":mergeDicts(k_Acceleration,{"channelNumber":"5"})
 		},
 		"actionParams":{},
@@ -633,9 +778,10 @@ k_mapHomematicToIndigoDevTypeStateChannelProps = {
 
 
 	"HMIP-Temperature":{
+		"file_deviceXML":{"Devicetype" :"sensor", "Name": "Homematic Temperature Sensor"},
 		"states":{
-			"channelNumber":{"dType": "string"},
-			"childOf":{"dType": "integer"},
+			"channelNumber":	{"dType": "string"},
+			"childOf":			{"dType": "integer"},
 			"ACTUAL_TEMPERATURE":mergeDicts(k_Temperature,{"channelNumber":"-99"})
 		},
 		"actionParams":{},
@@ -650,9 +796,10 @@ k_mapHomematicToIndigoDevTypeStateChannelProps = {
 	},
 
 	"HMIP-Humidity":{
+		"file_deviceXML":{"Devicetype" :"sensor", "Name": "Homematic Humidity Sensor"},
 		"states":{
-			"channelNumber":{"dType": "string"},
-			"childOf":{"dType": "integer"},
+			"channelNumber":	{"dType": "string"},
+			"childOf":			{"dType": "integer"},
 			"HUMIDITY":mergeDicts(k_Humidity,{"channelNumber":"-99"})
 		},
 		"actionParams":{},
@@ -667,9 +814,10 @@ k_mapHomematicToIndigoDevTypeStateChannelProps = {
 	},
 
 	"HMIP-Illumination":{
+		"file_deviceXML":{"Devicetype" :"sensor", "Name": "Homematic Illumination Sensor"},
 		"states":{
-			"channelNumber":{"dType": "string"},
-			"childOf":{"dType": "integer"},
+			"channelNumber":	{"dType": "string"},
+			"childOf":			{"dType": "integer"},
 			"ILLUMINATION":mergeDicts(k_Illumination,{"channelNumber":"-99"})
 		},
 		"actionParams":{},
@@ -684,6 +832,7 @@ k_mapHomematicToIndigoDevTypeStateChannelProps = {
 	},
 
 	"HMIP-SL":{
+		"file_deviceXML":{"Devicetype" :"sensor", "Name": "Homematic HMIP-SLx Illumination Sensor"},
 		"states":{
 			"ILLUMINATION":mergeDicts(k_Illumination,{"channelNumber":"1"}),
 			"CURRENT_ILLUMINATION":mergeDicts(k_Illumination,{"channelNumber":"1"})
@@ -698,46 +847,41 @@ k_mapHomematicToIndigoDevTypeStateChannelProps = {
 			"SupportsOnState":  False
 		}
 	},
+	
+	"HMIP-ESI":{
+		"file_deviceXML":{"Devicetype" :"sensor", "Name": "Homematic ESI-Gas counter monitor"},
+		"states":{
+			"UNREACH":k_UNREACHP,
+			"ENERGY_COUNTER":			{"dType": "real",			"channelNumber":"2",	"indigoState":"ENERGY_COUNTER",		"refresh":"3"},
+			"GAS_FLOW":					{"dType": "real",			"channelNumber":"1",										"refresh":"3"},
+			"POWER":					{"dType": "real",			"channelNumber":"1",										"refresh":"3"},
+			"POWER_STATUS":				{"dType": "integer",		"channelNumber":"1",										"refresh":"3"},
+			"SELF_CALIBRATION":			{"dType": "integer",		"channelNumber":"1",										"refresh":"3"},
+			"SELF_CALIBRATION_RESULT":	{"dType": "integer",		"channelNumber":"1",										"refresh":"3"},
+			"CHANNEL_OPERATION_MODE":	{"dType": "integer",		"channelNumber":"1",										"refresh":"3"},
+			"SENSOR_ERROR":				{"dType": "booltruefalse",	"channelNumber":"1",										"refresh":"3"}
+		},
+		"actionParams":{},
+		"deviceXML":'<ConfigUI> <Field id="show" type="label"> <Label>Nothing to configure</Label> </Field></ConfigUI>',
+		"triggerLastSensorChange":"GAS_VOLUME",
+		"props":{
+			"displayS":"GAS_VOLUME",
+			"SupportsStatusRequest":False,
+			"SupportsSensorValue": True,
+			"SupportsOnState":  False
+		}
+	},
 
 	"HMIP-Rain":{
+		"file_deviceXML":{"Devicetype" :"sensor", "Name": "Homematic Rain Sensor"},
 		"states":{
 			"channelNumber":{"dType": "string"},
-			"childOf":{"dType": "integer"},
-			"RAINING":{"dType": "booltruefalse","indigoState":k_deviceWithDayWeekMonth["HMIP-Rain"]["onOffState"],"channelNumber":"1",		"refresh":"2"},
-			"RAIN_COUNTER":{"dType": "real","indigoState":k_deviceWithDayWeekMonth["HMIP-Rain"]["indigoState"],"channelNumber":"1",			"refresh":"3"},
-			"lastEventOff":{"dType": "string"},
-			"lastEventOn":{"dType": "string"},
-			k_deviceWithDayWeekMonth["HMIP-Rain"]["indigoState"]+"_Reset":{"dType": "string"},
-			"at0":{"dType": "string","indigoState":k_deviceWithDayWeekMonth["HMIP-Rain"]["indigoState"]+"_At0"},
-			"Day-7":{"dType": "real","indigoState":k_deviceWithDayWeekMonth["HMIP-Rain"]["indigoState"]+"_Day-7"},
-			"Day-6":{"dType": "real","indigoState":k_deviceWithDayWeekMonth["HMIP-Rain"]["indigoState"]+"_Day-6"},
-			"Day-5":{"dType": "real","indigoState":k_deviceWithDayWeekMonth["HMIP-Rain"]["indigoState"]+"_Day-5"},
-			"Day-4":{"dType": "real","indigoState":k_deviceWithDayWeekMonth["HMIP-Rain"]["indigoState"]+"_Day-4"},
-			"Day-3":{"dType": "real","indigoState":k_deviceWithDayWeekMonth["HMIP-Rain"]["indigoState"]+"_Day-3"},
-			"Day-2":{"dType": "real","indigoState":k_deviceWithDayWeekMonth["HMIP-Rain"]["indigoState"]+"_Day-2"},
-			"Day-1":{"dType": "real","indigoState":k_deviceWithDayWeekMonth["HMIP-Rain"]["indigoState"]+"_Yesterday"},
-			"Day-0":{"dType": "real","indigoState":k_deviceWithDayWeekMonth["HMIP-Rain"]["indigoState"]+"_Today"},
-			"Week-0":{"dType": "real","indigoState":k_deviceWithDayWeekMonth["HMIP-Rain"]["indigoState"]+"_ThisWeek"},
-			"Week-1":{"dType": "real","indigoState":k_deviceWithDayWeekMonth["HMIP-Rain"]["indigoState"]+"_Week-1"},
-			"Week-2":{"dType": "real","indigoState":k_deviceWithDayWeekMonth["HMIP-Rain"]["indigoState"]+"_Week-2"},
-			"Week-3":{"dType": "real","indigoState":k_deviceWithDayWeekMonth["HMIP-Rain"]["indigoState"]+"_Week-3"},
-			"Week-4":{"dType": "real","indigoState":k_deviceWithDayWeekMonth["HMIP-Rain"]["indigoState"]+"_Week-4"},
-			"Month-0":{"dType": "real","indigoState":k_deviceWithDayWeekMonth["HMIP-Rain"]["indigoState"]+"_ThisMonth"},
-			"Month-1" :{"dType": "real","indigoState":k_deviceWithDayWeekMonth["HMIP-Rain"]["indigoState"]+"_"+k_mapMonthNumberToMonthName["1"]},
-			"Month-2" :{"dType": "real","indigoState":k_deviceWithDayWeekMonth["HMIP-Rain"]["indigoState"]+"_"+k_mapMonthNumberToMonthName["2"]},
-			"Month-3" :{"dType": "real","indigoState":k_deviceWithDayWeekMonth["HMIP-Rain"]["indigoState"]+"_"+k_mapMonthNumberToMonthName["3"]},
-			"Month-4" :{"dType": "real","indigoState":k_deviceWithDayWeekMonth["HMIP-Rain"]["indigoState"]+"_"+k_mapMonthNumberToMonthName["4"]},
-			"Month-5" :{"dType": "real","indigoState":k_deviceWithDayWeekMonth["HMIP-Rain"]["indigoState"]+"_"+k_mapMonthNumberToMonthName["5"]},
-			"Month-6" :{"dType": "real","indigoState":k_deviceWithDayWeekMonth["HMIP-Rain"]["indigoState"]+"_"+k_mapMonthNumberToMonthName["6"]},
-			"Month-7" :{"dType": "real","indigoState":k_deviceWithDayWeekMonth["HMIP-Rain"]["indigoState"]+"_"+k_mapMonthNumberToMonthName["7"]},
-			"Month-8" :{"dType": "real","indigoState":k_deviceWithDayWeekMonth["HMIP-Rain"]["indigoState"]+"_"+k_mapMonthNumberToMonthName["8"]},
-			"Month-9" :{"dType": "real","indigoState":k_deviceWithDayWeekMonth["HMIP-Rain"]["indigoState"]+"_"+k_mapMonthNumberToMonthName["9"]},
-			"Month-10":{"dType": "real","indigoState":k_deviceWithDayWeekMonth["HMIP-Rain"]["indigoState"]+"_"+k_mapMonthNumberToMonthName["10"]},
-			"Month-11":{"dType": "real","indigoState":k_deviceWithDayWeekMonth["HMIP-Rain"]["indigoState"]+"_"+k_mapMonthNumberToMonthName["11"]},
-			"Month-12":{"dType": "real","indigoState":k_deviceWithDayWeekMonth["HMIP-Rain"]["indigoState"]+"_"+k_mapMonthNumberToMonthName["12"]},
-			"Year":    {"dType": "real","indigoState":k_deviceWithDayWeekMonth["HMIP-Rain"]["indigoState"]+"_ThisYear"},
-			"LastYear":  {"dType": "real","indigoState":k_deviceWithDayWeekMonth["HMIP-Rain"]["indigoState"]+"_LastYear"},
-			"rainrate":{"dType": "real","indigoState":"RainRate_mm_pH"}
+			"childOf":		{"dType": "integer"},
+			"RAINING":		{"dType": "booltruefalse","indigoState":k_deviceWithDayWeekMonth["HMIP-Rain"]["onOffState"],"channelNumber":"1",		"refresh":"2"},
+			"RAIN_COUNTER":	{"dType": "real", "indigoState":"RainTotal"},
+			"lastEventOff":	{"dType": "string"},
+			"lastEventOn":	{"dType": "string"},
+			"rainrate":		{"dType": "real","indigoState":"RainRate_mm_pH"}
 		},
 		"noIndigoState":k_buttonPressStates,
 		"actionParams":{},
@@ -753,40 +897,11 @@ k_mapHomematicToIndigoDevTypeStateChannelProps = {
 	},
 
 	"HMIP-Sunshine":{
+		"file_deviceXML":{"Devicetype" :"sensor", "Name": "Homematic Sunshine Sensor"},
 		"states":{
-			"channelNumber":{"dType": "string"},
-			"childOf":{"dType": "integer"},
-			"SunshineMinutes_Reset":{"dType": "string"},
-			"SUNSHINEDURATION":{"dType":"integer","indigoState":k_deviceWithDayWeekMonth["HMIP-Sunshine"]["indigoState"],"channelNumber":"1",		"refresh":"3"},
-			"at0":{"dType": "string","indigoState":k_deviceWithDayWeekMonth["HMIP-Sunshine"]["indigoState"]+"_At0"},
-			"Day-7":{"dType": "real","indigoState":k_deviceWithDayWeekMonth["HMIP-Sunshine"]["indigoState"]+"_Day-7"},
-			"Day-6":{"dType": "real","indigoState":k_deviceWithDayWeekMonth["HMIP-Sunshine"]["indigoState"]+"_Day-6"},
-			"Day-5":{"dType": "real","indigoState":k_deviceWithDayWeekMonth["HMIP-Sunshine"]["indigoState"]+"_Day-5"},
-			"Day-4":{"dType": "real","indigoState":k_deviceWithDayWeekMonth["HMIP-Sunshine"]["indigoState"]+"_Day-4"},
-			"Day-3":{"dType": "real","indigoState":k_deviceWithDayWeekMonth["HMIP-Sunshine"]["indigoState"]+"_Day-3"},
-			"Day-2":{"dType": "real","indigoState":k_deviceWithDayWeekMonth["HMIP-Sunshine"]["indigoState"]+"_Day-2"},
-			"Day-1":{"dType": "real","indigoState":k_deviceWithDayWeekMonth["HMIP-Sunshine"]["indigoState"]+"_Yesterday"},
-			"Day-0":{"dType": "real","indigoState":k_deviceWithDayWeekMonth["HMIP-Sunshine"]["indigoState"]+"_Today"},
-			"Week-0":{"dType": "real","indigoState":k_deviceWithDayWeekMonth["HMIP-Sunshine"]["indigoState"]+"_ThisWeek"},
-			"Week-1":{"dType": "real","indigoState":k_deviceWithDayWeekMonth["HMIP-Sunshine"]["indigoState"]+"_Week-1"},
-			"Week-2":{"dType": "real","indigoState":k_deviceWithDayWeekMonth["HMIP-Sunshine"]["indigoState"]+"_Week-2"},
-			"Week-3":{"dType": "real","indigoState":k_deviceWithDayWeekMonth["HMIP-Sunshine"]["indigoState"]+"_Week-3"},
-			"Week-4":{"dType": "real","indigoState":k_deviceWithDayWeekMonth["HMIP-Sunshine"]["indigoState"]+"_Week-4"},
-			"Month-0":{"dType": "real","indigoState":k_deviceWithDayWeekMonth["HMIP-Sunshine"]["indigoState"]+"_ThisMonth"},
-			"Month-1" :{"dType": "real","indigoState":k_deviceWithDayWeekMonth["HMIP-Sunshine"]["indigoState"]+"_"+k_mapMonthNumberToMonthName["1"]},
-			"Month-2" :{"dType": "real","indigoState":k_deviceWithDayWeekMonth["HMIP-Sunshine"]["indigoState"]+"_"+k_mapMonthNumberToMonthName["2"]},
-			"Month-3" :{"dType": "real","indigoState":k_deviceWithDayWeekMonth["HMIP-Sunshine"]["indigoState"]+"_"+k_mapMonthNumberToMonthName["3"]},
-			"Month-4" :{"dType": "real","indigoState":k_deviceWithDayWeekMonth["HMIP-Sunshine"]["indigoState"]+"_"+k_mapMonthNumberToMonthName["4"]},
-			"Month-5" :{"dType": "real","indigoState":k_deviceWithDayWeekMonth["HMIP-Sunshine"]["indigoState"]+"_"+k_mapMonthNumberToMonthName["5"]},
-			"Month-6" :{"dType": "real","indigoState":k_deviceWithDayWeekMonth["HMIP-Sunshine"]["indigoState"]+"_"+k_mapMonthNumberToMonthName["6"]},
-			"Month-7" :{"dType": "real","indigoState":k_deviceWithDayWeekMonth["HMIP-Sunshine"]["indigoState"]+"_"+k_mapMonthNumberToMonthName["7"]},
-			"Month-8" :{"dType": "real","indigoState":k_deviceWithDayWeekMonth["HMIP-Sunshine"]["indigoState"]+"_"+k_mapMonthNumberToMonthName["8"]},
-			"Month-9" :{"dType": "real","indigoState":k_deviceWithDayWeekMonth["HMIP-Sunshine"]["indigoState"]+"_"+k_mapMonthNumberToMonthName["9"]},
-			"Month-10":{"dType": "real","indigoState":k_deviceWithDayWeekMonth["HMIP-Sunshine"]["indigoState"]+"_"+k_mapMonthNumberToMonthName["10"]},
-			"Month-11":{"dType": "real","indigoState":k_deviceWithDayWeekMonth["HMIP-Sunshine"]["indigoState"]+"_"+k_mapMonthNumberToMonthName["11"]},
-			"Month-12":{"dType": "real","indigoState":k_deviceWithDayWeekMonth["HMIP-Sunshine"]["indigoState"]+"_"+k_mapMonthNumberToMonthName["12"]},
-			"Year":    {"dType": "real","indigoState":k_deviceWithDayWeekMonth["HMIP-Sunshine"]["indigoState"]+"_ThisYear"},
-			"LastYear":  {"dType": "real","indigoState":k_deviceWithDayWeekMonth["HMIP-Sunshine"]["indigoState"]+"_LastYear"}
+			"channelNumber":	{"dType": "string"},
+			"SUNSHINEDURATION":{"dType": "real", "indigoState":"SunshineMinutes"},
+			"childOf":			{"dType": "integer"}
 		},
 		"actionParams":{},
 		"deviceXML":'<ConfigUI> <Field id="show" type="label"> <Label>Nothing to configure</Label> </Field></ConfigUI>',
@@ -800,12 +915,13 @@ k_mapHomematicToIndigoDevTypeStateChannelProps = {
 	},
 
 	"HMIP-Wind":{
+		"file_deviceXML":{"Devicetype" :"sensor", "Name": "Homematic Wind Sensor"},
 		"states":{
-			"channelNumber":{"dType": "string"},
-			"childOf":{"dType": "integer"},
-			"WIND_DIR":{"dType": "integer","channelNumber":"1",															"refresh":"2"},
-			"WIND_DIR_RANGE":{"dType": "real","channelNumber":"1",														"refresh":"2"},
-			"WIND_SPEED":{"dType": "real","indigoState":"WindSpeed", "channelNumber":"1","format":"{:.1f}[km/h]",		"refresh":"2"}
+			"channelNumber":	{"dType": "string"},
+			"childOf":			{"dType": "integer"},
+			"WIND_DIR":			{"dType": "integer",	"channelNumber":"1",														"refresh":"2"},
+			"WIND_DIR_RANGE":	{"dType": "real",		"channelNumber":"1",														"refresh":"2"},
+			"WIND_SPEED":		{"dType": "real",		"channelNumber":"1",	"indigoState":"WindSpeed", "format":"{:.1f}[km/h]",	"refresh":"2"}
 		},
 		"actionParams":{},
 		"deviceXML":'<ConfigUI> <Field id="show" type="label"> <Label>Nothing to configure</Label> </Field></ConfigUI>',
@@ -819,11 +935,12 @@ k_mapHomematicToIndigoDevTypeStateChannelProps = {
 	},
 
 	"HMIP-Direction":{
+		"file_deviceXML":{"Devicetype" :"sensor", "Name": "Homematic Direction device"},
 		"states":{
-			"channelNumber":{"dType": "string"},
-			"childOf":{"dType": "integer"},
-			"ABSOLUTE_ANGLE":{"indigoState":"Angle","dType":"integer","format":"{:d}º","duplicateState":"sensorValue","channelNumber":"-99"},
-			"MOTION":{"indigoState":"Horizontal","dType": "booltruefalse","inverse":True,"channelNumber":"-99"}
+			"channelNumber":	{"dType": "string"},
+			"childOf":			{"dType": "integer"},
+			"ABSOLUTE_ANGLE":	{"dType":"integer",			"channelNumber":"-99",	"indigoState":"Angle","format":"{:d}º","duplicateState":"sensorValue"},
+			"MOTION":			{"dType": "booltruefalse",	"channelNumber":"-99",	"indigoState":"Horizontal","inverse":True}
 		},
 		"actionParams":{},
 		"deviceXML":'<ConfigUI> <Field id="show" type="label"> <Label>Nothing to configure</Label> </Field></ConfigUI>',
@@ -838,10 +955,11 @@ k_mapHomematicToIndigoDevTypeStateChannelProps = {
 
 	# Multi channel types
 	"HMIP-SCTH":{
+		"file_deviceXML":{"Devicetype" :"sensor", "Name": "Homematic SCTH CO2-Temp-Humidity Sensor"},
 		"states":{
-			"CONCENTRATION":{"indigoState":"CO2","dType": "integer","format":"{:}[ppm]",				"refresh":"2"},
-			"enabledChildren":{"dType": "string"},
-			"childInfo":{"dType": "string","init":'{"Temperature":[0,"4","HMIP-Temperature"], "Humidity":[0,"4","HMIP-Humidity"], "Relay":[0,"7","HMIP-Relay"], "Dimmer":[0,"11","HMIP-Dimmer"]}'}
+			"CONCENTRATION":	{"dType": "integer",	"indigoState":"CO2","format":"{:}[ppm]",				"refresh":"2"},
+			"enabledChildren":	{"dType": "string"},
+			"childInfo":		{"dType": "string",		"init":'{"Temperature":[0,"4","HMIP-Temperature"], "Humidity":[0,"4","HMIP-Humidity"], "Relay":[0,"7","HMIP-Relay"], "Dimmer":[0,"11","HMIP-Dimmer"]}'}
 		},
 		"actionParams":{},
 		"deviceXML":
@@ -865,10 +983,11 @@ k_mapHomematicToIndigoDevTypeStateChannelProps = {
 	},
 	# Multi channel types
 	"HMIP-STE2":{
+		"file_deviceXML":{"Devicetype" :"sensor", "Name": "Homematic STE2 Dual Temperature Sensor"},
 		"states":{
 			"ACTUAL_TEMPERATURE":mergeDicts(k_Temperature,{"indigoState":"Temperature","channelNumber":"3"}),
-			"enabledChildren":{"dType": "string"},
-			"childInfo":{"dType": "string","init":'{"T1":[0,"1","HMIP-Temperature"],"T2":[0,"2","HMIP-Temperature"]}'}
+			"enabledChildren":	{"dType": "string"},
+			"childInfo":		{"dType": "string","init":'{"T1":[0,"1","HMIP-Temperature"],"T2":[0,"2","HMIP-Temperature"]}'}
 		},
 		"actionParams":{},
 		"deviceXML":
@@ -887,22 +1006,22 @@ k_mapHomematicToIndigoDevTypeStateChannelProps = {
 		}
 	},
 
-
 	"HMIP-SFD":{
+		"file_deviceXML":{"Devicetype" :"sensor", "Name": "Homematic SWO-SFD particulate sensor"},
 		"states":{
 			"UNREACH":k_UNREACHP,
-			"ERROR_COMMUNICATION_PARTICULATE_MATTER_SENSOR":{"dType":"string","intToState":True,"channelNumber":"0",		"refresh":"3"},
-			"TYPICAL_PARTICLE_SIZE":{"dType":"real","channelNumber":"1","format":"{:.1f} um",								"refresh":"2"},
-			"NUMBER_CONCENTRATION_PM_10":{"dType":"real","channelNumber":"1","format":"{:.1f}/cm3",							"refresh":"2"},
-			"NUMBER_CONCENTRATION_PM_2_5":{"dType":"real","channelNumber":"1","format":"{:.1f}/cm3",						"refresh":"2"},
-			"NUMBER_CONCENTRATION_PM_1":{"dType":"real","channelNumber":"1","format":"{:.1f}/cm3",							"refresh":"2"},
-			"MASS_CONCENTRATION_PM_10":{"dType":"real","channelNumber":"1","format":"{:.1f} ug/m3",							"refresh":"2"},
-			"MASS_CONCENTRATION_PM_2_5":{"dType":"real","channelNumber":"1","format":"{:.1f} ug/m3",						"refresh":"2"},
-			"MASS_CONCENTRATION_PM_1":{"dType":"real","channelNumber":"1","format":"{:.1f} ug/m3",							"refresh":"2"},
-			"MASS_CONCENTRATION_PM_1_24H_AVERAGE":{"dType":"real","channelNumber":"1","format":"{:.1f} ug/m3",				"refresh":"2"},
-			"MASS_CONCENTRATION_PM_2_5_24H_AVERAGE":{"dType":"real","channelNumber":"1","format":"{:.1f} ug/m3",			"refresh":"2"},
-			"MASS_CONCENTRATION_PM_10_24H_AVERAGE":{"dType":"real","channelNumber":"1","format":"{:.1f} ug/m3",				"refresh":"2"},
-			"enabledChildren":{"dType": "string"},
+			"ERROR_COMMUNICATION_PARTICULATE_MATTER_SENSOR":{"dType":"string","replaceNumberByString":"ERROR_COMMUNICATION_PARTICULATE_MATTER_SENSOR","channelNumber":"0",		"refresh":"3"},
+			"TYPICAL_PARTICLE_SIZE":				{"dType":"real",	"channelNumber":"1","format":"{:.1f} um",			"refresh":"2"},
+			"NUMBER_CONCENTRATION_PM_10":			{"dType":"real",	"channelNumber":"1","format":"{:.1f}/cm3",			"refresh":"2"},
+			"NUMBER_CONCENTRATION_PM_2_5":			{"dType":"real",	"channelNumber":"1","format":"{:.1f}/cm3",			"refresh":"2"},
+			"NUMBER_CONCENTRATION_PM_1":			{"dType":"real",	"channelNumber":"1","format":"{:.1f}/cm3",			"refresh":"2"},
+			"MASS_CONCENTRATION_PM_10":				{"dType":"real",	"channelNumber":"1","format":"{:.1f} ug/m3",		"refresh":"2"},
+			"MASS_CONCENTRATION_PM_2_5":			{"dType":"real",	"channelNumber":"1","format":"{:.1f} ug/m3",		"refresh":"2"},
+			"MASS_CONCENTRATION_PM_1":				{"dType":"real",	"channelNumber":"1","format":"{:.1f} ug/m3",		"refresh":"2"},
+			"MASS_CONCENTRATION_PM_1_24H_AVERAGE":	{"dType":"real",	"channelNumber":"1","format":"{:.1f} ug/m3",		"refresh":"2"},
+			"MASS_CONCENTRATION_PM_2_5_24H_AVERAGE":{"dType":"real",	"channelNumber":"1","format":"{:.1f} ug/m3",		"refresh":"2"},
+			"MASS_CONCENTRATION_PM_10_24H_AVERAGE":	{"dType":"real",	"channelNumber":"1","format":"{:.1f} ug/m3",		"refresh":"2"},
+			"enabledChildren":						{"dType":"string"},
 			"childInfo":{"dType": "string","init":'{"Temperature":[0,"1","HMIP-Temperature"],"Humidity":[0,"1","HMIP-Humidity"]}'}
 		},
 		"actionParams":{},
@@ -939,42 +1058,44 @@ k_mapHomematicToIndigoDevTypeStateChannelProps = {
 
 
 	"HMIP-SWO-PR":{
+		"file_deviceXML":{"Devicetype" :"sensor", "Name": "Homematic SWO-PR -PL -B weather station"},
 		"states":{
 			"UNREACH":k_UNREACH,
-			"enabledChildren":{"dType": "string"},
-			"childInfo":{"dType": "string","init":'{"Temperature":[0,"1","HMIP-Temperature"], "Humidity":[0,"1","HMIP-Humidity"], "Illumination":[0,"1","HMIP-Illumination"],  "Rain":[0,"1","HMIP-Rain"],  "Sunshine":[0,"1","HMIP-Sunshine"],  "Wind":[0,"1","HMIP-Wind"]}'}
+			"enabledChildren":	{"dType": "string"},
+			"childInfo":		{"dType": "string",	"init":'{"Temperature":[0,"1","HMIP-Temperature"], "Humidity":[0,"1","HMIP-Humidity"], "Illumination":[0,"1","HMIP-Illumination"],  "RainTotal":[0,"1","HMIP-Rain"],  "SunshineMinutes":[0,"1","HMIP-Sunshine"],  "Wind":[0,"1","HMIP-Wind"]}'}
 		},
 		"actionParams":{},
 		"deviceXML":
 			'<ConfigUI>'+
-				'<Field id="enable-Temperature"  type="checkbox" defaultValue="true"   >  <Label>Enable Temperature device </Label></Field>'+
-				'<Field id="enable-Humidity"     type="checkbox" defaultValue="true"   >  <Label>Enable Humidity device </Label></Field>'+
-				'<Field id="enable-Illumination" type="checkbox" defaultValue="true"   >  <Label>Enable Illumination device </Label></Field>'+
-				'<Field id="enable-Sunshine"     type="checkbox" defaultValue="true"   >  <Label>Enable Sunshine device </Label></Field>'+
-				'<Field id="enable-Rain"         type="checkbox" defaultValue="true"   >  <Label>Enable Rain device </Label></Field>'+
-				'<Field id="enable-Wind"         type="checkbox" defaultValue="true"   >  <Label>Enable Wind device </Label></Field>'+
+				'<Field id="enable-Temperature"  	type="checkbox" defaultValue="true" >  <Label>Enable Temperature device </Label></Field>'+
+				'<Field id="enable-Humidity"     	type="checkbox" defaultValue="true" >  <Label>Enable Humidity device </Label></Field>'+
+				'<Field id="enable-Illumination" 	type="checkbox" defaultValue="true" >  <Label>Enable Illumination device </Label></Field>'+
+				'<Field id="enable-SunshineMinutes"	type="checkbox" defaultValue="true" >  <Label>Enable Sunshine device </Label></Field>'+
+				'<Field id="enable-RainTotal"  		type="checkbox" defaultValue="true" >  <Label>Enable Rain device </Label></Field>'+
+				'<Field id="enable-Wind"         	type="checkbox" defaultValue="true" >  <Label>Enable Wind device </Label></Field>'+
 			'</ConfigUI>',
 		"triggerLastSensorChange":"onOffState",
 		"props":{
 			"displayS":"online",
-			"SupportsStatusRequest":False,
-			"SupportsSensorValue": False,
-			"SupportsOnState":  True,
-			"enable-Temperature":  True,
-			"enable-Humidity":  True,
-			"enable-Illumination":  True,
-			"enable-Rain":  True,
-			"enable-Sunshine":  True,
-			"enable-Wind":  True
+			"SupportsStatusRequest":	False,
+			"SupportsSensorValue": 		False,
+			"SupportsOnState":  		True,
+			"enable-Temperature":  		True,
+			"enable-Humidity":  		True,
+			"enable-Illumination":  	True,
+			"enable-RainTotal":  		True,
+			"enable-SunshineMinutes":	True,
+			"enable-Wind":  			True
 		}
 	},
 
 	"HMIP-MOD-OC8":{
+		"file_deviceXML":{"Devicetype" :"sensor", "Name": "Homematic MOD-OC8 8 parent device"},
 		"states":{
 			"UNREACH":k_UNREACH,
 			"ACTUAL_TEMPERATURE":mergeDicts(k_Temperature,{"channelNumber":"0"}),
-			"childInfo":{"dType": "string","init":'{"1":[0,"9","HMIP-Relay"], "2":[0,"13","HMIP-Relay"], "3":[0,"17","HMIP-Relay"],  "4":[0,"21","HMIP-Relay"],  "5":[0,"25","HMIP-Relay"],  "6":[0,"29","HMIP-Relay"],  "7":[0,"33","HMIP-Relay"],  "8":[0,"37","HMIP-Relay"]}'},
-			"enabledChildren":{"dType": "string"}
+			"childInfo":		{"dType": "string",	"init":'{"1":[0,"9","HMIP-Relay"], "2":[0,"13","HMIP-Relay"], "3":[0,"17","HMIP-Relay"],  "4":[0,"21","HMIP-Relay"],  "5":[0,"25","HMIP-Relay"],  "6":[0,"29","HMIP-Relay"],  "7":[0,"33","HMIP-Relay"],  "8":[0,"37","HMIP-Relay"]}'},
+			"enabledChildren":	{"dType": "string"}
 		},
 		"actionParams":{},
 		"deviceXML":
@@ -1004,10 +1125,11 @@ k_mapHomematicToIndigoDevTypeStateChannelProps = {
 		}
 	},
 	"HMIP-MIOB":{
+		"file_deviceXML":{"Devicetype" :"sensor", "Name": "Homematic MIOB parent device"},
 		"states":{
 			"UNREACH":k_UNREACH,
 			"childInfo":{
-				"dType": "string","init":
+				"dType": "string",	"init":
 					'{"R1":[0,"1","HMIP-Relay"], "R2":[0,"5","HMIP-Relay"],'+
 					'"D1":[0,"11","HMIP-Dimmer-R"],'+
 					'"B1":[0,"9","HMIP-BUTTON"], "B2":[0,"10","HMIP-BUTTON"] }' 
@@ -1045,15 +1167,15 @@ k_mapHomematicToIndigoDevTypeStateChannelProps = {
 		}
 	},
 
-
 	"HMIP-MIO16-PCB":{
+		"file_deviceXML":{"Devicetype" :"sensor", "Name": "Homematic MIO16-PCB parent device"},
 		"states":{
 			"UNREACH":k_UNREACH,
-			"childInfo":{"dType": "string","init":
+			"childInfo":		{"dType": "string","init":
 			'{"R1":[0,"17","HMIP-Relay"], "R2":[0,"21","HMIP-Relay"], "R3":[0,"25","HMIP-Relay"], "R4":[0,"29","HMIP-Relay"], "R5":[0,"33","HMIP-Relay"], "R6":[0,"37","HMIP-Relay"], "R7":[0,"41","HMIP-Relay"], "R8":[0,"45","HMIP-Relay"]'+
 			',"V1":[0,"1","HMIP-Voltage"], "V2":[0,"4","HMIP-Voltage"], "V3":[0,"7","HMIP-Voltage"], "V4":[0,"10","HMIP-Voltage"]'+
 			',"B99":[0,"-99","HMIP-BUTTON"] }' },
-			"enabledChildren":{"dType": "string"}
+			"enabledChildren":	{"dType": "string"}
 		},
 		"actionParams":{},
 		"deviceXML":
@@ -1104,17 +1226,18 @@ k_mapHomematicToIndigoDevTypeStateChannelProps = {
 
 
 	"HMIP-WRCD":{
+		"file_deviceXML":{"Devicetype" :"sensor", "Name": "Homematic WRCR display and button"},
 		"states":{
 			"UNREACH":k_UNREACH,
-			"childInfo":{"dType": "string","init":'{"Button":[0,"-99","HMIP-BUTTON"]}'},
-			"enabledChildren":{"dType": "string"}
+			"childInfo":		{"dType": "string","init":'{"Button":[0,"-99","HMIP-BUTTON"]}'},
+			"enabledChildren":	{"dType": "string"}
 		},
 		"actionParams":{},
-		"deviceXML":'',
+		"deviceXML":'<ConfigUI> <Field id="show" type="label"> <Label>Nothing to configure</Label> </Field></ConfigUI>',
 		"triggerLastSensorChange":"UNREACH",
 		"props":{
 			"displayS":"online",
-			"enable-Button":True,
+			"enable_BUTTON":True,
 			"SupportsStatusRequest":False,
 			"SupportsOnState":  True
 		}
@@ -1122,16 +1245,17 @@ k_mapHomematicToIndigoDevTypeStateChannelProps = {
 
 
 	"HMIP-MP3P":{
+		"file_deviceXML":{"Devicetype" :"dimmer", "Name": "Homematic MP3P-Sound"},
 		"states":{
 			"UNREACH":k_UNREACH,
 			"LEVEL":mergeDicts(k_DimmerMap,{"channelNumber":"1"}),
-			"childInfo":{"dType": "string","init":'{"Dimmer-C":[0,"5","HMIP-Dimmer-C"]}'},
-			"enabledChildren":{"dType": "string"}
+			"childInfo":		{"dType": "string","init":'{"Dimmer-C":[0,"5","HMIP-Dimmer-C"]}'},
+			"enabledChildren":	{"dType": "string"}
 		},
 		"actionParams":{
 			"states":{"Dimm":"LEVEL"}, "channels":{"Dimm":["2","3","4"],"OnOff":["2","3","4"]}, "mult":{"Dimm":0.01}
 		},
-		"deviceXML":'',
+		"deviceXML":'<ConfigUI> <Field id="show" type="label"> <Label>Nothing to configure</Label> </Field></ConfigUI>',
 		"triggerLastSensorChange":"LEVEL",
 		"props":{
 			"SupportsStatusRequest":False,
@@ -1140,16 +1264,16 @@ k_mapHomematicToIndigoDevTypeStateChannelProps = {
 	},
 
 	"HMIP-DLD":{
+		"file_deviceXML":{"Devicetype" :"sensor", "Name": "Homematic DLD-Door-Lock"},
 		"states":{
 			"UNREACH":k_UNREACHP,
-			"ACTIVITY_STATE":{"dType":"string","intToState":True,"channelNumber":"1",		"refresh":"1"},
-			"LOCK_STATE":{"dType":"string","intToState":True,"channelNumber":"1",			"refresh":"1"},
-			"SECTION_STATUS":{"dType":"string","intToState":True,"channelNumber":"1",		"refresh":"3"},
-			"WP_OPTIONS":{"dType":"string","intToState":True,"channelNumber":"1",			"refresh":"3"},
-			"PROCESS":{"dType":"string","intToState":True,"channelNumber":"1",				"refresh":"3"},
-			"SECTION":{"channelNumber": "1","dType": "integer",								"refresh":"3"},
-			"batteryLevel":{"dType": "integer"},
-			"lastBatteryReplaced":{"dType": "string"}
+			"ACTIVITY_STATE":		{"dType":"string",	"channelNumber":"1",	"replaceNumberByString":"ACTIVITY_STATE",	"refresh":"1"},
+			"LOCK_STATE":			{"dType":"string",	"channelNumber":"1",	"replaceNumberByString":"LOCK_STATE",		"refresh":"1"},
+			"SECTION_STATUS":		{"dType":"string",	"channelNumber":"1",	"replaceNumberByString":"SECTION_STATUS",	"refresh":"3"},
+			"WP_OPTIONS":			{"dType":"string",	"channelNumber":"1",	"replaceNumberByString":"WP_OPTIONS",		"refresh":"3"},
+			"PROCESS":				{"dType":"string",	"channelNumber":"1",	"replaceNumberByString":"PROCESS",			"refresh":"3"},
+			"SECTION":				{"dType":"integer",	"channelNumber":"1",												"refresh":"3"},
+			"lastBatteryReplaced":	{"dType":"string"}
 		},
 		"actionParams":{
 			"states":{
@@ -1181,14 +1305,15 @@ k_mapHomematicToIndigoDevTypeStateChannelProps = {
 	},
 
 	"HMIP-FALMOT":{
+		"file_deviceXML":{"Devicetype" :"sensor", "Name": "Homematic HMIP-FALMOT-C4/6/8/10/12-Actor"},
 		"states":{
 			"UNREACH":k_UNREACHP,
-			"DUTY_CYCLE":{"dType": "booltruefalse","channelNumber":"-99",					"refresh":"3"},
-			"HEATING_COOLING":{"dType": "integer","channelNumber":"-99",					"refresh":"3"},
-			"HUMIDITY_ALARM":{"dType": "booltruefalse","channelNumber":"-99",				"refresh":"3"},
-			"TEMPERATURE_LIMITER":{"dType": "booltruefalse","channelNumber":"-99",			"refresh":"3"},
-			"childInfo":{"dType": "string","init":'{"1":[0,"1","HMIP-LEVEL"], "2":[0,"2","HMIP-LEVEL"], "3":[0,"3","HMIP-LEVEL"],  "4":[0,"4","HMIP-LEVEL"],  "5":[0,"5","HMIP-LEVEL"],  "6":[0,"6","HMIP-LEVEL"], "7":[0,"7","HMIP-LEVEL"], "8":[0,"8","HMIP-LEVEL"], "9":[0,"9","HMIP-LEVEL"], "10":[0,"10","HMIP-LEVEL"], "11":[0,"11","HMIP-LEVEL"], "12":[0,"12","HMIP-LEVEL"]}'},
-			"enabledChildren":{"dType": "string"}
+			"DUTY_CYCLE":			{"dType": "booltruefalse",	"channelNumber":"-99",			"refresh":"3"},
+			"HEATING_COOLING":		{"dType": "integer",		"channelNumber":"-99",			"refresh":"3"},
+			"HUMIDITY_ALARM":		{"dType": "booltruefalse",	"channelNumber":"-99",			"refresh":"3"},
+			"TEMPERATURE_LIMITER":	{"dType": "booltruefalse",	"channelNumber":"-99",			"refresh":"3"},
+			"childInfo":			{"dType": "string","init":'{"1":[0,"1","HMIP-LEVEL"], "2":[0,"2","HMIP-LEVEL"], "3":[0,"3","HMIP-LEVEL"],  "4":[0,"4","HMIP-LEVEL"],  "5":[0,"5","HMIP-LEVEL"],  "6":[0,"6","HMIP-LEVEL"], "7":[0,"7","HMIP-LEVEL"], "8":[0,"8","HMIP-LEVEL"], "9":[0,"9","HMIP-LEVEL"], "10":[0,"10","HMIP-LEVEL"], "11":[0,"11","HMIP-LEVEL"], "12":[0,"12","HMIP-LEVEL"]}'},
+			"enabledChildren":		{"dType": "string"}
 		},
 		"actionParams":{},
 		"deviceXML":
@@ -1245,22 +1370,23 @@ k_mapHomematicToIndigoDevTypeStateChannelProps = {
 	},
 
 	"HMIP-HEATING":{
+		"file_deviceXML":{"Devicetype" :"thermostat", "Name": "Homematic Heating Group"},
 		"states":{
 			"ACTUAL_TEMPERATURE": 		mergeDicts(k_Temperature,{"indigoState":"temperatureInput1","channelNumber":"1"}),
 			"SET_POINT_TEMPERATURE":	mergeDicts(k_Temperature,{"indigoState":"setpointHeat","channelNumber":"-99"}),
 			"HUMIDITY":					mergeDicts(k_Humidity,{"indigoState":"humidityInput1"}),
-			"SWITCH_POINT_OCCURED":{"dType": "booltruefalse","channelNumber":"-99",					"refresh":"3"},
-			"FROST_PROTECTION":{"dType": "booltruefalse","channelNumber":"-99",						"refresh":"3"},
-			"PARTY_MODE":{"dType": "booltruefalse","channelNumber":"-99",							"refresh":"3"},
-			"BOOST_MODE":{"dType": "booltruefalse","channelNumber":"-99",							"refresh":"3"},
-			"QUICK_VETO_TIME":{"dType": "real","channelNumber":"-99",								"refresh":"3"},
-			"BOOST_TIME":{"dType": "real","channelNumber":"-99",									"refresh":"3"},
-			"SET_POINT_MODE":{"dType": "string","channelNumber":"1","intToState":True,				"refresh":"3"},
-			"ACTIVE_PROFILE":{"dType": "integer","channelNumber":"1",								"refresh":"3"},
-			"VALVE_ADAPTION":{"dType": "booltruefalse","channelNumber":"1",							"refresh":"3"},
-			"WINDOW_STATE":{"dType": "integer","channelNumber":"1","intToState":True,				"refresh":"1"},
-			"childInfo":{"dType": "string","init":'{"Dimmer-V":[0,"1","HMIP-Dimmer-V"]}'},
-			"enabledChildren":{"dType": "string"}
+			"SWITCH_POINT_OCCURED":	{"dType": "booltruefalse",	"channelNumber":"-99",												"refresh":"3"},
+			"FROST_PROTECTION":		{"dType": "booltruefalse",	"channelNumber":"-99",												"refresh":"3"},
+			"PARTY_MODE":			{"dType": "booltruefalse",	"channelNumber":"-99",												"refresh":"3"},
+			"BOOST_MODE":			{"dType": "booltruefalse",	"channelNumber":"-99",												"refresh":"3"},
+			"QUICK_VETO_TIME":		{"dType": "real",			"channelNumber":"-99",												"refresh":"3"},
+			"BOOST_TIME":			{"dType": "real",			"channelNumber":"-99",												"refresh":"3"},
+			"SET_POINT_MODE":		{"dType": "string",			"channelNumber":"1",	"replaceNumberByString":"SET_POINT_MODE",	"refresh":"3"},
+			"ACTIVE_PROFILE":		{"dType": "integer",		"channelNumber":"1",												"refresh":"3"},
+			"VALVE_ADAPTION":		{"dType": "booltruefalse",	"channelNumber":"1",												"refresh":"3"},
+			"WINDOW_STATE":			{"dType": "integer",		"channelNumber":"1",	"replaceNumberByString":"WINDOW_STATE",		"refresh":"1"},
+			"childInfo":			{"dType": "string",									"init":'{"Dimmer-V":[0,"1","HMIP-Dimmer-V"]}'},
+			"enabledChildren":		{"dType": "string"}
 		},
 		"actionParams":{
 			"states":{
@@ -1293,23 +1419,23 @@ k_mapHomematicToIndigoDevTypeStateChannelProps = {
 		}
 	},
 	"HMIP-ETRV":{
+		"file_deviceXML":{"Devicetype" :"thermostat", "Name": "Homematic eTRV-RadiatorValve"},
 		"states":{
 			"UNREACH":k_UNREACHP,
 			"ACTUAL_TEMPERATURE": 		mergeDicts(k_Temperature,{"indigoState":"temperatureInput1","channelNumber":"1"}),
 			"SET_POINT_TEMPERATURE":	mergeDicts(k_Temperature,{"indigoState":"setpointHeat","channelNumber":"-99"}),
-			"SET_POINT_MODE":{"dType": "string","channelNumber":"1","intToState":True,"indigoState":"SET_POINT_MODE",		"refresh":"3"},
-			"WINDOW_STATE":{"dType": "string","intToState":True,															"refresh":"3"},
-			"SWITCH_POINT_OCCURED":{"dType": "booltruefalse",																"refresh":"3"},
-			"FROST_PROTECTION":{"dType": "booltruefalse",																	"refresh":"3"},
-			"ACTIVE_PROFILE":{"dType": "integer","channelNumber":"1",														"refresh":"3"},
-			"PARTY_MODE":{"dType": "booltruefalse",																			"refresh":"3"},
-			"BOOST_MODE":{"dType": "booltruefalse",																			"refresh":"3"},
-			"QUICK_VETO_TIME":{"dType": "real",																				"refresh":"3"},
-			"BOOST_TIME":{"dType": "real",																					"refresh":"3"},
-			"batteryLevel":{"dType": "integer"},
-			"lastBatteryReplaced":{"dType": "string"},
-			"childInfo":{"dType": "string","init":'{"Dimmer-V":[0,"1","HMIP-Dimmer-V"]}'},
-			"enabledChildren":{"dType": "string"}
+			"SET_POINT_MODE":		{"dType": "string",			"channelNumber":"1",	"replaceNumberByString":"SET_POINT_MODE","indigoState":"SET_POINT_MODE",	"refresh":"3"},
+			"WINDOW_STATE":			{"dType": "string",									"replaceNumberByString":"WINDOW_STATE",										"refresh":"3"},
+			"SWITCH_POINT_OCCURED":	{"dType": "booltruefalse",																										"refresh":"3"},
+			"FROST_PROTECTION":		{"dType": "booltruefalse",																										"refresh":"3"},
+			"ACTIVE_PROFILE":		{"dType": "integer",		"channelNumber":"1",																				"refresh":"3"},
+			"PARTY_MODE":			{"dType": "booltruefalse",																										"refresh":"3"},
+			"BOOST_MODE":			{"dType": "booltruefalse",																										"refresh":"3"},
+			"QUICK_VETO_TIME":		{"dType": "real",																												"refresh":"3"},
+			"BOOST_TIME":			{"dType": "real",																												"refresh":"3"},
+			"lastBatteryReplaced":	{"dType": "string"},
+			"childInfo":			{"dType": "string",								"init":'{"Dimmer-V":[0,"1","HMIP-Dimmer-V"]}'},
+			"enabledChildren":		{"dType": "string"}
 		},
 		"actionParams":{
 			"states":{
@@ -1324,10 +1450,10 @@ k_mapHomematicToIndigoDevTypeStateChannelProps = {
 			}
 		},
 		"deviceXML":
-				'<ConfigUI>'+ 
-				'<Field id="operatingVoltage100" type="textfield"  defaultValue="3.0 > <Label>set Battery Volt at 100%</Label> </Field>'+
-				'<Field id="operatingVoltage0" type="textfield"  defaultValue="2.2" > <Label>set Battery Volt at 0%</Label> </Field>'+
-				'</ConfigUI>',
+			'<ConfigUI>'+ 
+				'<Field id="operatingVoltage100" type="textfield"  defaultValue="3.0" > <Label>set Battery Volt at 100%</Label> </Field>'+
+				'<Field id="operatingVoltage0"   type="textfield"  defaultValue="2.2" > <Label>set Battery Volt at 0%</Label> </Field>'+
+			'</ConfigUI>',
 		"triggerLastSensorChange":"temperatureInput1,setpointHeat",
 		"props":{
 			"operatingVoltage100":"3.0",
@@ -1338,8 +1464,8 @@ k_mapHomematicToIndigoDevTypeStateChannelProps = {
 			"SupportsHvacFanMode": False,
 			"SupportsHvacOperationMode": False,
 			"SupportsCoolSetpoint": False,
+			"SupportsHeatSetpoint":True,
 			"ShowCoolHeatEquipmentStateUI": False,
-			"SupportsHeatSetpoint": True,
 			"NumHumidityInputs": 0,
 			"NumTemperatureInputs": 1,
 			"SupportsSensorValue":True,
@@ -1350,11 +1476,12 @@ k_mapHomematicToIndigoDevTypeStateChannelProps = {
 
 
 	"HMIP-STHO":{
+		"file_deviceXML":{"Devicetype" :"sensor", "Name": "Homematic STHO-Temp-Humidity Sensor"},
 		"states":{
 			"UNREACH":k_UNREACHP,
 			"ACTUAL_TEMPERATURE":mergeDicts(k_Temperature,{"channelNumber":"1"}),
-			"enabledChildren":{"dType": "string"},
-			"childInfo":{"dType": "string","init":'{ "Humidity":[0,"1","HMIP-Humidity"]}'}
+			"enabledChildren":	{"dType": "string"},
+			"childInfo":		{"dType": "string","init":'{ "Humidity":[0,"1","HMIP-Humidity"]}'}
 		},
 		"actionParams":{},
 		"deviceXML":
@@ -1373,14 +1500,15 @@ k_mapHomematicToIndigoDevTypeStateChannelProps = {
 
 
 	"HMIP-SRD":{
+		"file_deviceXML":{"Devicetype" :"sensor", "Name": "Homematic SRD-Rain Indicator"},
 		"states":{
 			"UNREACH":k_UNREACHP,
 			"ACTUAL_TEMPERATURE":mergeDicts(k_Temperature,{"channelNumber":"-99"}),
-			"RAINING":{"dType": "booltruefalse",										"refresh":"3"},
-			"ERROR_CODE":{"dType": "string","intToState":True,"channelNumber":"-99",	"refresh":"3"},
-			"lastEventOn":{"dType": "string"},
-			"lastEventOff":{"dType": "string"},
-			"HEATER_STATE":{"dType": "booltruefalse",									"refresh":"3"}
+			"RAINING":{			"dType": "booltruefalse",																"refresh":"3"},
+			"ERROR_CODE":		{"dType": "string",		"channelNumber":"-99",	"replaceNumberByString":"ERROR_CODE",	"refresh":"3"},
+			"lastEventOn":		{"dType": "string"},
+			"lastEventOff":		{"dType": "string"},
+			"HEATER_STATE":		{"dType": "booltruefalse",																"refresh":"3"}
 		},
 		"actionParams":{},
 		"deviceXML":'<ConfigUI> <Field id="show" type="label"> <Label>Nothing to configure</Label> </Field></ConfigUI>',
@@ -1393,14 +1521,15 @@ k_mapHomematicToIndigoDevTypeStateChannelProps = {
 		}
 	},
 	"HMIP-PDT":{
+		"file_deviceXML":{"Devicetype" :"dimmer", "Name": "Homematic PDT-outlet dimmer"},
 		"states":{
 			"UNREACH":k_UNREACHP,
 			"LEVEL":k_DimmerMap,
 			"ACTUAL_TEMPERATURE":mergeDicts(k_Temperature,{"channelNumber":"-99"}),
-			"ERROR_CODE":{"channelNumber": "-99","dType": "integer",				"refresh":"3"},
-			"ERROR_OVERHEAT":{"channelNumber": "0","dType": "booltruefalse",		"refresh":"3"},
-			"ERROR_OVERLOAD":{"channelNumber": "0","dType": "booltruefalse",		"refresh":"3"},
-			"ERROR_POWER_FAILURE":{"channelNumber": "0","dType": "booltruefalse",	"refresh":"3"}
+			"ERROR_CODE":			{"dType": "integer",		"channelNumber": "-99",	"refresh":"3"},
+			"ERROR_OVERHEAT":		{"dType": "booltruefalse",	"channelNumber": "0",	"refresh":"3"},
+			"ERROR_OVERLOAD":		{"dType": "booltruefalse",	"channelNumber": "0",	"refresh":"3"},
+			"ERROR_POWER_FAILURE":	{"dType": "booltruefalse",	"channelNumber": "0",	"refresh":"3"}
 		},
 		"actionParams":{
 			"states":{
@@ -1422,15 +1551,16 @@ k_mapHomematicToIndigoDevTypeStateChannelProps = {
 	},
 
 	"HMIP-PDT3":{
+		"file_deviceXML":{"Devicetype" :"dimmer", "Name": "Homematic PDT- 3 dimmer"},
 		"states":{
 			"UNREACH":k_UNREACH,
 			"ACTUAL_TEMPERATURE":mergeDicts(k_Temperature,{"channelNumber":"-99"}),
-			"ERROR_CODE":{"channelNumber": "-99","dType": "integer",	"			refresh":2},
-			"ERROR_OVERHEAT":{"channelNumber": "0","dType": "booltruefalse",		"refresh":"3"},
-			"ERROR_OVERLOAD":{"channelNumber": "0","dType": "booltruefalse",		"refresh":"3"},
-			"ERROR_POWER_FAILURE":{"channelNumber": "0","dType": "booltruefalse",	"refresh":"3"},
-			"childInfo":{"dType": "string","init":'{"1":[0,"4","HMIP-Dimmer"], "2":[0,"8","HMIP-Dimmer"],"3":[0,"12","HMIP-Dimmer"]}'},
-			"enabledChildren":{"dType": "string"}
+			"ERROR_CODE":			{"dType": "integer",		"channelNumber": "-99",	"refresh":"2"},
+			"ERROR_OVERHEAT":		{"dType": "booltruefalse",	"channelNumber": "0",	"refresh":"3"},
+			"ERROR_OVERLOAD":		{"dType": "booltruefalse",	"channelNumber": "0",	"refresh":"3"},
+			"ERROR_POWER_FAILURE":	{"dType": "booltruefalse",	"channelNumber": "0",	"refresh":"3"},
+			"childInfo":			{"dType": "string",		"init":'{"1":[0,"4","HMIP-Dimmer"], "2":[0,"8","HMIP-Dimmer"],"3":[0,"12","HMIP-Dimmer"]}'},
+			"enabledChildren":		{"dType": "string"}
 		},
 		"deviceXML":
 			'<ConfigUI>'+
@@ -1450,11 +1580,12 @@ k_mapHomematicToIndigoDevTypeStateChannelProps = {
 	},
 
 	"ELV-SH-TACO":{
+		"file_deviceXML":{"Devicetype" :"sensor", "Name": "Homematic ELV-SH-TACO parent device"},
 		"states":{
 			"UNREACH":k_UNREACH,
-			"ERROR_CODE":{"channelNumber": "-99","dType": "integer",	"refresh":"3"},
-			"childInfo":{"dType": "string","init":'{"1":[0,"1","HMIP-Temperature"], "2":[0,"2","HMIP-Direction"]}'},
-			"enabledChildren":{"dType": "string"}
+			"ERROR_CODE":		{"dType": "integer",	"channelNumber": "-99",	"refresh":"3"},
+			"childInfo":		{"dType": "string",				"init":'{"1":[0,"1","HMIP-Temperature"], "2":[0,"2","HMIP-Direction"]}'},
+			"enabledChildren":	{"dType": "string"}
 		},
 		"deviceXML":
 			'<ConfigUI>'+
@@ -1472,15 +1603,16 @@ k_mapHomematicToIndigoDevTypeStateChannelProps = {
 	},
 
 	"HMIP-PDT4":{
+		"file_deviceXML":{"Devicetype" :"dimmer", "Name": "Homematic PDT- DRBL 4 dimmer"},
 		"states":{
 			"UNREACH":k_UNREACH,
 			"ACTUAL_TEMPERATURE":mergeDicts(k_Temperature,{"channelNumber":"-99"}),
-			"ERROR_CODE":{"channelNumber": "-99","dType": "integer",				"refresh":"3"},
-			"ERROR_OVERHEAT":{"channelNumber": "0","dType": "booltruefalse",		"refresh":"3"},
-			"ERROR_OVERLOAD":{"channelNumber": "0","dType": "booltruefalse",		"refresh":"3"},
-			"ERROR_POWER_FAILURE":{"channelNumber": "0","dType": "booltruefalse",	"refresh":"3"},
-			"childInfo":{"dType": "string","init":'{"1":[0,"9","HMIP-Dimmer"], "2":[0,"13","HMIP-Dimmer"],"3":[0,"17","HMIP-Dimmer"],"4":[0,"21","HMIP-Dimmer"]}'},
-			"enabledChildren":{"dType": "string"}
+			"ERROR_CODE":			{"dType": "integer",		"channelNumber": "-99",	"refresh":"3"},
+			"ERROR_OVERHEAT":		{"dType": "booltruefalse",	"channelNumber": "0", 	"refresh":"3"},
+			"ERROR_OVERLOAD":		{"dType": "booltruefalse",	"channelNumber": "0",	"refresh":"3"},
+			"ERROR_POWER_FAILURE":	{"dType": "booltruefalse",	"channelNumber": "0",	"refresh":"3"},
+			"childInfo":			{"dType": "string",					"init":'{"1":[0,"9","HMIP-Dimmer"], "2":[0,"13","HMIP-Dimmer"],"3":[0,"17","HMIP-Dimmer"],"4":[0,"21","HMIP-Dimmer"]}'},
+			"enabledChildren":		{"dType": "string"}
 		},
 		"deviceXML":
 			'<ConfigUI>'+
@@ -1504,46 +1636,89 @@ k_mapHomematicToIndigoDevTypeStateChannelProps = {
 
 
 	"HMIP-ASIR":{
+		"file_deviceXML":{"Devicetype" :"sensor", "Name": "Homematic HMIP-ASIR alarm"},
 		"states":{
 			"UNREACH":k_UNREACH,
-			"SABOTAGE":{"channelNumber": "0","dType": "booltruefalse",		"refresh":"2"},
-			"channelNumber":{"dType": "string","init":"3"},
-			"childInfo":{"dType": "string","init":'{"BUTTON":[0,  "3","HMIP-BUTTON"]}'},
-			"enabledChildren":{"dType": "string"}
+			"SABOTAGE":			{"dType": "booltruefalse",	"channelNumber": "0",	"refresh":"2"},
+			"channelNumber":	{"dType": "string",			"init":"3"},
+			"childInfo":		{"dType": "string",			"init":'{"BUTTON":[0,  "3","HMIP-BUTTON"]}'},
+			"enabledChildren":	{"dType": "string"}
 		},
 		"actionParams":{
 		},
 		"deviceXML":
 			'<ConfigUI>'+
-				'<Field id="enable-BUTTON" type="checkbox" defaultValue="true" >   <Label>enable Button device</Label></Field>'+
+				'<Field id="enable_BUTTON" type="checkbox" defaultValue="true" >   <Label>enable Button device</Label></Field>'+
 				'<Field id="show" type="label">'+
-				'  <Label>'+
-				'   for the alarm action to work you need to (a) create a system variable on homematic'+
-				'       (b) add a program with a trigger on change of above variable and under  "sonst" add a script, see menu help '+
-				'      then in menu or action you can carte an action that will trigger the optical or acustical output.'+
-				'  </Label>'+
+					'<Label>'+
+						'for the alarm action to work you need to (a) create a system variable on homematic\n'+
+						'  (b) add a program with a trigger on change of above variable and under  "sonst" add a script, see menu help\n'+
+						'  then in menu or action you can create an action that will trigger the optical or acustical output.'+
+					'</Label>'+
+				'</Field>'+
 			'</ConfigUI>',
 		"props":{
 			"displayS":"online",
-			"enable-BUTTON":True,
+			"enable_BUTTON":True,
 			"SupportsStatusRequest":False,
 			"SupportsSensorValue":False,
 			"SupportsOnState": True
 		}
+	},	
+
+	"ELV-SH-WSM":{
+		"file_deviceXML":{"Devicetype" :"relay", "Name": "Homematic ELV-SH-WSM Water Valve"},
+		"states":{
+			"UNREACH":k_UNREACHP,
+			"STATE":mergeDicts(k_RelayMap,{"channelNumber":"3"}),
+			"ACTUAL_TEMPERATURE":mergeDicts(k_Temperature,{"channelNumber":"0"}),
+			"channelNumber":			{"dType": "string","init":"3"},
+			"WATER_FLOW":				{"dType": "real",			"channelNumber": "2",	"format":"{:.2f}L/m",	"indigoState":"Flow", 					"refresh":"2"},
+			"WATER_VOLUME":				{"dType": "real",			"channelNumber": "2",	"format":"{:.1f}L",		"indigoState":"Volume",					"refresh":"2"},
+			"WATER_VOLUME_SINCE_OPEN":	{"dType": "real",			"channelNumber": "2",	"format":"{:.1f}L",		"indigoState":"Volume_last_open",		"refresh":"2"},
+			"Volume_previous_open":		{"dType": "real",								  	"format":"{:.1f}L",		"indigoState":"Volume_previous_open"				},
+			"Last_Minutes":				{"dType": "number",															"indigoState":"Last_Minutes"						},
+			"Last_open":				{"dType": "string",															"indigoState":"Last_open"							},
+			"Last_close":				{"dType": "string",															"indigoState":"Last_close"							},
+			"Previous_Minutes":			{"dType": "number",															"indigoState":"Previous_Minutes"					},
+			"Previous_open":			{"dType": "string",															"indigoState":"Previous_open"						},
+			"Previous_close":			{"dType": "string",															"indigoState":"Previous_close"						},
+			"ERROR_CODE":				{"dType": "string",			"channelNumber": "0",							"replaceNumberByString":"STATE_CODE",	"refresh":"3"}, # set mapping
+			"ERROR_OVERHEAT":			{"dType": "booltruefalse",	"channelNumber": "0",																	"refresh":"3"},
+			"ERROR_UNDERVOLTAGE":		{"dType": "booltruefalse",	"channelNumber": "0",																	"refresh":"3"},
+			"ERROR_FROST_PROTECTION":	{"dType": "booltruefalse",	"channelNumber": "0",																	"refresh":"3"},
+			"ERROR_WATER_FAILURE":		{"dType": "booltruefalse",	"channelNumber": "0",																	"refresh":"3"},
+			"ERROR_VALVE_FAILURE":		{"dType": "booltruefalse",	"channelNumber": "0",																	"refresh":"3"}
+		},
+		"actionParams":{
+			"states":{
+				"OnOff":"STATE" # use this key to send command to homematic
+			},
+			"channels":{
+					"OnOff":['int(dev.states["channelNumber"])+1', 'int(dev.states["channelNumber"])+2','int(dev.states["channelNumber"])+3']
+			}
+		},
+		"deviceXML":
+			'<ConfigUI>'+
+			'</ConfigUI>',
+		"triggerLastSensorChange":"STATE",
+		"props":{
+			"SupportsStatusRequest":False,
+			"SupportsOnState": True
+		}
 	},
 
-
-
 	"ELV-SH-WSC":{
+		"file_deviceXML":{"Devicetype" :"dimmer", "Name": "Homematic ELV-SH-WSC 2 channel servo controller"},
 		"states":{
 			"UNREACH":k_UNREACHP,
 			"LEVEL":mergeDicts(k_DimmerMap,{"channelNumber":"3"}),
 			"ACTUAL_TEMPERATURE":mergeDicts(k_Temperature,{"channelNumber":"0"}),
-			"ERROR_CODE":{"channelNumber": "0","dType": "integer",				"refresh":"3"},
-			"ERROR_OVERHEAT":{"channelNumber": "0","dType": "booltruefalse",	"refresh":"3"},
-			"channelNumber":{"dType": "string","init":"3"},
-			"childInfo":{"dType": "string","init":'{"BUTTON":[0,"-99","HMIP-BUTTON"],"DIMMER":[0,"7","HMIP-Dimmer"]}'},
-			"enabledChildren":{"dType": "string"}
+			"ERROR_CODE":			{"dType": "integer",		"channelNumber": "0",			"refresh":"3"},
+			"ERROR_OVERHEAT":		{"dType": "booltruefalse",	"channelNumber": "0",			"refresh":"3"},
+			"channelNumber":		{"dType": "string",									"init":"3"},
+			"childInfo":			{"dType": "string",									"init":'{"BUTTON":[0,"-99","HMIP-BUTTON"],"DIMMER":[0,"7","HMIP-Dimmer"]}'},
+			"enabledChildren":		{"dType": "string"}
 		},
 		"actionParams":{
 			"states":{
@@ -1557,12 +1732,12 @@ k_mapHomematicToIndigoDevTypeStateChannelProps = {
 		},
 		"deviceXML":
 			'<ConfigUI>'+
-				'<Field id="enable-BUTTON" type="checkbox" defaultValue="true" >   <Label>enable Button device</Label></Field>'+
+				'<Field id="enable_BUTTON" type="checkbox" defaultValue="true" >   <Label>enable Button device</Label></Field>'+
 				'<Field id="enable-DIMMER" type="checkbox" defaultValue="true" >   <Label>enable 2. Servo device</Label></Field>'+
 			'</ConfigUI>',
 		"triggerLastSensorChange":"LEVEL",
 		"props":{
-			"enable-BUTTON":True,
+			"enable_BUTTON":True,
 			"enable-DIMMER":True,
 			"SupportsStatusRequest":False,
 			"SupportsSensorValue":True,
@@ -1571,15 +1746,16 @@ k_mapHomematicToIndigoDevTypeStateChannelProps = {
 	},
 
 	"HMIP-ROLL":{
+		"file_deviceXML":{"Devicetype" :"dimmer", "Name": "Homematic HMIP-xROLL window curtain roll "},
 		"states":{
 			"UNREACH":k_UNREACHP,
 			"LEVEL":mergeDicts(k_DimmerMap,{"channelNumber":"3"}),
 			"ACTUAL_TEMPERATURE":mergeDicts(k_Temperature,{"channelNumber":"0"}),
-			"ERROR_CODE":{"channelNumber": "0","dType": "integer",				"refresh":"3"},
-			"ERROR_OVERHEAT":{"channelNumber": "0","dType": "booltruefalse",	"refresh":"3"},
-			"channelNumber":{"dType": "string","init":"3"},
-			"childInfo":{"dType": "string","init":'{"BUTTON":[0,"-99","HMIP-BUTTON"]}'},
-			"enabledChildren":{"dType": "string"}
+			"ERROR_CODE":		{"dType": "integer",		"channelNumber": "0",			"refresh":"3"},
+			"ERROR_OVERHEAT":	{"dType": "booltruefalse",	"channelNumber": "0",			"refresh":"3"},
+			"channelNumber":	{"dType": "string",								"init":"3"},
+			"childInfo":		{"dType": "string",								"init":'{"BUTTON":[0,"-99","HMIP-BUTTON"]}'},
+			"enabledChildren":	{"dType": "string"}
 		},
 		"actionParams":{
 			"states":{
@@ -1593,11 +1769,11 @@ k_mapHomematicToIndigoDevTypeStateChannelProps = {
 		},
 		"deviceXML":
 			'<ConfigUI>'+
-				'<Field id="enable-BUTTON" type="checkbox" defaultValue="true" >   <Label>enable Button device</Label></Field>'+
+				'<Field id="enable_BUTTON" type="checkbox" defaultValue="true" >   <Label>enable Button device</Label></Field>'+
 			'</ConfigUI>',
 		"triggerLastSensorChange":"LEVEL",
 		"props":{
-			"enable-BUTTON": True,
+			"enable_BUTTON": True,
 			"SupportsStatusRequest":False,
 			"SupportsSensorValue":True,
 			"SupportsOnState": True
@@ -1606,12 +1782,12 @@ k_mapHomematicToIndigoDevTypeStateChannelProps = {
 
 
 	"HMIP-SRH":{
+		"file_deviceXML":{"Devicetype" :"custom", "Name": "Homematic HMIP-SRH Window open/tilt/close "},
 		"states":{
 			"UNREACH":k_UNREACHP,
-			"STATE": {"channelNumber": "1","dType":"string", "intToState":True,"indigoState":"WINDOW_STATE",	"refresh":"1"},
-			"SABOTAGE":{"channelNumber": "0","dType": "booltruefalse",											"refresh":"3"},
-			"batteryLevel":{"dType": "integer"},
-			"lastBatteryReplaced":{"dType": "string"}
+			"STATE": 				{"dType":"string",			"channelNumber": "1", "indigoState":"WINDOW_STATE",	"refresh":"1"},
+			"SABOTAGE":				{"dType":"booltruefalse",	"channelNumber": "0",								"refresh":"3"},
+			"lastBatteryReplaced":	{"dType":"string"}
 		},
 		"actionParams":{
 		},
@@ -1633,14 +1809,15 @@ k_mapHomematicToIndigoDevTypeStateChannelProps = {
 	},
 
 	"HMIP-PS":{
+		"file_deviceXML":{"Devicetype" :"relay", "Name": "Homematic HMIP-PS  etc Switch"},
 		"states":{
 			"UNREACH":k_UNREACHP,
 			"STATE": k_RelayMap,
 			"ACTUAL_TEMPERATURE":mergeDicts(k_Temperature,{"channelNumber":"-99"}),
-			"ERROR_CODE":{"channelNumber": "-99","dType": "integer",				"refresh":"3"},
-			"ERROR_OVERHEAT":{"channelNumber": "0","dType": "booltruefalse",		"refresh":"3"},
-			"ERROR_OVERLOAD":{"channelNumber": "0","dType": "booltruefalse",		"refresh":"3"},
-			"ERROR_POWER_FAILURE":{"channelNumber": "0","dType": "booltruefalse",	"refresh":"3"}
+			"ERROR_CODE":			{"dType": "integer",		"channelNumber": "-99",		"refresh":"3"},
+			"ERROR_OVERHEAT":		{"dType": "booltruefalse",	"channelNumber": "0",		"refresh":"3"},
+			"ERROR_OVERLOAD":		{"dType": "booltruefalse",	"channelNumber": "0",		"refresh":"3"},
+			"ERROR_POWER_FAILURE":	{"dType": "booltruefalse",	"channelNumber": "0",		"refresh":"3"}
 		},
 		"actionParams":{
 			"states":{
@@ -1651,7 +1828,7 @@ k_mapHomematicToIndigoDevTypeStateChannelProps = {
 			}
 		},
 		"deviceXML":'<ConfigUI> <Field id="show" type="label"> <Label>Nothing to configure</Label> </Field></ConfigUI>',
-		"triggerLastSensorChange":"STATE",
+		"triggerLastSensorChange":"onOffState",
 		"props":{
 			"SupportsStatusRequest":False,
 			"SupportsSensorValue":False,
@@ -1660,15 +1837,16 @@ k_mapHomematicToIndigoDevTypeStateChannelProps = {
 	},
 
 	"HMIP-PS2":{
+		"file_deviceXML":{"Devicetype" :"sensor", "Name": "Homematic HMIP-PS2 dual Relay output"},
 		"states":{
 			"UNREACH":k_UNREACH,
 			"ACTUAL_TEMPERATURE":mergeDicts(k_Temperature,{"channelNumber":"-99"}),
-			"ERROR_CODE":{"channelNumber": "-99","dType": "integer",				"refresh":"3"},
-			"ERROR_OVERHEAT":{"channelNumber": "0","dType": "booltruefalse",		"refresh":"3"},
-			"ERROR_OVERLOAD":{"channelNumber": "0","dType": "booltruefalse",		"refresh":"3"},
-			"ERROR_POWER_FAILURE":{"channelNumber": "0","dType": "booltruefalse",	"refresh":"3"},
-			"childInfo":{"dType": "string","init":'{"1":[0,"3","HMIP-Relay"],"2":[0,"7","HMIP-Relay"]}'},
-			"enabledChildren":{"dType": "string"}
+			"ERROR_CODE":			{"dType": "integer",		"channelNumber": "-99",	"refresh":"3"},
+			"ERROR_OVERHEAT":		{"dType": "booltruefalse",	"channelNumber": "0",	"refresh":"3"},
+			"ERROR_OVERLOAD":		{"dType": "booltruefalse",	"channelNumber": "0",	"refresh":"3"},
+			"ERROR_POWER_FAILURE":	{"dType": "booltruefalse",	"channelNumber": "0",	"refresh":"3"},
+			"childInfo":			{"dType": "string",					"init":'{"1":[0,"3","HMIP-Relay"],"2":[0,"7","HMIP-Relay"]}'},
+			"enabledChildren":		{"dType": "string"}
 		},
 		"actionParams":{},
 		"deviceXML":
@@ -1689,15 +1867,16 @@ k_mapHomematicToIndigoDevTypeStateChannelProps = {
 
 
 	"HMIP-PS4":{
+		"file_deviceXML":{"Devicetype" :"sensor", "Name": "Homematic HMIP-PS4 quad Relay output"},
 		"states":{
 			"UNREACH":k_UNREACH,
 			"ACTUAL_TEMPERATURE":mergeDicts(k_Temperature,{"channelNumber":"-99"}),
-			"ERROR_CODE":{"channelNumber": "-99","dType": "integer",				"refresh":"3"},
-			"ERROR_OVERHEAT":{"channelNumber": "0","dType": "booltruefalse",		"refresh":"3"},
-			"ERROR_OVERLOAD":{"channelNumber": "0","dType": "booltruefalse",		"refresh":"3"},
-			"ERROR_POWER_FAILURE":{"channelNumber": "0","dType": "booltruefalse",	"refresh":"3"},
-			"childInfo":{"dType": "string","init":'{"1":[0,"5","HMIP-Relay"],"2":[0,"9","HMIP-Relay"],"3":[0,"13","HMIP-Relay"],"4":[0,"17","HMIP-Relay"]}'},
-			"enabledChildren":{"dType": "string"}
+			"ERROR_CODE":			{"dType": "integer",		"channelNumber": "-99",		"refresh":"3"},
+			"ERROR_OVERHEAT":		{"dType": "booltruefalse",	"channelNumber": "0",		"refresh":"3"},
+			"ERROR_OVERLOAD":		{"dType": "booltruefalse",	"channelNumber": "0",		"refresh":"3"},
+			"ERROR_POWER_FAILURE":	{"dType": "booltruefalse",	"channelNumber": "0",		"refresh":"3"},
+			"childInfo":			{"dType": "string",						"init":'{"1":[0,"5","HMIP-Relay"],"2":[0,"9","HMIP-Relay"],"3":[0,"13","HMIP-Relay"],"4":[0,"17","HMIP-Relay"]}'},
+			"enabledChildren":		{"dType": "string"}
 		},
 		"actionParams":{},
 		"deviceXML":
@@ -1720,52 +1899,22 @@ k_mapHomematicToIndigoDevTypeStateChannelProps = {
 		}
 	},
 
-
 	"HMIP-PSM":{
+		"file_deviceXML":{"Devicetype" :"relay", "Name": "Homematic PSM  power switch w energy types:  BSM UBS...  "},
 		"states":{
 			"UNREACH":k_UNREACHP,
 			"STATE":k_RelayMap,
 			"ACTUAL_TEMPERATURE":mergeDicts(k_Temperature,{"channelNumber":"-99"}),
-			"ERROR_CODE":{"channelNumber": "-99","dType": "integer",				"refresh":"3"},
-			"ERROR_OVERHEAT":{"channelNumber": "0", "dType": "booltruefalse",		"refresh":"3"},
-			"ERROR_OVERLOAD":{"channelNumber": "0", "dType": "booltruefalse",		"refresh":"3"},
-			"ERROR_POWER_FAILURE":{"channelNumber": "0","dType": "booltruefalse",	"refresh":"3"},
+			"ERROR_CODE":				{"dType": "integer",		"channelNumber": "-99",	"refresh":"3"},
+			"ERROR_OVERHEAT":			{"dType": "booltruefalse",	"channelNumber": "0", 	"refresh":"3"},
+			"ERROR_OVERLOAD":			{"dType": "booltruefalse",	"channelNumber": "0", 	"refresh":"3"},
+			"ERROR_POWER_FAILURE":		{"dType": "booltruefalse",	"channelNumber": "0",	"refresh":"3"},
 			"FREQUENCY":mergeDicts(k_Frequency,{"channelNumber":"6"}),
 			"CURRENT":mergeDicts(k_Current,{"channelNumber":"6"}),
 			"POWER":mergeDicts(k_Power,{"channelNumber":"6"}),
 			"VOLTAGE":mergeDicts(k_Voltage,{"channelNumber":"6"}),
-			"ENERGY_COUNTER":{"dType": "real","indigoState":k_deviceWithDayWeekMonth["HMIP-PSM"]["indigoState"],				"refresh":"3"},
-			k_deviceWithDayWeekMonth["HMIP-PSM"]["indigoState"]+"_Reset":{"dType": "string"},
-			"at0":{"dType": "string","indigoState":k_deviceWithDayWeekMonth["HMIP-PSM"]["indigoState"]+"_At0"},
-			"Day-7":{"dType": "real","indigoState":k_deviceWithDayWeekMonth["HMIP-PSM"]["indigoState"]+"_Day-7"},
-			"Day-6":{"dType": "real","indigoState":k_deviceWithDayWeekMonth["HMIP-PSM"]["indigoState"]+"_Day-6"},
-			"Day-5":{"dType": "real","indigoState":k_deviceWithDayWeekMonth["HMIP-PSM"]["indigoState"]+"_Day-5"},
-			"Day-4":{"dType": "real","indigoState":k_deviceWithDayWeekMonth["HMIP-PSM"]["indigoState"]+"_Day-4"},
-			"Day-3":{"dType": "real","indigoState":k_deviceWithDayWeekMonth["HMIP-PSM"]["indigoState"]+"_Day-3"},
-			"Day-2":{"dType": "real","indigoState":k_deviceWithDayWeekMonth["HMIP-PSM"]["indigoState"]+"_Day-2"},
-			"Day-1":{"dType": "real","indigoState":k_deviceWithDayWeekMonth["HMIP-PSM"]["indigoState"]+"_Yesterday"},
-			"Day-0":{"dType": "real","indigoState":k_deviceWithDayWeekMonth["HMIP-PSM"]["indigoState"]+"_Today"},
-			"Week-0":{"dType": "real","indigoState":k_deviceWithDayWeekMonth["HMIP-PSM"]["indigoState"]+"_ThisWeek"},
-			"Week-1":{"dType": "real","indigoState":k_deviceWithDayWeekMonth["HMIP-PSM"]["indigoState"]+"_Week-1"},
-			"Week-2":{"dType": "real","indigoState":k_deviceWithDayWeekMonth["HMIP-PSM"]["indigoState"]+"_Week-2"},
-			"Week-3":{"dType": "real","indigoState":k_deviceWithDayWeekMonth["HMIP-PSM"]["indigoState"]+"_Week-3"},
-			"Week-4":{"dType": "real","indigoState":k_deviceWithDayWeekMonth["HMIP-PSM"]["indigoState"]+"_Week-4"},
-			"Month-0":{"dType": "real","indigoState":k_deviceWithDayWeekMonth["HMIP-PSM"]["indigoState"]+"_ThisMonth"},
-			"Month-1" :{"dType": "real","indigoState":k_deviceWithDayWeekMonth["HMIP-PSM"]["indigoState"]+"_"+k_mapMonthNumberToMonthName["1"]},
-			"Month-2" :{"dType": "real","indigoState":k_deviceWithDayWeekMonth["HMIP-PSM"]["indigoState"]+"_"+k_mapMonthNumberToMonthName["2"]},
-			"Month-3" :{"dType": "real","indigoState":k_deviceWithDayWeekMonth["HMIP-PSM"]["indigoState"]+"_"+k_mapMonthNumberToMonthName["3"]},
-			"Month-4" :{"dType": "real","indigoState":k_deviceWithDayWeekMonth["HMIP-PSM"]["indigoState"]+"_"+k_mapMonthNumberToMonthName["4"]},
-			"Month-5" :{"dType": "real","indigoState":k_deviceWithDayWeekMonth["HMIP-PSM"]["indigoState"]+"_"+k_mapMonthNumberToMonthName["5"]},
-			"Month-6" :{"dType": "real","indigoState":k_deviceWithDayWeekMonth["HMIP-PSM"]["indigoState"]+"_"+k_mapMonthNumberToMonthName["6"]},
-			"Month-7" :{"dType": "real","indigoState":k_deviceWithDayWeekMonth["HMIP-PSM"]["indigoState"]+"_"+k_mapMonthNumberToMonthName["7"]},
-			"Month-8" :{"dType": "real","indigoState":k_deviceWithDayWeekMonth["HMIP-PSM"]["indigoState"]+"_"+k_mapMonthNumberToMonthName["8"]},
-			"Month-9" :{"dType": "real","indigoState":k_deviceWithDayWeekMonth["HMIP-PSM"]["indigoState"]+"_"+k_mapMonthNumberToMonthName["9"]},
-			"Month-10":{"dType": "real","indigoState":k_deviceWithDayWeekMonth["HMIP-PSM"]["indigoState"]+"_"+k_mapMonthNumberToMonthName["10"]},
-			"Month-11":{"dType": "real","indigoState":k_deviceWithDayWeekMonth["HMIP-PSM"]["indigoState"]+"_"+k_mapMonthNumberToMonthName["11"]},
-			"Month-12":{"dType": "real","indigoState":k_deviceWithDayWeekMonth["HMIP-PSM"]["indigoState"]+"_"+k_mapMonthNumberToMonthName["12"]},
-			"Year":{"dType": "real","indigoState":k_deviceWithDayWeekMonth["HMIP-PSM"]["indigoState"]+"_ThisYear"},
-			"LastYear":{"dType": "real","indigoState":k_deviceWithDayWeekMonth["HMIP-PSM"]["indigoState"]+"_LastYear"}
-		},
+			"ENERGY_COUNTER":			{"dType": "real","indigoState":k_deviceWithDayWeekMonth["HMIP-PSM"]["indigoState"],				"refresh":"3"}
+	},
 		"actionParams":{
 			"states":{
 				"OnOff":"STATE",
@@ -1783,24 +1932,58 @@ k_mapHomematicToIndigoDevTypeStateChannelProps = {
 		}
 	},
 
+
+	"HMIP-FSM":{
+		"file_deviceXML":{"Devicetype" :"relay", "Name": "Homematic PSM  power switch w energy"},
+		"states":{
+			"UNREACH":k_UNREACHP,
+			"STATE":mergeDicts(k_RelayMap,{"channelNumber":"1"}),
+			"ACTUAL_TEMPERATURE":mergeDicts(k_Temperature,{"channelNumber":"-99"}),
+			"ERROR_CODE":			{"dType": "integer",		"channelNumber": "-99",	"refresh":"3"},
+			"ERROR_OVERHEAT":		{"dType": "booltruefalse",	"channelNumber": "0", 	"refresh":"3"},
+			"ERROR_OVERLOAD":		{"dType": "booltruefalse",	"channelNumber": "0", 	"refresh":"3"},
+			"ERROR_POWER_FAILURE":	{"dType": "booltruefalse",	"channelNumber": "0",	"refresh":"3"},
+			"FREQUENCY":mergeDicts(k_Frequency,{"channelNumber":"5"}),
+			"CURRENT":mergeDicts(k_Current,{"channelNumber":"5"}),
+			"POWER":mergeDicts(k_Power,{"channelNumber":"5"}),
+			"VOLTAGE":mergeDicts(k_Voltage,{"channelNumber":"5"})
+		},
+		"actionParams":{
+			"states":{
+				"OnOff":"STATE",
+			},
+			"channels":{
+				"OnOff":["2","3","4"]
+			}
+		},
+		"deviceXML":'<ConfigUI> <Field id="show" type="label"> <Label>Nothing to configure</Label> </Field></ConfigUI>',
+		"triggerLastSensorChange":"STATE",
+		"props":{
+			"SupportsStatusRequest":False,
+			"SupportsSensorValue":False,
+			"SupportsOnState": True
+		}
+	},
+
+
 	"HMIP-WTH":{
+		"file_deviceXML":{"Devicetype" :"thermostat", "Name": "Homematic WTH-Wall Thermostat"},
 		"states":{
 			"UNREACH":k_UNREACHP,
 			"STATE":mergeDicts(k_RelayMap,{"channelNumber":"1"}),
 			"ACTUAL_TEMPERATURE": 		mergeDicts(k_Temperature,{"indigoState":"temperatureInput1"}),
 			"SET_POINT_TEMPERATURE":	mergeDicts(k_Temperature,{"indigoState":"setpointHeat"}),
 			"HUMIDITY":					mergeDicts(k_Humidity,{"indigoState":"humidityInput1"}),
-			"SET_POINT_MODE":{"dType": "string","intToState":True,						"refresh":"3"},
-			"WINDOW_STATE":{"dType": "string","intToState":True,						"refresh":"3"},
-			"SWITCH_POINT_OCCURED":{"dType": "booltruefalse",							"refresh":"3"},
-			"FROST_PROTECTION":{"dType": "booltruefalse",								"refresh":"3"},
-			"PARTY_MODE":{"dType": "booltruefalse",										"refresh":"3"},
-			"BOOST_MODE":{"dType": "booltruefalse",										"refresh":"3"},
-			"QUICK_VETO_TIME":{"dType": "real",											"refresh":"3"},
-			"BOOST_TIME":{"dType": "real",												"refresh":"3"},
-			"HEATING_COOLING":{"dType": "string","intToState":True,						"refresh":"3"},
-			"batteryLevel":{"dType": "integer"},
-			"lastBatteryReplaced":{"dType": "string"}
+			"SET_POINT_MODE":		{"dType": "string",			"replaceNumberByString":"SET_POINT_MODE",	"refresh":"3"},
+			"WINDOW_STATE":			{"dType": "string",			"replaceNumberByString":"WINDOW_STATE",		"refresh":"3"},
+			"SWITCH_POINT_OCCURED":	{"dType": "booltruefalse",												"refresh":"3"},
+			"FROST_PROTECTION":		{"dType": "booltruefalse",												"refresh":"3"},
+			"PARTY_MODE":			{"dType": "booltruefalse",												"refresh":"3"},
+			"BOOST_MODE":			{"dType": "booltruefalse",												"refresh":"3"},
+			"QUICK_VETO_TIME":		{"dType": "real",														"refresh":"3"},
+			"BOOST_TIME":			{"dType": "real",														"refresh":"3"},
+			"HEATING_COOLING":		{"dType": "string",			"replaceNumberByString":"HEATING_COOLING",	"refresh":"3"},
+			"lastBatteryReplaced":	{"dType": "string"}
 		},
 		"actionParams":{
 			"states":{
@@ -1813,10 +1996,10 @@ k_mapHomematicToIndigoDevTypeStateChannelProps = {
 			}
 		},
 		"deviceXML":
-				'<ConfigUI>'+
-				'<Field id="operatingVoltage100" type="textfield"  defaultValue="3.0 > <Label>set Battery Volt at 100%</Label> </Field>'+
-				'<Field id="operatingVoltage0" type="textfield"  defaultValue="2.2" > <Label>set Battery Volt at 0%</Label> </Field>'+
-				'</ConfigUI>',
+			'<ConfigUI>'+
+				'<Field id="operatingVoltage100" type="textfield"  defaultValue="3.0" > <Label>set Battery Volt at 100%</Label> </Field>'+
+				'<Field id="operatingVoltage0"   type="textfield"  defaultValue="2.2" > <Label>set Battery Volt at 0%</Label> </Field>'+
+			'</ConfigUI>',
 		"triggerLastSensorChange":"temperatureInput1,setpointHeat",
 		"props":{
 			"operatingVoltage100":"3.0",
@@ -1826,6 +2009,7 @@ k_mapHomematicToIndigoDevTypeStateChannelProps = {
 			"SupportsHvacFanMode": False,
 			"SupportsHvacOperationMode": False,
 			"SupportsCoolSetpoint": False,
+			"SupportsHeatSetpoint":True,
 			"ShowCoolHeatEquipmentStateUI": False,
 			"NumHumidityInputs": 1,
 			"NumTemperatureInputs": 1,
@@ -1834,17 +2018,17 @@ k_mapHomematicToIndigoDevTypeStateChannelProps = {
 			"SupportsOnState":  False
 		}
 	},
-
 	"HMIP-SPI":{
+		"file_deviceXML":{"Devicetype" :"sensor", "Name": "Homematic SPI-Motion sensor"},
 		"states":{
 			"UNREACH":k_UNREACHP,
 			"STATE":mergeDicts(k_RelayMap,{"channelNumber":"1"}),
 			"ILLUMINATION":k_Illumination,
-			"ILLUMINATION_STATUS":{"dType": "string","intToState":True,								"refresh":"3"},
 			"CURRENT_ILLUMINATION":mergeDicts(k_Illumination,{"indigoState":"CURRENT_ILLUMINATION"}),
-			"CURRENT_ILLUMINATION_STATUS":{"dType": "string","intToState":True,						"refresh":"3"},
-			"PRESENCE_DETECTION_STATE":{"dType": "booltruefalse",									"refresh":"3"},
-			"PRESENCE_DETECTION_ACTIVE":{"dType": "booltruefalse",									"refresh":"3"}
+			"ILLUMINATION_STATUS":			{"dType": "string",			"replaceNumberByString":"ILLUMINATION_STATUS",			"refresh":"3"},
+			"CURRENT_ILLUMINATION_STATUS":	{"dType": "string",			"replaceNumberByString":"CURRENT_ILLUMINATION_STATUS",	"refresh":"3"},
+			"PRESENCE_DETECTION_STATE":		{"dType": "booltruefalse",															"refresh":"3"},
+			"PRESENCE_DETECTION_ACTIVE":	{"dType": "booltruefalse",															"refresh":"3"}
 		},
 		"actionParams":{},
 		"deviceXML":'<ConfigUI> <Field id="show" type="label"> <Label>Nothing to configure</Label> </Field></ConfigUI>',
@@ -1858,24 +2042,24 @@ k_mapHomematicToIndigoDevTypeStateChannelProps = {
 	},
 
 	"HMIP-SMI":{
+		"file_deviceXML":{"Devicetype" :"sensor", "Name": "Homematic SMI-Motion sensor"},
 		"states":{
 			"UNREACH":k_UNREACHP,
 			"STATE":mergeDicts(k_RelayMap,{"channelNumber":"1"}),
 			"ILLUMINATION":k_Illumination,
-			"ILLUMINATION_STATUS":{"dType": "string","intToState":True,					"refresh":"3"},
 			"CURRENT_ILLUMINATION":mergeDicts(k_Illumination,{"indigoState":"CURRENT_ILLUMINATION"}),
-			"CURRENT_ILLUMINATION_STATUS":{"dType": "string","intToState":True,			"refresh":"3"},
-			"MOTION":{"dType": "booltruefalse",											"refresh":"1"},
-			"MOTION_DETECTION_ACTIVE":{"dType": "booltruefalse",						"refresh":"3"},
-			"batteryLevel":{"dType": "integer"},
-			"lastBatteryReplaced":{"dType": "string"}
+			"ILLUMINATION_STATUS":			{"dType": "string",				"replaceNumberByString":"ILLUMINATION_STATUS",			"refresh":"3"},
+			"CURRENT_ILLUMINATION_STATUS":	{"dType": "string",				"replaceNumberByString":"CURRENT_ILLUMINATION_STATUS",	"refresh":"3"},
+			"MOTION":						{"dType": "booltruefalse",																"refresh":"1"},
+			"MOTION_DETECTION_ACTIVE":		{"dType": "booltruefalse",																"refresh":"3"},
+			"lastBatteryReplaced":			{"dType": "string"}
 		},
 		"actionParams":{},
 		"deviceXML":
-				'<ConfigUI>'+
-				'<Field id="operatingVoltage100" type="textfield"  defaultValue="3.0 > <Label>set Battery Volt at 100%</Label> </Field>'+
-				'<Field id="operatingVoltage0" type="textfield"  defaultValue="2.2" > <Label>set Battery Volt at 0%</Label> </Field>'+
-				'</ConfigUI>',
+			'<ConfigUI>'+
+				'<Field id="operatingVoltage100" type="textfield"  defaultValue="3.0" > <Label>set Battery Volt at 100%</Label> </Field>'+
+				'<Field id="operatingVoltage0"   type="textfield"  defaultValue="2.2" > <Label>set Battery Volt at 0%</Label> </Field>'+
+			'</ConfigUI>',
 		"triggerLastSensorChange":"MOTION",
 		"props":{
 			"operatingVoltage100":"3.0",
@@ -1889,9 +2073,10 @@ k_mapHomematicToIndigoDevTypeStateChannelProps = {
 
 
 	"HMIP-SAM":{
+		"file_deviceXML":{"Devicetype" :"sensor", "Name": "Homematic SAM-Motion sensor"},
 		"states":{
 			"UNREACH":k_UNREACHP,
-			"MOTION":{"dType": "booltruefalse"},
+			"MOTION":{"dType": "booltruefalse",											"refresh":"1"},
 		},
 		"actionParams":{},
 		"deviceXML":'<ConfigUI> <Field id="show" type="label"> <Label>Nothing to configure</Label> </Field></ConfigUI>',
@@ -1904,13 +2089,12 @@ k_mapHomematicToIndigoDevTypeStateChannelProps = {
 		}
 	},
 
-
 	"HMIP-SWDM":{
+		"file_deviceXML":{"Devicetype" :"sensor", "Name": "Homematic SWDM- Magnet/Optical/Contact sensor"},
 		"states":{
 			"UNREACH":k_UNREACHP,
-			"STATE":{"dType": "string","intToState":True,"channelNumber":"1",						"refresh":"3"},
-			"batteryLevel":{"dType": "integer"},
-			"lastBatteryReplaced":{"dType": "string"}
+			"STATE":				{"dType": "booltruefalse",	"channelNumber":"1",	"replaceNumberByString":"STATE",					"refresh":"1"},
+			"lastBatteryReplaced":	{"dType": "string"}
 		},
 		"actionParams":{
 			"states":{
@@ -1922,12 +2106,12 @@ k_mapHomematicToIndigoDevTypeStateChannelProps = {
 		},
 		"deviceXML":
 			'<ConfigUI>'+
-				'<Field id="invertState" type="menu"  defaultValue="no" tooltip="pick one">'+
-					'<Label>Invert state on to off and vs versa</Label>'+
-					'<List>'+
-						'<Option value="yes"  >invert state</Option>'+
-						'<Option value="no"   >keep as is	</Option>'+
-					'</List>'+
+				'<Field id="inverse"   type="checkbox"  defaultValue="false" > <Label>invert on/off state</Label> </Field>'+
+				'<Field id="useForOn"  type="textfield" defaultValue="on" >    <Label>use what string for ON </Label> </Field>'+
+				'<Field id="useForOff" type="textfield" defaultValue="off" >   <Label>use what string for OFF </Label> </Field>'+
+				'<Field id="image"   type="menu" defaultValue="" >'+
+					'<List class="self" filter="" method="filterSensorONoffIcons" dynamicReload="false" />'+
+					'<Label>select the icon pair you like to use for on/off:</Label>'+
 				'</Field>'+
 				'<Field id="operatingVoltage100" type="textfield"  defaultValue="1.5" > <Label>set Battery Volt at 100%</Label> </Field>'+
 				'<Field id="operatingVoltage0" type="textfield"  defaultValue="1.1" > <Label>set Battery Volt at 0%</Label> </Field>'+
@@ -1937,9 +2121,69 @@ k_mapHomematicToIndigoDevTypeStateChannelProps = {
 			"operatingVoltage100":"1.5",
 			"operatingVoltage0":"1.1",
 			"SupportsBatteryLevel":True,
-			"displayS":"ALARMSTATE",
 			"displayS":"STATE",
-			"invertState":"no",
+			"useForOn":"on",
+			"useForOff":"off",
+			"image":"",
+			"inverse":False,
+			"SupportsStatusRequest":False,
+			"SupportsSensorValue":False,
+			"SupportsOnState": True
+		}
+	},
+
+	"ELV-SH-SMSI":{
+		#4% == 3718
+		#57% = 3434
+		#100% == 3064  
+		# slope is not is not linear  and its negative
+		"file_deviceXML":{"Devicetype" :"sensor", "Name": "Homematic ELV-SH-SMSI Earth Humidity sensor"},
+		"states":{
+			"UNREACH":k_UNREACHP,
+			"SOIL_MOISTURE":mergeDicts(k_Humidity,{"indigoState":"Moisture","channelNumber":"1"}),
+			"SOIL_MOISTURE_RAW_VALUE":	{"dType": "integer",		"channelNumber":"1",											"refresh":"1"},
+			"lastBatteryReplaced":		{"dType": "string"}
+		},
+		"actionParams":{},
+		"deviceXML":
+			'<ConfigUI>'+
+			'</ConfigUI>',
+		"triggerLastSensorChange":"Moisture",
+		"props":{
+			"displayS":"Moisture",
+			"SupportsStatusRequest":False,
+			"SupportsSensorValue":True,
+			"SupportsOnState":False
+			}
+	},
+	
+	"ELV-SH-CTV":{
+		"file_deviceXML":{"Devicetype" :"sensor", "Name": "Homematic ELV-SH-CTV Motion/ Tilt sensor"},
+		"states":{
+			"UNREACH":k_UNREACHP,
+			"STATE":				{"dType": "string",			"channelNumber":"1","replaceNumberByString":"TILT_STATE",	"refresh":"1"},
+			"ABSOLUTE_ANGLE":		{"dType": "integer",		"channelNumber":"1",										"refresh":"1"},
+			"MOTION":				{"dType": "booltruefalse",	"channelNumber":"1",										"refresh":"1"},
+			"lastBatteryReplaced":	{"dType": "string"}
+		},
+		"actionParams":{
+			"states":{
+				"OnOff":"OnOff",
+			},
+			"channels":{
+				"OnOff":["1"]
+			}
+		},
+		"deviceXML":
+			'<ConfigUI>'+
+				'<Field id="operatingVoltage100" type="textfield"  defaultValue="2.7" > <Label>set Battery Volt at 100%</Label> </Field>'+
+				'<Field id="operatingVoltage0" type="textfield"  defaultValue="1.1" > <Label>set Battery Volt at 0%</Label> </Field>'+
+			'</ConfigUI>',
+		"triggerLastSensorChange":"STATE",
+		"props":{
+			"operatingVoltage100":"2.7",
+			"operatingVoltage0":"1.1",
+			"displayS":"MOTION",
 			"SupportsStatusRequest":False,
 			"SupportsSensorValue":False,
 			"SupportsOnState": True
@@ -1947,27 +2191,28 @@ k_mapHomematicToIndigoDevTypeStateChannelProps = {
 	},
 
 	"HMIP-SWD":{
+		"file_deviceXML":{"Devicetype" :"sensor", "Name": "Homematic SWD Water Alarm"},
 		"states":{
 			"UNREACH":k_UNREACHP,
-			"ALARMSTATE":{"dType": "string","intToState":True,"channelNumber":"1",				"refresh":"1"},
-			"MOISTURE_DETECTED":{"dType": "booltruefalse","channelNumber":"1",					"refresh":"1"},
-			"WATERLEVEL_DETECTED":{"dType": "booltruefalse","channelNumber":"1",				"refresh":"1"},
-			"ERROR_NON_FLAT_POSITIONING":{"dType": "booltruefalse","channelNumber":"0",			"refresh":"1"},
-			"ERROR_CODE":{"channelNumber": "0","dType": "integer",								"refresh":"3"},
-			"batteryLevel":{"dType": "integer"},
-			"lastBatteryReplaced":{"dType": "string"}
+			"ALARMSTATE":						{"dType": "booltruefalse",	"channelNumber":"1",		"refresh":"1"},
+			"MOISTURE_DETECTED":				{"dType": "booltruefalse",	"channelNumber":"1",		"refresh":"1"},
+			"WATERLEVEL_DETECTED":				{"dType": "booltruefalse",	"channelNumber":"1",		"refresh":"1"},
+			"ERROR_NON_FLAT_POSITIONING":		{"dType": "booltruefalse",	"channelNumber":"0",		"refresh":"1"},
+			"ERROR_CODE":						{"dType": "integer",		"channelNumber":"0",		"refresh":"3"},
+			"lastBatteryReplaced":				{"dType": "string"}
 		},
 		"actionParams":{},
 		"deviceXML":
-				'<ConfigUI>'+
-				'<Field id="operatingVoltage100" type="textfield"  defaultValue="3.0 > <Label>set Battery Volt at 100%</Label> </Field>'+
-				'<Field id="operatingVoltage0" type="textfield"  defaultValue="2.2" > <Label>set Battery Volt at 0%</Label> </Field>'+
-				'</ConfigUI>',
+			'<ConfigUI>'+
+				'<Field id="operatingVoltage100" type="textfield"  defaultValue="3.0" > <Label>set Battery Volt at 100%</Label> </Field>'+
+				'<Field id="operatingVoltage0"   type="textfield"  defaultValue="2.2" > <Label>set Battery Volt at 0%</Label> </Field>'+
+				'<Field id="useForOn"  type="textfield" defaultValue="on" >    <Label>use what string for ON </Label> </Field>'+
+				'<Field id="useForOff" type="textfield" defaultValue="off" >   <Label>use what string for OFF </Label> </Field>'+
+			'</ConfigUI>',
 		"triggerLastSensorChange":"ALARMSTATE,WATERLEVEL_DETECTED",
 		"props":{
 			"operatingVoltage100":"3.0",
 			"operatingVoltage0":"2.2",
-			"SupportsBatteryLevel":True,
 			"displayS":"ALARMSTATE",
 			"SupportsStatusRequest":False,
 			"SupportsSensorValue":False,
@@ -1975,13 +2220,14 @@ k_mapHomematicToIndigoDevTypeStateChannelProps = {
 		}
 	},
 	"HMIP-SWSD":{
+		"file_deviceXML":{"Devicetype" :"custom", "Name": "Homematic SWSD Smoke Alarm"},
 		"states":{
 			"UNREACH":k_UNREACHP,
-			"SMOKE_DETECTOR_ALARM_STATUS":{"dType": "string","intToState":True,"channelNumber":"1",	"refresh":"3"},
-			"MOISTURE_DETECTED":{"dType": "booltruefalse","channelNumber":"1",						"refresh":"1"},
-			"WATERLEVEL_DETECTED":{"dType": "booltruefalse","channelNumber":"1",					"refresh":"1"},
-			"ERROR_NON_FLAT_POSITIONING":{"dType": "booltruefalse","channelNumber":"0",				"refresh":"1"},
-			"ERROR_CODE":{"channelNumber": "-99","dType": "integer",								"refresh":"3"}
+			"SMOKE_DETECTOR_ALARM_STATUS":	{"dType": "string",			"channelNumber":"1",	"replaceNumberByString":"SMOKE_DETECTOR_ALARM_STATUS",	"refresh":"3"},
+			"MOISTURE_DETECTED":			{"dType": "booltruefalse",	"channelNumber":"1",															"refresh":"1"},
+			"WATERLEVEL_DETECTED":			{"dType": "booltruefalse",	"channelNumber":"1",															"refresh":"1"},
+			"ERROR_NON_FLAT_POSITIONING":	{"dType": "booltruefalse",	"channelNumber":"0",															"refresh":"1"},
+			"ERROR_CODE":					{"dType": "integer",		"channelNumber":"-99",															"refresh":"3"}
 		},
 		"actionParams":{
 			"states":{
@@ -2007,18 +2253,18 @@ k_mapHomematicToIndigoDevTypeStateChannelProps = {
 	},
 
 	"HMIP-SPDR":{
+		"file_deviceXML":{"Devicetype" :"sensor", "Name": "Homematic SPDR-passage detector"},
 		"states":{
 			"UNREACH":k_UNREACHP,
 			"displayStatus":{"dType":"string"},
-			"pCV-l":{"dType": "integer", "indigoState":"PASSAGE_COUNTER_VALUE-left"},
-			"pCV-r":{"dType": "integer", "indigoState":"PASSAGE_COUNTER_VALUE-right"},
-			"pT-l":{"dType": "string",   "indigoState":"PREVIOUS_PASSAGE-left"},
-			"pT-r":{"dType": "string",   "indigoState":"PREVIOUS_PASSAGE-right"},
-			"dir": {"dType": "string",   "indigoState":"direction"},
-			"lT-l":{"dType": "string",   "indigoState":"LAST_PASSAGE-left"},
-			"lT-r":{"dType": "string",   "indigoState":"LAST_PASSAGE-right"},
-			"batteryLevel":{"dType": "integer"},
-			"lastBatteryReplaced":{"dType": "string"}
+			"pCV-l":				{"dType": "integer",	"indigoState":"PASSAGE_COUNTER_VALUE-left"},
+			"pCV-r":				{"dType": "integer",	"indigoState":"PASSAGE_COUNTER_VALUE-right"},
+			"pT-l":					{"dType": "string",		"indigoState":"PREVIOUS_PASSAGE-left"},
+			"pT-r":					{"dType": "string",		"indigoState":"PREVIOUS_PASSAGE-right"},
+			"dir": 					{"dType": "string", 	"indigoState":"direction"},
+			"lT-l":					{"dType": "string", 	"indigoState":"LAST_PASSAGE-left"},
+			"lT-r":					{"dType": "string",		"indigoState":"LAST_PASSAGE-right"},
+			"lastBatteryReplaced":	{"dType": "string"}
 		},
 		"noIndigoState":{"PASSAGE_COUNTER_VALUE":{"refresh":"1"}},
 		"actionParams":{},
@@ -2032,14 +2278,13 @@ k_mapHomematicToIndigoDevTypeStateChannelProps = {
 						'<Option value="out-in"  >out - in</Option>'+
 					'</List>'+
 				'</Field>'+
-				'<Field id="operatingVoltage100" type="textfield"  defaultValue="3.0 > <Label>set Battery Volt at 100%</Label> </Field>'+
-				'<Field id="operatingVoltage0" type="textfield"  defaultValue="2.2" > <Label>set Battery Volt at 0%</Label> </Field>'+
+				'<Field id="operatingVoltage100" type="textfield"  defaultValue="3.0" > <Label>set Battery Volt at 100%</Label> </Field>'+
+				'<Field id="operatingVoltage0"   type="textfield"  defaultValue="2.2" > <Label>set Battery Volt at 0%</Label> </Field>'+
 			'</ConfigUI>',
 		"triggerLastSensorChange":"",
 		"props":{
 			"operatingVoltage100":"3.0",
 			"operatingVoltage0":"2.2",
-			"SupportsBatteryLevel":True,
 			"useWhatForDirection":"left-right",
 			"SupportsStatusRequest":False,
 			"SupportsSensorValue":False,
@@ -2048,55 +2293,52 @@ k_mapHomematicToIndigoDevTypeStateChannelProps = {
 	},
 
 	"HMIP-WKP":{
+		"file_deviceXML":{"Devicetype" :"sensor", "Name": "Homematic KeyPad devices"},
 		"states":{
 			"UNREACH":k_UNREACHP,
-			"lastValuesText":{"dType":"string"},
-			"user":{"dType":"string"},
-			"userTime":{"dType":"string"},
-			"userPrevious":{"dType":"string"},
-			"userTimePrevious":{"dType":"string"},
-			"ua":{"dType":"string",	"indigoState":"USER_AUTHORIZATION"		},
-			"SABOTAGE_STICKY":{"dType": "booltruefalse","channelNumber":"0",		"refresh":"3"},
-			"SABOTAGE":{"dType": "booltruefalse","channelNumber":"0",				"refresh":"3"},
-			"BLOCKED_TEMPORARY":{"dType": "booltruefalse","channelNumber":"0",		"refresh":"3"},
-			"CODE_STATE":{"dType": "string","intToState":True,"channelNumber":"0",	"refresh":"1"},
-			"batteryLevel":{"dType": "integer"},
-			"lastBatteryReplaced":{"dType": "string"}
+			"lastValuesText":		{"dType":"string"},
+			"user":					{"dType":"string"},
+			"user_at":				{"dType":"string"},
+			"userPrevious":			{"dType":"string"},
+			"userPrevious_at":		{"dType":"string"},
+			"ua":					{"dType":"string",								"indigoState":"USER_AUTHORIZATION"		},
+			"SABOTAGE_STICKY":		{"dType": "booltruefalse",	"channelNumber":"0",										"refresh":"3"},
+			"SABOTAGE":				{"dType": "booltruefalse",	"channelNumber":"0",										"refresh":"3"},
+			"BLOCKED_TEMPORARY":	{"dType": "booltruefalse",	"channelNumber":"0",										"refresh":"3"},
+			"CODE_STATE":			{"dType": "string",			"channelNumber":"0", "replaceNumberByString":"CODE_STATE",	"refresh":"1"},
+			"lastBatteryReplaced":	{"dType": "string"}
 		},
 		"noIndigoState":k_keyPressStates,
 		"actionParams":{},
 		"deviceXML":
-				'<ConfigUI>'+
-				'<Field id="operatingVoltage100" type="textfield"  defaultValue="3.0 > <Label>set Battery Volt at 100%</Label> </Field>'+
-				'<Field id="operatingVoltage0" type="textfield"  defaultValue="2.2" > <Label>set Battery Volt at 0%</Label> </Field>'+
-				'</ConfigUI>',
+			'<ConfigUI>'+
+				'<Field id="operatingVoltage100" type="textfield"  defaultValue="3.0" > <Label>set Battery Volt at 100%</Label> </Field>'+
+				'<Field id="operatingVoltage0"   type="textfield"  defaultValue="2.2" > <Label>set Battery Volt at 0%</Label> </Field>'+
+			'</ConfigUI>',
 		"triggerLastSensorChange":"",
 		"props":{
 			"operatingVoltage100":"3.0",
 			"operatingVoltage0":"2.2",
-			"SupportsBatteryLevel":True,
 			"NumberOfUsersMax": 8,
 			"SupportsStatusRequest":False,
 			"SupportsSensorValue":False,
 			"SupportsOnState": True
 		}
 	},
-
-
 	"HMIP-BUTTON":{
+		"file_deviceXML":{"Devicetype" :"sensor", "Name": "Homematic Button devices"},
 		"states":{
 			"UNREACH":k_UNREACHP,
-			"buttonPressed":{"dType":"string","channelNumber":"-99"},
-			"buttonPressedTime":{"dType":"string","channelNumber":"-99"},
-			"buttonPressedType":{"dType":"string","channelNumber":"-99"},
-			"buttonPressedPrevious":{"dType":"string","channelNumber":"-99"},
-			"buttonPressedTimePrevious":{"dType":"string","channelNumber":"-99"},
-			"buttonPressedTypePrevious":{"dType":"string","channelNumber":"-99"},
-			"lastValuesText":{"dType":"string","channelNumber":"-99"},
-			"childInfo":{"dType": "string", "init":'{"1":[0,"1","HMIP-OnOff"], "2":[0,"2","HMIP-OnOff"], "3":[0,"3","HMIP-OnOff"],  "4":[0,"4","HMIP-OnOff"],  "5":[0,"5","HMIP-OnOff"],  "6":[0,"6","HMIP-OnOff"], "7":[0,"7","HMIP-OnOff"], "8":[0,"8","HMIP-OnOff"]}'},
-			"enabledChildren":{"dType": "string"},
-			"batteryLevel":{"dType": "integer"},
-			"lastBatteryReplaced":{"dType": "string"}
+			"buttonPressed":				{"dType":"string","channelNumber":"-99"},
+			"buttonPressedTime":			{"dType":"string","channelNumber":"-99"},
+			"buttonPressedType":			{"dType":"string","channelNumber":"-99"},
+			"buttonPressedPrevious":		{"dType":"string","channelNumber":"-99"},
+			"buttonPressedTimePrevious":	{"dType":"string","channelNumber":"-99"},
+			"buttonPressedTypePrevious":	{"dType":"string","channelNumber":"-99"},
+			"lastValuesText":				{"dType":"string","channelNumber":"-99"},
+			"childInfo":					{"dType":"string", "init":'{"1":[0,"1","HMIP-OnOff"], "2":[0,"2","HMIP-OnOff"], "3":[0,"3","HMIP-OnOff"],  "4":[0,"4","HMIP-OnOff"],  "5":[0,"5","HMIP-OnOff"],  "6":[0,"6","HMIP-OnOff"], "7":[0,"7","HMIP-OnOff"], "8":[0,"8","HMIP-OnOff"]}'},
+			"enabledChildren":				{"dType":"string"},
+			"lastBatteryReplaced":			{"dType":"string"}
 		},
 		"noIndigoState":k_buttonPressStates,
 		"actionParams":{},
@@ -2104,21 +2346,20 @@ k_mapHomematicToIndigoDevTypeStateChannelProps = {
 		'<ConfigUI>'+
 			'<Field id="enableOnOff" type="checkbox" defaultValue="false" >  														 <Label>Enable on option</Label></Field>'+
 			'<Field id="enable-1" type="checkbox" defaultValue="false" visibleBindingId="enableOnOff" visibleBindingValue="true" >  <Label>Enable channel 1 as on off channel</Label></Field>'+
-			'<Field id="enable-2" type="checkbox" defaultValue="false" visibleBindingId="enableOnOff" visibleBindingValue="true" >  <Label>Enable channel 2 as on off channel</Label></Field>'+
-			'<Field id="enable-3" type="checkbox" defaultValue="false" visibleBindingId="enableOnOff" visibleBindingValue="true" >  <Label>Enable channel 3 as on off channel</Label></Field>'+
-			'<Field id="enable-4" type="checkbox" defaultValue="false" visibleBindingId="enableOnOff" visibleBindingValue="true" >  <Label>Enable channel 4 as on off channel</Label></Field>'+
-			'<Field id="enable-5" type="checkbox" defaultValue="false" visibleBindingId="enableOnOff" visibleBindingValue="true" >  <Label>Enable channel 5 as on off channel</Label></Field>'+
-			'<Field id="enable-6" type="checkbox" defaultValue="false" visibleBindingId="enableOnOff" visibleBindingValue="true" >  <Label>Enable channel 6 as on off channel</Label></Field>'+
-			'<Field id="enable-7" type="checkbox" defaultValue="false" visibleBindingId="enableOnOff" visibleBindingValue="true" >  <Label>Enable channel 7 as on off channel</Label></Field>'+
-			'<Field id="enable-8" type="checkbox" defaultValue="false" visibleBindingId="enableOnOff" visibleBindingValue="true" >  <Label>Enable channel 7 as on off channel</Label></Field>'+
+			'<Field id="enable-2" type="checkbox" defaultValue="false" visibleBindingId="enableOnOff" visibleBindingValue="true" >  <Label>Enable channel 2 as on off channel if present</Label></Field>'+
+			'<Field id="enable-3" type="checkbox" defaultValue="false" visibleBindingId="enableOnOff" visibleBindingValue="true" >  <Label>Enable channel 3 as on off channel if present</Label></Field>'+
+			'<Field id="enable-4" type="checkbox" defaultValue="false" visibleBindingId="enableOnOff" visibleBindingValue="true" >  <Label>Enable channel 4 as on off channel if present</Label></Field>'+
+			'<Field id="enable-5" type="checkbox" defaultValue="false" visibleBindingId="enableOnOff" visibleBindingValue="true" >  <Label>Enable channel 5 as on off channel if present</Label></Field>'+
+			'<Field id="enable-6" type="checkbox" defaultValue="false" visibleBindingId="enableOnOff" visibleBindingValue="true" >  <Label>Enable channel 6 as on off channel if present</Label></Field>'+
+			'<Field id="enable-7" type="checkbox" defaultValue="false" visibleBindingId="enableOnOff" visibleBindingValue="true" >  <Label>Enable channel 7 as on off channel if present</Label></Field>'+
+			'<Field id="enable-8" type="checkbox" defaultValue="false" visibleBindingId="enableOnOff" visibleBindingValue="true" >  <Label>Enable channel 8 as on off channel if present</Label></Field>'+
 			'<Field id="operatingVoltage100" type="textfield"  defaultValue="1.5" > <Label>set Battery Volt at 100%</Label> </Field>'+
-			'<Field id="operatingVoltage0" type="textfield"  defaultValue="1.1" > <Label>set Battery Volt at 0%</Label> </Field>'+
+			'<Field id="operatingVoltage0"   type="textfield"  defaultValue="1.1" > <Label>set Battery Volt at 0%</Label> </Field>'+
 		'</ConfigUI>',
 		"triggerLastSensorChange":"",
 		"props":{
 			"operatingVoltage100":"1.5",
 			"operatingVoltage0":"1.1",
-			"SupportsBatteryLevel":True,
 			"enableOnOff": False,
 			"enable-1": False,
 			"enable-2": False,
@@ -2133,12 +2374,84 @@ k_mapHomematicToIndigoDevTypeStateChannelProps = {
 			"SupportsOnState": True
 		}
 	},
+	"HMIP-BUTTON-V":{
+		"file_deviceXML":{"Devicetype" :"sensor", "Name": "Homematic Virtual Button"},
+		"states":{
+			"UNREACH":k_UNREACHP,
+			"buttonPressed":				{"dType":"string","channelNumber":"-99"},
+			"buttonPressedTime":			{"dType":"string","channelNumber":"-99"},
+			"buttonPressedType":			{"dType":"string","channelNumber":"-99"},
+			"buttonPressedPrevious":		{"dType":"string","channelNumber":"-99"},
+			"buttonPressedTimePrevious":	{"dType":"string","channelNumber":"-99"},
+			"buttonPressedTypePrevious":	{"dType":"string","channelNumber":"-99"},
+			"lastValuesText":				{"dType":"string","channelNumber":"-99"},
+			"childInfo":					{"dType":"string", "init":'{"1":[0,"1","HMIP-OnOff"], "2":[0,"2","HMIP-OnOff"], "3":[0,"3","HMIP-OnOff"],  "4":[0,"4","HMIP-OnOff"],  "5":[0,"5","HMIP-OnOff"],  "6":[0,"6","HMIP-OnOff"], "7":[0,"7","HMIP-OnOff"], "8":[0,"8","HMIP-OnOff"], "9":[0,"9","HMIP-OnOff"], "10":[0,"10","HMIP-OnOff"],"11":[0,"11","HMIP-OnOff"], "12":[0,"12","HMIP-OnOff"], "13":[0,"3","HMIP-OnOff"],  "14":[0,"4","HMIP-OnOff"],  "15":[0,"15","HMIP-OnOff"],  "16":[0,"16","HMIP-OnOff"], "17":[0,"17","HMIP-OnOff"], "18":[0,"18","HMIP-OnOff"], "19":[0,"19","HMIP-OnOff"], "20":[0,"10","HMIP-OnOff"]	}'},
+			"enabledChildren":				{"dType":"string"}
+		},
+		"noIndigoState":k_buttonPressStates,
+		"actionParams":{},
+		"deviceXML":
+		'<ConfigUI>'+
+			'<Field id="enableOnOff" type="checkbox" defaultValue="false" >  														 <Label>Enable on option</Label></Field>'+
+			'<Field id="enable-1" type="checkbox" defaultValue="false" visibleBindingId="enableOnOff" visibleBindingValue="true" >  <Label>Enable channel 1 as on off channel</Label></Field>'+
+			'<Field id="enable-2" type="checkbox" defaultValue="false" visibleBindingId="enableOnOff" visibleBindingValue="true" >  <Label>Enable channel 2 as on off channel if present</Label></Field>'+
+			'<Field id="enable-3" type="checkbox" defaultValue="false" visibleBindingId="enableOnOff" visibleBindingValue="true" >  <Label>Enable channel 3 as on off channel if present</Label></Field>'+
+			'<Field id="enable-4" type="checkbox" defaultValue="false" visibleBindingId="enableOnOff" visibleBindingValue="true" >  <Label>Enable channel 4 as on off channel if present</Label></Field>'+
+			'<Field id="enable-5" type="checkbox" defaultValue="false" visibleBindingId="enableOnOff" visibleBindingValue="true" >  <Label>Enable channel 5 as on off channel if present</Label></Field>'+
+			'<Field id="enable-6" type="checkbox" defaultValue="false" visibleBindingId="enableOnOff" visibleBindingValue="true" >  <Label>Enable channel 6 as on off channel if present</Label></Field>'+
+			'<Field id="enable-7" type="checkbox" defaultValue="false" visibleBindingId="enableOnOff" visibleBindingValue="true" >  <Label>Enable channel 7 as on off channel if present</Label></Field>'+
+			'<Field id="enable-8" type="checkbox" defaultValue="false" visibleBindingId="enableOnOff" visibleBindingValue="true" >  <Label>Enable channel 8 as on off channel if present</Label></Field>'+
+			'<Field id="enable-9" type="checkbox" defaultValue="false" visibleBindingId="enableOnOff" visibleBindingValue="true" >  <Label>Enable channel 9 as on off channel if present</Label></Field>'+
+			'<Field id="enable-10" type="checkbox" defaultValue="false" visibleBindingId="enableOnOff" visibleBindingValue="true" >  <Label>Enable channel 10 as on off channel if present</Label></Field>'+
+			'<Field id="enable-11" type="checkbox" defaultValue="false" visibleBindingId="enableOnOff" visibleBindingValue="true" >  <Label>Enable channel 11 as on off channel if present</Label></Field>'+
+			'<Field id="enable-12" type="checkbox" defaultValue="false" visibleBindingId="enableOnOff" visibleBindingValue="true" >  <Label>Enable channel 12 as on off channel if present</Label></Field>'+
+			'<Field id="enable-13" type="checkbox" defaultValue="false" visibleBindingId="enableOnOff" visibleBindingValue="true" >  <Label>Enable channel 13 as on off channel if present</Label></Field>'+
+			'<Field id="enable-14" type="checkbox" defaultValue="false" visibleBindingId="enableOnOff" visibleBindingValue="true" >  <Label>Enable channel 14 as on off channel if present</Label></Field>'+
+			'<Field id="enable-15" type="checkbox" defaultValue="false" visibleBindingId="enableOnOff" visibleBindingValue="true" >  <Label>Enable channel 15 as on off channel if present</Label></Field>'+
+			'<Field id="enable-16" type="checkbox" defaultValue="false" visibleBindingId="enableOnOff" visibleBindingValue="true" >  <Label>Enable channel 16 as on off channel if present</Label></Field>'+
+			'<Field id="enable-17" type="checkbox" defaultValue="false" visibleBindingId="enableOnOff" visibleBindingValue="true" >  <Label>Enable channel 17 as on off channel if present</Label></Field>'+
+			'<Field id="enable-18" type="checkbox" defaultValue="false" visibleBindingId="enableOnOff" visibleBindingValue="true" >  <Label>Enable channel 18 as on off channel if present</Label></Field>'+
+			'<Field id="enable-19" type="checkbox" defaultValue="false" visibleBindingId="enableOnOff" visibleBindingValue="true" >  <Label>Enable channel 19 as on off channel if present</Label></Field>'+
+			'<Field id="enable-20" type="checkbox" defaultValue="false" visibleBindingId="enableOnOff" visibleBindingValue="true" >  <Label>Enable channel 20 as on off channel if present</Label></Field>'+
+		'</ConfigUI>',
+		"triggerLastSensorChange":"",
+		"props":{
+			"enableOnOff": False,
+			"enable-1": False,
+			"enable-2": False,
+			"enable-3": False,
+			"enable-4": False,
+			"enable-5": False,
+			"enable-6": False,
+			"enable-7": False,
+			"enable-8": False,
+			"enable-8": False,
+			"enable-9": False,
+			"enable-10": False,
+			"enable-11": False,
+			"enable-12": False,
+			"enable-13": False,
+			"enable-14": False,
+			"enable-15": False,
+			"enable-16": False,
+			"enable-17": False,
+			"enable-18": False,
+			"enable-19": False,
+			"enable-20": False,
+			"SupportsStatusRequest":False,
+			"SupportsSensorValue":False,
+			"SupportsOnState": True,
+			"ignoreStates": "roomId,firmware,availableFirmware"
+		}
+	},
+
 
 	"HMIP-ROOM":{
+		"file_deviceXML":{"Devicetype" :"sensor", "Name": "Homematic Room"},
 		"states":{
-			"roomListNames":{"dType": "string"},
-			"NumberOfDevices":{"dType": "integer"},
-			"roomListIDs":{"dType": "string"}
+			"roomListNames":		{"dType": "string"},
+			"NumberOfDevices":		{"dType": "integer"},
+			"roomListIDs":			{"dType": "string"}
 		},
 		"actionParams":{},
 		"deviceXML":'<ConfigUI> <Field id="show" type="label"> <Label>Nothing to configure</Label> </Field></ConfigUI>',
@@ -2151,10 +2464,11 @@ k_mapHomematicToIndigoDevTypeStateChannelProps = {
 	},
 
 	"HMIP-SYSVAR-FLOAT":{
+		"file_deviceXML":{"Devicetype" :"sensor", "Name": "Homematic SYSvar-FLOAT"},
 		"states":{
-			"description":{"dType": "string"},
-			"unit":{"dType": "string"},
-			"sensorValue":{"dType": "real"}
+			"description":	{"dType": "string"},
+			"unit":			{"dType": "string"},
+			"sensorValue":	{"dType": "real"}
 		},
 		"actionParams":{},
 		"deviceXML":'<ConfigUI> <Field id="show" type="label"> <Label>Nothing to configure</Label> </Field></ConfigUI>',
@@ -2167,9 +2481,10 @@ k_mapHomematicToIndigoDevTypeStateChannelProps = {
 	},
 
 	"HMIP-SYSVAR-STRING":{
+		"file_deviceXML":{"Devicetype" :"custom", "Name": "Homematic SYSvar-STRING"},
 		"states":{
-			"description":{"dType": "string"},
-			"value":{"dType": "string"}
+			"description":	{"dType": "string"},
+			"value":		{"dType": "string"}
 		},
 		"actionParams":{},
 		"deviceXML":'<ConfigUI> <Field id="show" type="label"> <Label>Nothing to configure</Label> </Field></ConfigUI>',
@@ -2183,9 +2498,10 @@ k_mapHomematicToIndigoDevTypeStateChannelProps = {
 	},
 
 	"HMIP-SYSVAR-BOOL":{
+		"file_deviceXML":{"Devicetype" :"sensor", "Name": "Homematic SYSvar-BOOL"},
 		"states":{
-			"description":{"dType": "string"},
-			"onOffState":{"dType": "booltruefalse"}
+			"description":	{"dType": "string"},
+			"onOffState":	{"dType": "booltruefalse"}
 		},
 		"actionParams":{},
 		"deviceXML":'<ConfigUI> <Field id="show" type="label"> <Label>Nothing to configure</Label> </Field></ConfigUI>',
@@ -2198,9 +2514,10 @@ k_mapHomematicToIndigoDevTypeStateChannelProps = {
 	},
 
 	"HMIP-SYSVAR-ALARM":{
+		"file_deviceXML":{"Devicetype" :"sensor", "Name": "Homematic SYSvar-ALARM"},
 		"states":{
-			"description":{"dType": "string"},
-			"onOffState":{"dType": "booltruefalse"}
+			"description":	{"dType": "string"},
+			"onOffState":	{"dType": "booltruefalse"}
 		},
 		"actionParams":{},
 		"deviceXML":'<ConfigUI> <Field id="show" type="label"> <Label>Nothing to configure</Label> </Field></ConfigUI>',
@@ -2213,9 +2530,10 @@ k_mapHomematicToIndigoDevTypeStateChannelProps = {
 	},
 
 	"Homematic-AP":{
+		"file_deviceXML":{"Devicetype" :"sensor", "Name": "Homematic AP"},
 		"states":{
-			"CARRIER_SENSE_LEVEL":{"dType": "integer","channelNumber":"0","format":"{}%",		"refresh":"3"},
-			"DUTY_CYCLE_LEVEL":{"dType": "real","channelNumber":"0","format":"{:.1f}%",			"refresh":"3"}
+			"CARRIER_SENSE_LEVEL":	{"dType": "integer","channelNumber":"0","format":"{}%",		"refresh":"3"},
+			"DUTY_CYCLE_LEVEL":		{"dType": "real","channelNumber":"0","format":"{:.1f}%",			"refresh":"3"}
 		},
 		"actionParams":{},
 		"deviceXML":'<ConfigUI> <Field id="show" type="label"> <Label>Nothing to configure</Label> </Field></ConfigUI>',
@@ -2229,11 +2547,12 @@ k_mapHomematicToIndigoDevTypeStateChannelProps = {
 	},
 
 	"Homematic-Host":{
+		"file_deviceXML":{"Devicetype" :"sensor", "Name" :"Homematic Host"},
 		"states":{
-			"buttonPressed":{"dType": "integer"},
-			"numberOfRooms":{"dType": "integer"},
-			"numberOfDevices":{"dType": "integer"},
-			"numberOfVariables":{"dType": "integer"}
+			"buttonPressed":		{"dType": "integer"},
+			"numberOfRooms":		{"dType": "integer"},
+			"numberOfDevices":		{"dType": "integer"},
+			"numberOfVariables":	{"dType": "integer"}
 		},
 		"actionParams":{},
 		"deviceXML":
@@ -2285,6 +2604,18 @@ k_stateValueNumbersToTextInIndigo ={
 		"IDLE",
 		"KNOWN_CODE_ID_RECEIVED",
 		"UNKNOWN_CODE_ID_RECEIVED"
+	],
+	"STATE":[
+		"0",
+		"1",
+		"2",
+		"3",
+		"4"
+	],
+	"TILT_STATE":[
+		"CLOSED",
+		"TILTED",
+		"OPEN"
 	],
 	"RAIN_COUNTER_STATUS": [
 		"NORMAL",  			# 0
@@ -2409,6 +2740,18 @@ k_stateValueNumbersToTextInIndigo ={
 		"ADJUSTMENT_TOO_BIG",
 		"ADJUSTMENT_TOO_SMALL"	# 7
 	],
+	"STATE_CODE":[
+		"ok",  # 0
+		"1",# 1
+		"2",
+		"3",
+		"4",
+		"5",
+		"6",
+		"7",# 7
+		"8-Water Failure",	# 7
+		"9"	# 7
+	],
 	"WINDOW_STATE": [
 		"closed",				# 0
 		"tilted",				# 0
@@ -2435,6 +2778,7 @@ k_logMessageAtCreation 					= {}
 k_actionTypes 							= { "thermostat":[], "doorLock":[] ,"SYSVAR-STRING":[] ,"alarm":[],"display":[],"variable":[]}
 k_createStates 							= {}
 
+
 # add states and props if member of a category, saves a lot of lines above 
 for devType in k_mapHomematicToIndigoDevTypeStateChannelProps:
 
@@ -2447,10 +2791,24 @@ for devType in k_mapHomematicToIndigoDevTypeStateChannelProps:
 	if devType.find("SYSVAR") > -1:
 			k_indigoDeviceisVariableDevice.append(devType)
 	
-	if devType in k_isVoltageDevice:
+	if devType in k_isVoltageDevice and devType not in k_isNotRealDevice:
 		if "OPERATING_VOLTAGE" not in dd["states"]:
 			dd["states"]["OPERATING_VOLTAGE"] = {"channelNumber": "0","dType": "real","indigoState":"OperatingVoltage"}
 
+
+	if devType in k_deviceWithDayWeekMonth:
+		FF = k_deviceWithDayWeekMonth[devType]
+		indigoState = FF["indigoState"]
+		for addSt in k_addDMW:
+			nextItem = k_addDMW[addSt]
+			dd["states"][indigoState+nextItem["indigoState"]] = {"dType": nextItem["dType"], "indigoState": indigoState+nextItem["indigoState"]}
+
+		homaticState = FF.get("homaticState","")
+		if homaticState != "":
+			dd["states"][homaticState] = {"dType": FF["dType"],"indigoState": FF["indigoState"], "refresh":FF["refresh"], "channelNumber":FF["channelNumber"]}
+
+
+	
 	if "childInfo" in dd["states"]:
 		if devType not in k_devTypeHasChildren:
 			k_devTypeHasChildren.append(devType)
@@ -2474,7 +2832,7 @@ for devType in k_mapHomematicToIndigoDevTypeStateChannelProps:
 			dd["states"]["LOW_BAT"] = {"channelNumber": "0","dType": "booltruefalse","indigoState":"LOW_BAT"}
 
 
-	if "LOW_BAT" in dd["states"] and "batteryLevel" not in dd["states"] :
+	if "LOW_BAT" in dd["states"] and "batteryLevel" not in dd["states"] or devType in k_isBatteryDevice and  devType not in k_isNotRealDevice:
 			dd["states"]["batteryLevel"] = {"dType": "integer"}
 			dd["states"]["lastBatteryReplaced"] = {"dType": "string"}
 			dd["props"]["SupportsBatteryLevel"] = True
@@ -2485,8 +2843,6 @@ for devType in k_mapHomematicToIndigoDevTypeStateChannelProps:
 			k_indigoDeviceisDoorLockDevice.append(devType)
 
 
-
-
 	if "SET_POINT_TEMPERATURE" in dd["states"]:
 		if devType not in k_indigoDeviceisThermostatDevice:
 			k_indigoDeviceisThermostatDevice.append(devType)
@@ -2495,8 +2851,6 @@ for devType in k_mapHomematicToIndigoDevTypeStateChannelProps:
 
 	if "enable-" in str(dd["props"]):
 		k_logMessageAtCreation[devType] = "in DEVICE EDIT, please select active child devices"
-
-
 
 
 	for homematicStateName in dd["states"]:
@@ -2514,25 +2868,65 @@ for devType in k_mapHomematicToIndigoDevTypeStateChannelProps:
 				if dd["deviceXML"].find("Nothing to configure") > -1:
 					dd["deviceXML"] = "<ConfigUI> </ConfigUI>"
 	
-				ll = dd["deviceXML"].find("</ConfigUI>")
-				temp = dd["deviceXML"][0:ll]
-
-				if "minMaxEnable-"+state not in dd["props"]:
-					newString  = temp + '<Field id="minMaxEnable-'+state+ '" type="checkbox"  defaultValue="false" >   <Label>Enable '+state+' min max states</Label></Field></ConfigUI>'
+				if "minMaxEnable_"+state not in dd["props"]:
+					ll = dd["deviceXML"].find("</ConfigUI>")
+					newString  = dd["deviceXML"][0:ll] 
+					newString  += '<Field id="minMaxEnable_'+state+ '" type="checkbox"  defaultValue="false" >   <Label>Enable '+state+' min max states</Label></Field>'
+					newString  += '<Field id="ignoreZerominMaxEnable_'+state+ '" type="checkbox"  defaultValue="false"  visibleBindingId="minMaxEnable_'+state+'"  visibleBindingValue="true" >   <Label> ... ignore 0 </Label></Field>'
+					newString  += '</ConfigUI>'
 					dd["deviceXML"] = newString
-					dd["props"]["minMaxEnable-"+state] = False
+					dd["props"]["minMaxEnable_"+state] = False
 
 			if state in k_statesWithPreviousValue:
 				if dd["deviceXML"].find("Nothing to configure") > -1:
 					dd["deviceXML"] = "<ConfigUI> </ConfigUI>"
 	
-				ll = dd["deviceXML"].find("</ConfigUI>")
-				temp = dd["deviceXML"][0:ll]
-
 				if "previousValue-"+state not in dd["props"]:
-					newString  = temp + '<Field id="previousValue-'+state+ '" type="checkbox"  defaultValue="false" >   <Label>Enable '+state+' previous value</Label></Field></ConfigUI>'
+					ll = dd["deviceXML"].find("</ConfigUI>")
+					newString  = dd["deviceXML"][0:ll] 
+					newString  += '<Field id="previousValue_'+state+ '" type="checkbox"  defaultValue="false" >   <Label>Enable '+state+' previous value</Label></Field>'
+					newString  += '</ConfigUI>'
 					dd["deviceXML"] = newString
 					dd["props"]["previousValue-"+state] = False
+
+			if state in k_statesWithTrend:
+				if dd["deviceXML"].find("Nothing to configure") > -1:
+					dd["deviceXML"] = "<ConfigUI> </ConfigUI>"
+	
+				if "enableTrend_"+state not in dd["props"]:
+					ll = dd["deviceXML"].find("</ConfigUI>")
+					newString  = dd["deviceXML"][0:ll] 
+					newString  += '<Field id="'+'enableTrend_'+state+ '" type="checkbox"  defaultValue="false" > <Label>Enable '+state+' Trend</Label></Field>'
+					newString  += '<Field id="'+'trendTimeDeltaMin_'+state+ '" type="menu"  defaultValue="600" visibleBindingId="enableTrend_'+state+'" visibleBindingValue="true" >   <Label> ... trend min delta time:</Label>'
+					newString  += '<List>'
+					newString  += 	'<Option value="300"   > 5 minutes</Option>'
+					newString  += 	'<Option value="600"   > 10 minutes</Option>'
+					newString  += 	'<Option value="1200"  > 20 minutes</Option>'
+					newString  += 	'<Option value="3600"  > 1 hour</Option>'
+					newString  += 	'<Option value="7200"  > 2 hour</Option>'
+					newString  += 	'<Option value="21600" > 6 hour</Option>'
+					newString  += 	'<Option value="43200" > 12 hour</Option>'
+					newString  += 	'<Option value="86400" > 24 hour</Option>'
+					newString  += '</List>'
+					newString  += '</Field>'
+					newString  += '<Field id="'+'trendDelta_'+state+ '" type="menu"  defaultValue="100" visibleBindingId="enableTrend_'+state+'"  visibleBindingValue="true" >   <Label> ... trend min delta value:</Label>'
+					newString  += '<List>'
+					newString  += 	'<Option value="10"    > 0.1  %</Option>'
+					newString  += 	'<Option value="25"    > 0.25 %</Option>'
+					newString  += 	'<Option value="50"    > 0.5 %</Option>'
+					newString  += 	'<Option value="100"   > 1 %</Option>'
+					newString  += 	'<Option value="150"   > 1.5 %</Option>'
+					newString  += 	'<Option value="200"   > 2 %</Option>'
+					newString  += 	'<Option value="300"   > 3 %</Option>'
+					newString  += 	'<Option value="500"   > 5 %</Option>'
+					newString  += 	'<Option value="1000"  > 10 %</Option>'
+					newString  += '</List>'
+					newString  += '</Field>'
+					newString  += '</ConfigUI>'
+					dd["deviceXML"] = newString
+					dd["props"]["Trend-"+state] = False
+
+
 
 
 		if state in k_doubleState:
@@ -2545,8 +2939,7 @@ for devType in k_mapHomematicToIndigoDevTypeStateChannelProps:
 					dd["deviceXML"] = "<ConfigUI> </ConfigUI>"
 	
 				ll = dd["deviceXML"].find("</ConfigUI>")
-				temp = dd["deviceXML"][0:ll]
-				newString  = temp + '<Field id="minMaxEnable-'+stateD+ '" type="checkbox"  defaultValue="true" >   <Label>Enable '+stateD+' min max states</Label></Field></ConfigUI>'
+				newString  = dd["deviceXML"][0:ll] + '<Field id="minMaxEnable_'+stateD+ '" type="checkbox"  defaultValue="true" >   <Label>Enable '+stateD+' min max states</Label></Field></ConfigUI>'
 				dd["deviceXML"] = newString
 				dd["props"]["minMaxEnable-"+state] = False
 
@@ -2554,11 +2947,10 @@ for devType in k_mapHomematicToIndigoDevTypeStateChannelProps:
 				if dd["deviceXML"].find("Nothing to configure") > -1:
 					dd["deviceXML"] = "<ConfigUI> </ConfigUI>"
 	
-				ll = dd["deviceXML"].find("</ConfigUI>")
-				temp = dd["deviceXML"][0:ll]
 
 				if "offset-"+state not in dd["props"]:
-					newString  = temp + '<Field id="offset-'+state+ '" type="textfield"  defaultValue="0" >   <Label>offset '+state+'</Label></Field></ConfigUI>'
+					ll = dd["deviceXML"].find("</ConfigUI>")
+					newString  = dd["deviceXML"][0:ll] + '<Field id="offset-'+state+ '" type="textfield"  defaultValue="0" >   <Label>offset '+state+'</Label></Field></ConfigUI>'
 					dd["deviceXML"] = newString
 					dd["props"]["offset-"+state ] = "0"
 			
